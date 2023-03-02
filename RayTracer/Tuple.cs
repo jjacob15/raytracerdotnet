@@ -73,10 +73,10 @@ namespace RayTracer
             return Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2) + Math.Pow(W, 2));
         }
 
-        public Tuple Normalize(Tuple t)
+        public Tuple Normalize()
         {
-            var m = t.Magnitude();
-            return t / m;
+            var m = Magnitude();
+            return this / m;
         }
 
         public double Dot(Tuple t)

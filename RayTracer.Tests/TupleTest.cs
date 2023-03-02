@@ -149,7 +149,7 @@ namespace RayTracer.Tests
         public void DotProduct()
         {
             Tuple v1 = Tuple.Vector(1, 2, 3);
-            Tuple v2 = Tuple.Vector(2, 3, 4);
+            Tuple v2 = Tuple.Vec    tor(2, 3, 4);
             Assert.Equal(v1.Dot(v2), 20);
         }
 

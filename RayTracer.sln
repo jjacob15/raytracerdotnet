@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32630.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayTracer", "RayTracer\RayTracer.csproj", "{FC022DD5-7FD8-4CA1-AB17-204CD99C8691}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracer", "RayTracer\RayTracer.csproj", "{FC022DD5-7FD8-4CA1-AB17-204CD99C8691}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayTracer.Tests", "RayTracer.Tests\RayTracer.Tests.csproj", "{E9D86197-05FC-4AC0-81E1-6FF4DCB9473D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracer.Tests", "RayTracer.Tests\RayTracer.Tests.csproj", "{E9D86197-05FC-4AC0-81E1-6FF4DCB9473D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exercises", "Exercises", "{A112EE47-52C6-403A-AEB4-609244D40013}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter1", "Chapter1", "{C9E965F7-6291-4ACB-B715-F3A5DFD89F17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projectile", "Projectile\Projectile.csproj", "{4725D855-34BB-47FC-9ABA-A65265D21351}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +27,17 @@ Global
 		{E9D86197-05FC-4AC0-81E1-6FF4DCB9473D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9D86197-05FC-4AC0-81E1-6FF4DCB9473D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9D86197-05FC-4AC0-81E1-6FF4DCB9473D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4725D855-34BB-47FC-9ABA-A65265D21351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4725D855-34BB-47FC-9ABA-A65265D21351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4725D855-34BB-47FC-9ABA-A65265D21351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4725D855-34BB-47FC-9ABA-A65265D21351}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C9E965F7-6291-4ACB-B715-F3A5DFD89F17} = {A112EE47-52C6-403A-AEB4-609244D40013}
+		{4725D855-34BB-47FC-9ABA-A65265D21351} = {C9E965F7-6291-4ACB-B715-F3A5DFD89F17}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {974FEDBE-9D66-4434-999A-154AA173BEAD}
