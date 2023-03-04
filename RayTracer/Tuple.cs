@@ -61,7 +61,7 @@ namespace RayTracer
         public static Tuple operator /(Tuple a, double divisor)
         {
             return new Tuple(a.X / divisor, a.Y / divisor, a.Z / divisor, a.W / divisor);
-        }
+        } 
 
         public static Tuple operator *(Tuple a, double multiplier)
         {

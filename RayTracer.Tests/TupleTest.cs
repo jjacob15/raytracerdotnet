@@ -135,21 +135,21 @@ namespace RayTracer.Tests
         public void NormalizeOne()
         {
             Tuple v = Tuple.Vector(4, 0, 0);
-            Assert.Equal(v.Normalize(v), Tuple.Vector(1, 0, 0));
+            Assert.Equal(v.Normalize(), Tuple.Vector(1, 0, 0));
         }
 
         [Fact]
         public void NormalizeTwo()
         {
             Tuple v = Tuple.Vector(1, 2, 3);
-            Assert.Equal(v.Normalize(v), Tuple.Vector(0.26726, 0.53452, 0.80178));
+            Assert.Equal(v.Normalize(), Tuple.Vector(0.26726, 0.53452, 0.80178));
         }
 
         [Fact]
         public void DotProduct()
         {
             Tuple v1 = Tuple.Vector(1, 2, 3);
-            Tuple v2 = Tuple.Vec    tor(2, 3, 4);
+            Tuple v2 = Tuple.Vector(2, 3, 4);
             Assert.Equal(v1.Dot(v2), 20);
         }
 
