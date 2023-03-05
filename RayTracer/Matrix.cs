@@ -7,11 +7,46 @@ namespace RayTracer
     public class Matrix
     {
         public int Size;
-        private double[,] _matrix = new double[4, 4];
+        private double[,] _m;
         public static Matrix Identity = new Matrix(1, 0, 0, 0,
             0, 1, 0, 0,
             0, 0, 1, 0,
             0, 0, 0, 1);
+
+
+        public Matrix(double m00, double m01,
+            double m10, double m11)
+        {
+            Size = 2;
+            _m = new double[2, 2];
+
+            _m[0, 0] = m00;
+            _m[0, 1] = m01;
+
+            _m[1, 0] = m10;
+            _m[1, 1] = m11;
+        }
+
+        public Matrix(double m00, double m01, double m02,
+            double m10, double m11, double m12,
+            double m20, double m21, double m22)
+        {
+            Size = 3;
+            _m = new double[3, 3];
+
+            _m[0, 0] = m00;
+            _m[0, 1] = m01;
+            _m[0, 2] = m02;
+
+            _m[1, 0] = m10;
+            _m[1, 1] = m11;
+            _m[1, 2] = m12;
+
+            _m[2, 0] = m20;
+            _m[2, 1] = m21;
+            _m[2, 2] = m22;
+
+        }
 
         public Matrix(double m00, double m01, double m02, double m03,
             double m10, double m11, double m12, double m13,
@@ -19,36 +54,37 @@ namespace RayTracer
             double m30, double m31, double m32, double m33)
         {
             Size = 4;
-            _matrix = new double[4, 4];
+            _m = new double[4, 4];
 
-            _matrix[0, 0] = m00;
-            _matrix[0, 1] = m01;
-            _matrix[0, 2] = m02;
-            _matrix[0, 3] = m03;
+            _m[0, 0] = m00;
+            _m[0, 1] = m01;
+            _m[0, 2] = m02;
+            _m[0, 3] = m03;
 
-            _matrix[1, 0] = m10;
-            _matrix[1, 1] = m11;
-            _matrix[1, 2] = m12;
-            _matrix[1, 3] = m13;
+            _m[1, 0] = m10;
+            _m[1, 1] = m11;
+            _m[1, 2] = m12;
+            _m[1, 3] = m13;
 
-            _matrix[2, 0] = m20;
-            _matrix[2, 1] = m21;
-            _matrix[2, 2] = m22;
-            _matrix[2, 3] = m23;
+            _m[2, 0] = m20;
+            _m[2, 1] = m21;
+            _m[2, 2] = m22;
+            _m[2, 3] = m23;
 
-            _matrix[3, 0] = m30;
-            _matrix[3, 1] = m31;
-            _matrix[3, 2] = m32;
-            _matrix[3, 3] = m33;
+            _m[3, 0] = m30;
+            _m[3, 1] = m31;
+            _m[3, 2] = m32;
+            _m[3, 3] = m33;
         }
         public Matrix(int size)
         {
             Size = size;
+            _m = new double[size, size];
         }
         public Matrix(int size, double intializeWith)
         {
             Size = size;
-            _matrix = new double[size, size];
+            _m = new double[size, size];
 
             Initialize(intializeWith);
         }
@@ -57,12 +93,12 @@ namespace RayTracer
         {
             for (int r = 0; r < Size; r++)
                 for (int c = 0; c < Size; c++)
-                    _matrix[r, c] = val;
+                    _m[r, c] = val;
         }
         public double this[int row, int column]
         {
-            get => _matrix[row, column];
-            set => _matrix[row, column] = value;
+            get => _m[row, column];
+            set => _m[row, column] = value;
         }
 
         public static bool operator ==(Matrix a, Matrix b)
@@ -99,11 +135,11 @@ namespace RayTracer
         public Matrix Transpose()
         {
             Matrix m = new Matrix(Size);
-            for(int r = 0; r < Size; r++)
+            for (int r = 0; r < Size; r++)
             {
-                for(int c = 0; c < Size; c++)
+                for (int c = 0; c < Size; c++)
                 {
-                    m[r, c] = _matrix[c, r];
+                    m[r, c] = _m[c, r];
                 }
             }
             return m;
@@ -132,6 +168,50 @@ namespace RayTracer
                 result += a[r, i] * b[i, c];
             }
             return result;
+        }
+
+        public double Determinant()
+        {
+            if (Size == 2)
+                return _m[0, 0] * _m[1, 1] - _m[0, 1] * _m[1, 0];
+            else
+            {
+                double det = 0;
+                for (int c = 0; c < Size; c++)
+                {
+                    det += _m[0, c] * Cofactor(0, c);
+                }
+                return det;
+            }
+        }
+
+        public Matrix Submatrix(int removeRow, int removeCol)
+        {
+            if (Size == 2) throw new Exception("Cannot reduce this matrix");
+            Matrix submatrix = new Matrix(Size - 1);
+            int newRow = 0, newCol = 0;
+            for (int r = 0; r < Size; r++)
+            {
+                if (r == removeRow) continue;
+                newCol = 0;
+                for (int c = 0; c < Size; c++)
+                {
+                    if (c == removeCol) continue;
+                    submatrix[newRow, newCol++] = _m[r, c];
+                }
+                newRow++;
+            }
+            return submatrix;
+        }
+
+        public double Minor(int row, int col)
+        {
+            return Submatrix(row, col).Determinant();
+        }
+
+        public double Cofactor(int row, int col)
+        {
+            return Minor(row, col) * ((row + col) % 2 != 0 ? -1 : 1);
         }
     }
 }

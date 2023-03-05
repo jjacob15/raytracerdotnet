@@ -110,5 +110,92 @@ namespace RayTracer.Tests
 
             Assert.True(i1.Transpose() == i2);
         }
+
+        [Fact]
+        public void DeterminantTest2x2()
+        {
+            Matrix m = new Matrix(1, 5,
+                -3, 2);
+
+            Assert.True(m.Determinant().DoubleEqual(17));
+        }
+
+        [Fact]
+        public void SubmatrixTest1()
+        {
+            Matrix m = new Matrix(1, 5, 0,
+                -3, 2, 7,
+                0, 6, -3);
+            Matrix result = new Matrix(-3, 2,
+                0, 6);
+            Assert.True(result == m.Submatrix(0, 2));
+        }
+
+        [Fact]
+        public void SubmatrixTest2()
+        {
+            Matrix m = new Matrix(-6, 1, 1, 6,
+                -8, 5, 8, 6,
+                -1, 0, 8, 2,
+                -7, 1, -1, 1);
+
+            Matrix result = new Matrix(-6, 1, 6,
+                -8, 8, 6,
+                -7, -1, 1);
+            Assert.True(result == m.Submatrix(2, 1));
+        }
+
+        [Fact]
+        public void MinorTest()
+        {
+            Matrix m = new Matrix(3, 5, 0,
+                2, -1, -7,
+                6, -1, 5);
+
+            Assert.True(m.Minor(1, 0).DoubleEqual(25));
+        }
+
+        [Fact]
+        public void CofactTest1()
+        {
+            Matrix m = new Matrix(3, 5, 0,
+                2, -1, -7,
+                6, -1, 5);
+
+            Assert.True(m.Cofactor(0, 0).DoubleEqual(-12));
+            Assert.True(m.Cofactor(1, 0).DoubleEqual(-25));
+        }
+
+        [Fact]
+        public void DeterminantTest3x3()
+        {
+            Matrix m = new Matrix(1, 2, 6,
+                -5, 8, -4,
+                2, 6, 4);
+
+            Assert.True(m.Cofactor(0, 0).DoubleEqual(56));
+            Assert.True(m.Cofactor(0, 1).DoubleEqual(12));
+            Assert.True(m.Cofactor(0, 2).DoubleEqual(-46));
+            Assert.True(m.Determinant().DoubleEqual(-196));
+        }
+
+
+        [Fact]
+        public void DeterminantTest4x4()
+        {
+            Matrix m = new Matrix(-2, -8, 3, 5,
+                -3, 1, 7, 3,
+                1, 2, -9, 6,
+                -6, 7, 7, -9);
+
+            Assert.True(m.Cofactor(0, 0).DoubleEqual(690));
+            Assert.True(m.Cofactor(0, 1).DoubleEqual(447));
+            Assert.True(m.Cofactor(0, 2).DoubleEqual(210));
+            Assert.True(m.Cofactor(0, 3).DoubleEqual(51));
+            Assert.True(m.Determinant().DoubleEqual(-4071));
+        }
+
+
+
     }
 }
