@@ -213,5 +213,26 @@ namespace RayTracer
         {
             return Minor(row, col) * ((row + col) % 2 != 0 ? -1 : 1);
         }
+
+        public bool IsInvertable()
+        {
+            return Determinant() != 0;
+        }
+
+        public Matrix Inverse()
+        {
+            if (!IsInvertable()) throw new NotSupportedException("This matrix is not invertable");
+
+            Matrix result = new Matrix(Size);
+            for (var row = 0; row < Size; row++)
+            {
+                for (var col = 0; col < Size; col++)
+                {
+                    var c = Cofactor(row, col);
+                    result[col, row] = c / Determinant();
+                }
+            }
+            return result;
+        }
     }
 }
