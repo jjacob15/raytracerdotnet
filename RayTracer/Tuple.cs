@@ -3,23 +3,24 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace RayTracer
 {
-    public class Tuple : IEquatable<Tuple>
+    public class Tuple
+    //: IEquatable<Tuple>
     {
         public static readonly Tuple Zero = new Tuple(0, 0, 0, 0);
 
         public static Tuple Point(double x, double y, double z) => new Tuple(x, y, z, 1);
         public static Tuple Vector(double x, double y, double z) => new Tuple(x, y, z, 0);
 
-        public bool Equals([AllowNull] Tuple other)
-        {
-            if (other == null) return false;
-            if (ReferenceEquals(this, other)) return true;
+        //public bool Equals([AllowNull] Tuple other)
+        //{
+        //    if (other == null) return false;
+        //    if (ReferenceEquals(this, other)) return true;
 
-            return X.DoubleEqual(other.X) &&
-                Y.DoubleEqual(other.Y) &&
-                Z.DoubleEqual(other.Z) &&
-                W.DoubleEqual(other.W);
-        }
+        //    return X.DoubleEqual(other.X) &&
+        //        Y.DoubleEqual(other.Y) &&
+        //        Z.DoubleEqual(other.Z) &&
+        //        W.DoubleEqual(other.W);
+        //}
 
         public Tuple(double x, double y, double z, double w)
         {
@@ -36,6 +37,36 @@ namespace RayTracer
 
         public bool IsPoint => W == 1;
         public bool IsVector => W == 0;
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || obj.GetType() != GetType())
+                return false;
+            Tuple tuple = (Tuple)obj;
+            return this == tuple;
+        }
+
+        public override int GetHashCode()
+        {
+            double hashcode = 23;
+            hashcode = (hashcode * 37) + X;
+            hashcode = (hashcode * 37) + Y;
+            hashcode = (hashcode * 37) + Z;
+            return (int) Math.Round((hashcode * 37) + W);
+        }
+
+        public static bool operator ==(Tuple a, Tuple b)
+        {
+            return a.X.DoubleEqual(b.X) &&
+                a.Y.DoubleEqual(b.Y) &&
+                a.Z.DoubleEqual(b.Z) &&
+                a.W.DoubleEqual(b.W);
+        }
+
+        public static bool operator !=(Tuple a, Tuple b)
+        {
+            return !(a == b);
+        }
 
         public static Tuple operator +(Tuple a, Tuple b)
         {
@@ -61,7 +92,7 @@ namespace RayTracer
         public static Tuple operator /(Tuple a, double divisor)
         {
             return new Tuple(a.X / divisor, a.Y / divisor, a.Z / divisor, a.W / divisor);
-        } 
+        }
 
         public static Tuple operator *(Tuple a, double multiplier)
         {

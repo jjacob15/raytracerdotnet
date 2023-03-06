@@ -8,7 +8,8 @@ namespace RayTracer
     {
         public int Size;
         private double[,] _m;
-        public static Matrix Identity = new Matrix(1, 0, 0, 0,
+
+        public static Matrix Identity() => new Matrix(1, 0, 0, 0,
             0, 1, 0, 0,
             0, 0, 1, 0,
             0, 0, 0, 1);
@@ -47,6 +48,7 @@ namespace RayTracer
             _m[2, 2] = m22;
 
         }
+
 
         public Matrix(double m00, double m01, double m02, double m03,
             double m10, double m11, double m12, double m13,
@@ -101,6 +103,27 @@ namespace RayTracer
             set => _m[row, column] = value;
         }
 
+        public override bool Equals(object obj)
+        {
+            if ((obj == null) || !GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                Matrix m = (Matrix)obj;
+                return m == this;
+            }
+        }
+        public override int GetHashCode()
+        {
+            double hashcode = 23;
+            for (var r = 0; r < Size; r++)
+                for (var c = 0; c < Size; c++)
+                    hashcode = (hashcode * 37) + _m[r, c];
+
+            return (int)Math.Round(hashcode);
+        }
         public static bool operator ==(Matrix a, Matrix b)
         {
             if (ReferenceEquals(a, b)) return true;
@@ -189,11 +212,11 @@ namespace RayTracer
         {
             if (Size == 2) throw new Exception("Cannot reduce this matrix");
             Matrix submatrix = new Matrix(Size - 1);
-            int newRow = 0, newCol = 0;
+            int newRow = 0;
             for (int r = 0; r < Size; r++)
             {
                 if (r == removeRow) continue;
-                newCol = 0;
+                int newCol = 0;
                 for (int c = 0; c < Size; c++)
                 {
                     if (c == removeCol) continue;
@@ -219,6 +242,7 @@ namespace RayTracer
             return Determinant() != 0;
         }
 
+
         public Matrix Inverse()
         {
             if (!IsInvertable()) throw new NotSupportedException("This matrix is not invertable");
@@ -233,6 +257,88 @@ namespace RayTracer
                 }
             }
             return result;
+        }
+
+        private Stack<Matrix> _transformationChain = new Stack<Matrix>();
+
+        public Matrix Apply()
+        {
+            Matrix result = this;
+            while (_transformationChain.Count > 0)
+            {
+                var transform = _transformationChain.Pop();
+                result = result * transform; 
+            }
+            return result;
+        }
+
+        public Matrix Scaling(double x, double y, double z)
+        {
+            var transform = Identity();
+            transform[0, 0] = x;
+            transform[1, 1] = y;
+            transform[2, 2] = z;
+
+            _transformationChain.Push(transform);
+            return this;
+        }
+        public Matrix Translation(double x, double y, double z)
+        {
+            var transform = Identity();
+
+            transform[0, 3] = x;
+            transform[1, 3] = y;
+            transform[2, 3] = z;
+
+            _transformationChain.Push(transform);
+            return this;
+        }
+
+        public Matrix RotateX(double r)
+        {
+            var transform = Identity();
+            transform[1, 1] = Math.Cos(r);
+            transform[1, 2] = -Math.Sin(r);
+            transform[2, 1] = Math.Sin(r);
+            transform[2, 2] = Math.Cos(r);
+
+            _transformationChain.Push(transform);
+            return this;
+        }
+
+        public Matrix RotateY(double r)
+        {
+            var transform = Identity();
+            transform[0, 0] = Math.Cos(r);
+            transform[0, 2] = Math.Sin(r);
+            transform[2, 0] = -Math.Sin(r);
+            transform[2, 2] = Math.Cos(r);
+            _transformationChain.Push(transform);
+            return this;
+        }
+
+        public Matrix RotateZ(double r)
+        {
+            var transform = Identity();
+            transform[0, 0] = Math.Cos(r);
+            transform[0, 1] = -Math.Sin(r);
+            transform[1, 0] = Math.Sin(r);
+            transform[1, 1] = Math.Cos(r);
+            _transformationChain.Push(transform);
+            return this;
+        }
+
+        public Matrix Shearing(double xy, double xz, double yx, double yz, double zx, double zy)
+        {
+            var transform = Identity();
+            transform[0, 1] = xy;
+            transform[0, 2] = xz;
+            transform[1, 0] = yx;
+            transform[1, 2] = yz;
+            transform[2, 0] = zx;
+            transform[2, 1] = zy;
+            _transformationChain.Push(transform);
+            return this;
         }
     }
 }

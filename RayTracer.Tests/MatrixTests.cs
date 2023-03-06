@@ -105,8 +105,8 @@ namespace RayTracer.Tests
         [Fact]
         public void TransposeIdentity()
         {
-            Matrix i1 = Matrix.Identity;
-            Matrix i2 = Matrix.Identity;
+            Matrix i1 = Matrix.Identity();
+            Matrix i2 = Matrix.Identity();
 
             Assert.True(i1.Transpose() == i2);
         }
