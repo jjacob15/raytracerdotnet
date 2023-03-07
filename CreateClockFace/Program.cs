@@ -8,6 +8,38 @@ namespace CreateClockFace
     {
         static void Main(string[] args)
         {
+            //DrawClock();
+            DrawLine();
+            Console.Read();
+        }
+
+        private static void DrawLine()
+        {
+            Color color = new Color(1, 1, 1);
+            int n = 12;
+            var size = 200;
+            Canvas c = new Canvas(size, size);
+            var point = Tuple.Point(size / 2, 0, 0);
+            Console.WriteLine(point);
+            point = Matrix.Identity().Scaling(.5, 0, .5).Apply() * point;
+            Console.WriteLine(point);
+            var translation = Matrix.Identity().RotateY(Math.PI / 6).Apply();
+            for (int i = 0; i < n; i++)
+            {
+                var pX = (int)(point.X + (size/2));
+                var pY = (int)(point.Z + (size / 2));
+                Console.WriteLine(point);
+                if (pX > 0 && pY > 0)
+                    c[pX, pY] = color;
+                point = translation * point;
+            }
+
+            c.Save(@"c:\users\jaison.jacob\desktop\line.ppm");
+            Console.WriteLine("Drew line");
+        }
+
+        private static void DrawClock()
+        {
             Color color = new Color(1, 1, 1);
             int n = 12;
             var size = 200;
@@ -30,7 +62,6 @@ namespace CreateClockFace
 
             c.Save(@"c:\users\jaison.jacob\desktop\clock.ppm");
             Console.WriteLine("Drew clock");
-            Console.Read();
         }
     }
 }

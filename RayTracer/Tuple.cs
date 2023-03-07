@@ -124,5 +124,9 @@ namespace RayTracer
                 X * t.Y - Y * t.X);
 
         }
+        public override string ToString()
+        {
+            return $"x {(int)X} y {(int)Y} z {(int)Z}";
+        }
     }
 }

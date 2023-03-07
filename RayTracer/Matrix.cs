@@ -168,10 +168,9 @@ namespace RayTracer
             return m;
         }
 
-        public static Tuple operator *(Matrix a, Tuple b)
-        {
-            return new Tuple(ColProduct(0, a, b), ColProduct(1, a, b), ColProduct(2, a, b), ColProduct(3, a, b));
-        }
+        public static Tuple operator *(Matrix a, Tuple b) => new Tuple(ColProduct(0, a, b), ColProduct(1, a, b), ColProduct(2, a, b), ColProduct(3, a, b));
+
+        public static Tuple operator *(Tuple b, Matrix a) => new Tuple(ColProduct(0, a, b), ColProduct(1, a, b), ColProduct(2, a, b), ColProduct(3, a, b));
 
         private static double ColProduct(int r, Matrix a, Tuple b)
         {
@@ -267,7 +266,7 @@ namespace RayTracer
             while (_transformationChain.Count > 0)
             {
                 var transform = _transformationChain.Pop();
-                result = result * transform; 
+                result = result * transform;
             }
             return result;
         }
