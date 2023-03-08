@@ -6,21 +6,10 @@ namespace RayTracer
     public class Tuple
     //: IEquatable<Tuple>
     {
-        public static readonly Tuple Zero = new Tuple(0, 0, 0, 0);
+        public static Tuple Zero() => new Tuple(0, 0, 0, 0);
 
         public static Tuple Point(double x, double y, double z) => new Tuple(x, y, z, 1);
         public static Tuple Vector(double x, double y, double z) => new Tuple(x, y, z, 0);
-
-        //public bool Equals([AllowNull] Tuple other)
-        //{
-        //    if (other == null) return false;
-        //    if (ReferenceEquals(this, other)) return true;
-
-        //    return X.DoubleEqual(other.X) &&
-        //        Y.DoubleEqual(other.Y) &&
-        //        Z.DoubleEqual(other.Z) &&
-        //        W.DoubleEqual(other.W);
-        //}
 
         public Tuple(double x, double y, double z, double w)
         {
@@ -33,7 +22,7 @@ namespace RayTracer
         public double X { get; }
         public double Y { get; }
         public double Z { get; }
-        public double W { get; }
+        public double W { get; set; }
 
         public bool IsPoint => W == 1;
         public bool IsVector => W == 0;
@@ -84,6 +73,8 @@ namespace RayTracer
                 Math.Abs(a.W - b.W));
         }
 
+        public static Tuple operator -(Tuple a) => new Tuple(-a.X, -a.Y, -a.Z, -a.W);
+
         public static Tuple operator --(Tuple a)
         {
             return new Tuple(-a.X, -a.Y, -a.Z, -a.W);
@@ -107,12 +98,12 @@ namespace RayTracer
         public Tuple Normalize()
         {
             var m = Magnitude();
-            return this / m;
+            return new Tuple(X / m, Y / m, Z / m, W / m);
         }
 
         public double Dot(Tuple t)
         {
-            return X * t.X + Y * t.Y + Z * t.Z;
+            return X * t.X + Y * t.Y + Z * t.Z + W * t.W;
         }
 
         public Tuple Cross(Tuple t)
@@ -124,9 +115,15 @@ namespace RayTracer
                 X * t.Y - Y * t.X);
 
         }
+
         public override string ToString()
         {
-            return $"x {(int)X} y {(int)Y} z {(int)Z}";
+            return $"x {Math.Round(X,2)} y {Math.Round(Y, 2)} z {Math.Round(Z, 2)} w {Math.Round(W, 2)}";
+        }
+
+        public Tuple Reflect(Tuple normal)
+        {
+            return this - normal * 2 * Dot(normal);
         }
     }
 }

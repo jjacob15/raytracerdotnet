@@ -161,5 +161,21 @@ namespace RayTracer.Tests
             Assert.Equal(v1.Cross(v2), Tuple.Vector(-1, 2, -1));
             Assert.Equal(v2.Cross(v1), Tuple.Vector(1, -2, 1));
         }
+
+        [Fact]
+        public void ReflectingAVectorAt45()
+        {
+            Tuple v = Tuple.Vector(1, -1, 0);
+            Tuple n = Tuple.Vector(0, 1, 0);
+            Assert.Equal(Tuple.Vector(1, 1, 0), v.Reflect(n));
+        }
+
+        [Fact]
+        public void ReflectingAVectorAtSlanted()
+        {
+            Tuple v = Tuple.Vector(0, -1, 0);
+            Tuple n = Tuple.Vector(Math.Sqrt(2)/2, Math.Sqrt(2) / 2, 0);
+            Assert.Equal(Tuple.Vector(1, 0, 0), v.Reflect(n));
+        }
     }
 }

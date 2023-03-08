@@ -6,20 +6,21 @@ namespace RayTracer
 {
     public class Sphere : IShape
     {
-        public  Guid Id { get; }
-        private Intersections intersections = new Intersections();
+        public Guid Id { get; }
 
+        private Intersections intersections = new Intersections();
         private Matrix transform = Matrix.Identity();
+        public Material Material { get; set; }
 
         public Sphere()
         {
             Id = Guid.NewGuid();
         }
-        
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(this, obj)) return true;
-            if(obj is Sphere)
+            if (obj is Sphere)
             {
                 Sphere typed = (Sphere)obj;
                 return typed.Id == this.Id;
@@ -48,6 +49,7 @@ namespace RayTracer
         }
         public Intersections Intersect(Ray ray)
         {
+            intersections = new Intersections();
             var transformedRay = ray.Transform(transform.Inverse());
             var SphereToRay = transformedRay.Origin - Tuple.Point(0, 0, 0);
             var a = transformedRay.Direction.Dot(transformedRay.Direction);
@@ -64,6 +66,15 @@ namespace RayTracer
             AddIntersection((-b + Math.Sqrt(discriminant)) / (2 * a));
 
             return intersections;
+        }
+
+        public Tuple NormalAt(Tuple worldPoint)
+        {
+            var objectPoint = transform.Inverse() * worldPoint;
+            var objectNormal = objectPoint - Tuple.Point(0, 0, 0);
+            var worldNormal = transform.Inverse().Transpose() * objectNormal;
+            worldNormal.W = 0;
+            return worldNormal.Normalize();
         }
     }
 }

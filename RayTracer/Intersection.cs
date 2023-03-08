@@ -7,9 +7,9 @@ namespace RayTracer
     public class Intersection
     {
         public double T { get; }
-        public IShape Object { get; }
+        public Sphere Object { get; }
 
-        public Intersection(IShape shape,double t)
+        public Intersection(Sphere shape,double t)
         {
             Object = shape;
             T = t;
