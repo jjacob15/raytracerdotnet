@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RayTracer
 {
@@ -10,8 +11,14 @@ namespace RayTracer
     {
         public Intersections(params Intersection[] intersections) : base(intersections)
         {
-
+            Sort();
         }
-        public Intersection Hit() => this.OrderBy(x=>x.T).FirstOrDefault(x => x.T >= 0);
+
+        public Intersections(List<Intersection> intersections) : base(intersections)
+        {
+            Sort();
+        }
+
+        public Intersection Hit() => this.OrderBy(x => x.T).FirstOrDefault(x => x.T >= 0);
     }
 }

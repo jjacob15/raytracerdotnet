@@ -2,9 +2,9 @@
 
 namespace RayTracer
 {
-    public interface IShape
-    {
-        Guid Id { get; }
-        void AddIntersection(double t);
-    }
+    //public interface IShape
+    //{
+    //    Guid Id { get; }
+    //    void AddIntersection(double t);
+    //}
 }

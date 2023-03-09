@@ -14,5 +14,17 @@ namespace RayTracer.Lights
 
         public Tuple Position { get; }
         public Color Intensity { get; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is PointLight light &&
+                   EqualityComparer<Tuple>.Default.Equals(Position, light.Position) &&
+                   EqualityComparer<Color>.Default.Equals(Intensity, light.Intensity);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Position, Intensity);
+        }
     }
 }

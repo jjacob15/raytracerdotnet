@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RayTracer
 {
-    public class Color : IEquatable<Color>
+    public class Color
     {
         public static Color Black = new Color(0, 0, 0);
 
@@ -20,13 +20,13 @@ namespace RayTracer
         public double Green { get; set; }
         public double Blue { get; set; }
 
-        public bool Equals([AllowNull] Color other)
-        {
-            if (other == null) return false;
-            if (ReferenceEquals(this, other)) return true;
+        //public bool Equals([AllowNull] Color other)
+        //{
+        //    if (other == null) return false;
+        //    if (ReferenceEquals(this, other)) return true;
 
-            return Red.DoubleEqual(other.Red) && Green.DoubleEqual(other.Green) && Blue.DoubleEqual(other.Blue);
-        }
+        //    return Red.DoubleEqual(other.Red) && Green.DoubleEqual(other.Green) && Blue.DoubleEqual(other.Blue);
+        //}
 
         public static Color operator +(Color a, Color b)
         {
@@ -65,6 +65,19 @@ namespace RayTracer
             if (val < 0) return 0;
             if (val > 1) return 255;
             return (int)Math.Round(255 * val);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Color color &&
+                   Red.DoubleEqual(color.Red) &&
+                   Green.DoubleEqual(color.Green) &&
+                   Blue.DoubleEqual(color.Blue);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Red, Green, Blue);
         }
     }
 }

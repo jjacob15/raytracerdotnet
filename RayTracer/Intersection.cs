@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace RayTracer
 {
-    public class Intersection
+    public class Intersection : IComparable<Intersection>
     {
         public double T { get; }
         public Sphere Object { get; }
 
-        public Intersection(Sphere shape,double t)
+        public Intersection(Sphere shape, double t)
         {
             Object = shape;
             T = t;
@@ -17,20 +18,29 @@ namespace RayTracer
 
         public override bool Equals(object obj)
         {
-            if (Object.GetType() != obj.GetType())
-                return false;
-
-            return Object.Equals(obj);
+            return obj is Intersection intersection &&
+                   T == intersection.T &&
+                   EqualityComparer<Sphere>.Default.Equals(Object, intersection.Object);
         }
 
         public override int GetHashCode()
         {
-            int hash = 17;
+            return HashCode.Combine(T, Object);
+        }
 
-            hash = hash * 23 + Object.Id.GetHashCode();
-            hash = hash * 23 + T.GetHashCode();
+        public int CompareTo([AllowNull] Intersection other)
+        {
+            if (other is null) return 1;
 
-            return hash;
+            if (T > other.T) return 1;
+            if (T < other.T) return -1;
+            return 0;
+        }
+
+        public IntersectionState PrepareComputations(Ray ray)
+        {
+            //return new IntersectionState(T, Object, ray.Position(T), -ray.Direction, Object.NormalAt(ray.Position(T)));
+            return new IntersectionState(this, ray);
         }
     }
 }

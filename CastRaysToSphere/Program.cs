@@ -30,14 +30,14 @@ namespace CastRaysToSphere
             var canvas = new Canvas(size, size);
             var sphere = new Sphere
             {
-                Material = new Material(new Color(1, 0.2, 1))
+                Material = new Material(new Color(0.5, 0, 0), 0.2, 0.8, 0.8, 300)
             };
 
-            var lightPosition = Tuple.Point(-10, 10, -10);
+            var lightPosition = Tuple.Point(-10, 10, -15);
             var lightColor = new Color(1, 1, 1);
             var light = new PointLight(lightPosition, lightColor);
 
-            sphere.SetTransform(Matrix.Identity().Scaling(0.5, 1, 1).Shearing(1, 0, 0, 0, 0, 0).Apply());
+            //sphere.SetTransform(Matrix.Identity().Scaling(0.5, 1, 1).Shearing(1, 0, 0, 0, 0, 0).Apply());
             for (int y = 0; y <= size; y++)
             {
                 double worldY = half - pixelSize * y;

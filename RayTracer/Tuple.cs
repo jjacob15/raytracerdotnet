@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace RayTracer
 {
     public class Tuple
-    //: IEquatable<Tuple>
     {
         public static Tuple Zero() => new Tuple(0, 0, 0, 0);
 
