@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentAssertions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
@@ -283,8 +284,40 @@ namespace RayTracer.Tests
  6, -2, 0, 5
 );
             var c = a * b;
-            Assert.True(c* b.Inverse() == a);
+            Assert.True(c * b.Inverse() == a);
 
+        }
+
+        [Fact]
+        public void TransformationMatrixForDefaultOrientation()
+        {
+            var t = Matrix.ViewTransform(Tuple.Point(0, 0, 0), Tuple.Point(0, 0, -1), Tuple.Vector(0, 1, 0));
+            t.Should().Be(Matrix.Identity());
+        }
+
+        [Fact]
+        public void TransformationMatrixLookingPositiveZDirection()
+        {
+            var t = Matrix.ViewTransform(Tuple.Point(0, 0, 0), Tuple.Point(0, 0, 1), Tuple.Vector(0, 1, 0));
+            t.Should().Be(Matrix.Identity().Scaling(-1, 1, -1).Apply());
+        }
+
+        [Fact]
+        public void ViewTransformationMovesTheWorld()
+        {
+            var t = Matrix.ViewTransform(Tuple.Point(0, 0, 8), Tuple.Point(0, 0, 0), Tuple.Vector(0, 1, 0));
+            t.Should().Be(Matrix.Identity().Translation(0, 0, -8).Apply());
+        }
+
+        [Fact]
+        public void ArbitraryViewTransformation()
+        {
+            var t = Matrix.ViewTransform(Tuple.Point(1, 3, 2), Tuple.Point(4, -2, 8), Tuple.Vector(1, 1, 0));
+            var result = new Matrix(-0.50709, 0.50709, 0.67612, -2.36643,
+ 0.76772, 0.60609, 0.12122, -2.82843,
+ -0.35857, 0.59761, -0.71714, 0.00000,
+ 0.00000, 0.00000, 0.00000, 1.00000);
+            t.Should().Be(result);
         }
     }
 }

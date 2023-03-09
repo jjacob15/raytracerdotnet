@@ -9,12 +9,12 @@ namespace RayTracer
     {
         public World()
         {
+            Shapes = new List<Sphere>();
             SetDefaults();
         }
 
         private void SetDefaults()
         {
-            Shapes = new List<Sphere>();
             Shapes.Add(new Sphere
             {
                 Material = new Material(new Color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2, 200)

@@ -14,9 +14,22 @@ namespace RayTracer
             0, 0, 1, 0,
             0, 0, 0, 1);
 
+        public static Matrix ViewTransform(Tuple from, Tuple to, Tuple up)
+        {
+            var forward = (to - from).Normalize();
+            var left = forward.Cross(up.Normalize());
+            var trueUp = left.Cross(forward);
+            
+            Matrix orientation = new Matrix(left.X, left.Y, left.Z, 0,
+                trueUp.X, trueUp.Y, trueUp.Z, 0,
+                -forward.X, -forward.Y, -forward.Z, 0,
+                0, 0, 0, 1);
+            
+            return orientation * Identity().Translation(-from.X, -from.Y, -from.Z).Apply();
+        }
 
         public Matrix(double m00, double m01,
-            double m10, double m11)
+                double m10, double m11)
         {
             Size = 2;
             _m = new double[2, 2];
