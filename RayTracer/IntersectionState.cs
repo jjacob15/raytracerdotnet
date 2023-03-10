@@ -2,17 +2,22 @@
 {
     public class IntersectionState
     {
-        public IntersectionState(Intersection intersection,Ray ray)
+        public IntersectionState(Intersection intersection, Ray ray)
         {
+            //instantiate a data structure for storing some precomputed values
+
+            //copy the intersection's properties, for convenience
             T = intersection.T;
             Obj = intersection.Object;
+
+            //precompute some useful values
             Point = ray.Position(T);
             EyeV = -ray.Direction;
             NormalV = Obj.NormalAt(ray.Position(T));
 
             ComputeInside();
         }
-       
+
         private void ComputeInside()
         {
             if (NormalV.Dot(EyeV) < 0)

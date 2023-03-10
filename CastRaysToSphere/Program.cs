@@ -80,14 +80,19 @@ namespace CastRaysToSphere
             var shape = new Sphere();
 
             //shape.SetTransform(Matrix.Identity().Scaling(0.5, 1, 1).Shearing(1, 0, 0, 0, 0, 0).Apply());
+            //for each row of pixels in the canvas
             for (int y = 0; y <= size; y++)
             {
+                //compute the world y coordinate (top = +half, bottom = -half)
                 double worldY = half - pixelSize * y;
 
+                //for each pixel in the row
                 for (int x = 0; x <= size; x++)
                 {
+                    //compute the world x coordinate (left = -half, right = half)
                     double worldX = -half + pixelSize * x;
 
+                    //describe the point on the wall that the ray will target
                     var position = Tuple.Point(worldX, worldY, wallZ);
                     //Console.WriteLine($"x {x} y {y} {position}");
                     var ray = new Ray(rayOrigin, (position - rayOrigin));

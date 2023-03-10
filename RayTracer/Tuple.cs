@@ -5,7 +5,8 @@ namespace RayTracer
 {
     public class Tuple
     {
-        public static Tuple Zero() => new Tuple(0, 0, 0, 0);
+        public static Tuple ZeroPoint() => new Tuple(0, 0, 0, 1);
+        public static Tuple ZeroVector() => new Tuple(0, 0, 0, 0);
 
         public static Tuple Point(double x, double y, double z) => new Tuple(x, y, z, 1);
         public static Tuple Vector(double x, double y, double z) => new Tuple(x, y, z, 0);
