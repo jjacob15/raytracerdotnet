@@ -133,7 +133,7 @@ namespace RayTracer.Tests
         [Fact]
         public void ShadingAnIntersection()
         {
-            var w = new World();
+            var w = World.DefaultWorld();
             var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             var shape = w.Shapes.First();
             var i = new Intersection(shape, 4);
@@ -144,7 +144,7 @@ namespace RayTracer.Tests
         [Fact]
         public void ShadingAnIntersectionFromInside()
         {
-            var w = new World();
+            var w = World.DefaultWorld();
             w.Light = new PointLight(Tuple.Point(0, 0.25, 0), new Color(1, 1, 1));
 
             var r = new Ray(Tuple.Point(0, 0, 0), Tuple.Vector(0, 0, 1));
@@ -157,7 +157,7 @@ namespace RayTracer.Tests
         [Fact]
         public void ColorWhenRayMisses()
         {
-            var w = new World();
+            var w = World.DefaultWorld();
             var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 1, 0));
             w.ColorAt(r).Should().Be(Color.Black);
         }
@@ -165,7 +165,7 @@ namespace RayTracer.Tests
         [Fact]
         public void ColorWhenRayHits()
         {
-            var w = new World();
+            var w = World.DefaultWorld();
             var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             w.ColorAt(r).Should().Be(new Color(0.38066, 0.47583, 0.2855));
         }
@@ -173,7 +173,7 @@ namespace RayTracer.Tests
         [Fact]
         public void ColorWhenIntersectionBehindRay()
         {
-            var w = new World();
+            var w = World.DefaultWorld();
             var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             w.ColorAt(r).Should().Be(new Color(0.38066, 0.47583, 0.2855));
         }
@@ -181,7 +181,7 @@ namespace RayTracer.Tests
         [Fact]
         public void ColorWithIntersectionBehindTheRay()
         {
-            var w = new World();
+            var w = World.DefaultWorld();
             var outer = w.Shapes.First();
             outer.Material.Ambient = 1;
 

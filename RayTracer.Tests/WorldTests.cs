@@ -17,7 +17,7 @@ namespace RayTracer.Tests
             Sphere s2 = new Sphere();
             s2.Transform = Matrix.Identity().Scaling(0.5, 0.5, 0.5).Apply();
 
-            var world = new World();
+            var world = World.DefaultWorld();
             world.Shapes[0].Should().Be(s1);
             world.Shapes[1].Should().Be(s2);
 
@@ -27,7 +27,7 @@ namespace RayTracer.Tests
         [Fact]
         public void DefaultWorldIntersections()
         {
-            var world = new World();
+            var world = World.DefaultWorld();
             var ray = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
 
             var xs = world.Intersect(ray);

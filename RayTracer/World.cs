@@ -10,22 +10,24 @@ namespace RayTracer
         public World()
         {
             Shapes = new List<Sphere>();
-            SetDefaults();
         }
 
-        private void SetDefaults()
+        public static World DefaultWorld()
         {
-            Shapes.Add(new Sphere
+            World w = new World();
+
+            w.Shapes.Add(new Sphere
             {
                 Material = new Material(new Color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2, 200)
             });
 
-            Shapes.Add(new Sphere
+            w.Shapes.Add(new Sphere
             {
                 Transform = Matrix.Identity().Scaling(0.5, 0.5, 0.5).Apply()
             });
 
-            Light = new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1));
+            w.Light = new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1));
+            return w;
         }
 
         public PointLight Light { get; set; }

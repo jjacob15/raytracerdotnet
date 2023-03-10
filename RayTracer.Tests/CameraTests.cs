@@ -49,5 +49,18 @@ namespace RayTracer.Tests
             r.Origin.Should().Be(Tuple.Point(0, 2, -5));
             r.Direction.Should().Be(Tuple.Vector(Math.Sqrt(2) / 2, 0, -Math.Sqrt(2) / 2));
         }
+        [Fact]
+        public void RenderingWorldWithCamera()
+        {
+            World w = World.DefaultWorld();
+            Camera c = new Camera(11,11,Math.PI/2);
+            var from = Tuple.Point(0, 0, -5);
+            var to = Tuple.Point(0, 0, 0);
+            var up = Tuple.Vector(0, 1, 0);
+            c.Transform = Matrix.ViewTransform(from, to, up);
+            var canvas = c.Render(w);
+            canvas[5, 5].Should().Be(new Color(0.38066, 0.47583, 0.2855));
+
+        }
     }
 }

@@ -59,7 +59,22 @@ namespace RayTracer
             var origin = Transform.Inverse() * Tuple.ZeroPoint();
             var direction = (pixel - origin).Normalize();
 
-            return new Ray(origin,direction);
+            return new Ray(origin, direction);
+        }
+
+        public Canvas Render(World w)
+        {
+            var c = new Canvas((int)HSize, (int)VSize);
+            for (int y = 0; y < VSize; y++)
+            {
+                for (int x = 0; x < VSize; x++)
+                {
+                    var ray = RayForPixel(x, y);
+                    var color = w.ColorAt(ray);
+                    c[x, y] = color;
+                }
+            }
+            return c;
         }
     }
 }
