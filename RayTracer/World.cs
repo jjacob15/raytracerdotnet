@@ -51,7 +51,8 @@ namespace RayTracer
 
         public Color ShadeHits(IntersectionState comps)
         {
-            return comps.Obj.Material.Lighting(Light, comps.Point, comps.EyeV, comps.NormalV);
+            var shadowed = IsShadowed(comps.OverPoint);
+            return comps.Obj.Material.Lighting(Light, comps.OverPoint, comps.EyeV, comps.NormalV, shadowed);
         }
 
         public Color ColorAt(Ray ray)
@@ -64,6 +65,23 @@ namespace RayTracer
                 var comp = xs.Hit().PrepareComputations(ray);
                 return ShadeHits(comp);
             }
+        }
+
+        public bool IsShadowed(Tuple point)
+        {
+            var v = Light.Position - point;
+            var distance = v.Magnitude();
+            var direction = v.Normalize();
+
+            var r = new Ray(point, direction);
+            var intersections = Intersect(r);
+            var h = intersections.Hit();
+            if (h != null && h.T < distance)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

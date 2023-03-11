@@ -27,7 +27,7 @@ namespace RayTracer
         public double Specular { get; set; }
         public double Shininess { get; set; }
 
-        public Color Lighting(PointLight light, Tuple point, Tuple eyeV, Tuple normalV)
+        public Color Lighting(PointLight light, Tuple point, Tuple eyeV, Tuple normalV, bool inShadow)
         {
             //combine the surface color with the light's color/intensity
             var effectiveColor = Color * light.Intensity;
@@ -43,7 +43,7 @@ namespace RayTracer
 
             Color diffuse = Color.Black;
             Color specular = Color.Black;
-            if (lightDotNormal > 0)
+            if (lightDotNormal > 0 && !inShadow)
             {
                 // compute the diffuse contribution
                 diffuse = effectiveColor * Diffuse * lightDotNormal;

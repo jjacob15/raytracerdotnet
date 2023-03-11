@@ -15,23 +15,21 @@
             EyeV = -ray.Direction;
             NormalV = Obj.NormalAt(ray.Position(T));
 
-            ComputeInside();
-        }
-
-        private void ComputeInside()
-        {
             if (NormalV.Dot(EyeV) < 0)
             {
                 Inside = true;
                 NormalV = -NormalV;
             }
+
+            OverPoint = Point + NormalV * Constants.EPSILON;
         }
 
         public double T { get; }
         public Sphere Obj { get; }
         public Tuple Point { get; }
+        public Tuple OverPoint { get; }
         public Tuple EyeV { get; }
-        public Tuple NormalV { get; set; }
-        public bool Inside { get; set; }
+        public Tuple NormalV { get;  }
+        public bool Inside { get; }
     }
 }

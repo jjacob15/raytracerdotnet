@@ -17,14 +17,15 @@ namespace RayTracer
         public static Matrix ViewTransform(Tuple from, Tuple to, Tuple up)
         {
             var forward = (to - from).Normalize();
-            var left = forward.Cross(up.Normalize());
+            var upNorm = up.Normalize();
+            var left = forward.Cross(upNorm);
             var trueUp = left.Cross(forward);
-            
+
             Matrix orientation = new Matrix(left.X, left.Y, left.Z, 0,
                 trueUp.X, trueUp.Y, trueUp.Z, 0,
                 -forward.X, -forward.Y, -forward.Z, 0,
                 0, 0, 0, 1);
-            
+
             return orientation * Identity().Translation(-from.X, -from.Y, -from.Z).Apply();
         }
 

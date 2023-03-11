@@ -37,5 +37,53 @@ namespace RayTracer.Tests
             xs[2].T.Should().Be(5.5);
             xs[3].T.Should().Be(6);
         }
+
+        [Fact]
+        public void NoShadowWhenNothingIsCollinearWithPointAndLight()
+        {
+            World w = World.DefaultWorld();
+            var p = Tuple.Point(0, 10, 0);
+            w.IsShadowed(p).Should().Be(false);
+        }
+
+        [Fact]
+        public void ShadowWhenObjectBetweenPointAndLight()
+        {
+            World w = World.DefaultWorld();
+            var p = Tuple.Point(10, -10, 10);
+            w.IsShadowed(p).Should().Be(true);
+        }
+
+        [Fact]
+        public void NoShadowWhenObjectBehindTheLight()
+        {
+            World w = World.DefaultWorld();
+            var p = Tuple.Point(-20, 20, -20);
+            w.IsShadowed(p).Should().Be(false);
+        }
+
+        [Fact]
+        public void ShadowWhenObjectBetweenPoint()
+        {
+            World w = World.DefaultWorld();
+            var p = Tuple.Point(-2, 2, -2);
+            w.IsShadowed(p).Should().Be(false);
+        }
+
+        [Fact]
+        public void ShadeHitWithIntersectionInShadow()
+        {
+            var w = new World();
+            w.Light = new PointLight(Tuple.Point(0, 0, -10), new Color(1, 1, 1));
+            w.AddShape(new Sphere());
+            var s2 = new Sphere();
+            s2.Transform = Matrix.Identity().Translation(0, 0, 10).Apply();
+            w.AddShape(s2);
+            var r = new Ray(Tuple.Point(0, 0, 5), Tuple.Vector(0, 0, 1));
+            var i = s2.Intersection(4);
+            var comps = i.PrepareComputations(r);
+            var c = w.ShadeHits(comps);
+            c.Should().Be(new Color(0.1, 0.1, 0.1));
+        }
     }
 }

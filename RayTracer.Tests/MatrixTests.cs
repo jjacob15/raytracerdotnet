@@ -306,7 +306,8 @@ namespace RayTracer.Tests
         public void ViewTransformationMovesTheWorld()
         {
             var t = Matrix.ViewTransform(Tuple.Point(0, 0, 8), Tuple.Point(0, 0, 0), Tuple.Vector(0, 1, 0));
-            t.Should().Be(Matrix.Identity().Translation(0, 0, -8).Apply());
+            var transformation = Matrix.Identity().Translation(0, 0, -8).Apply();
+            t.Should().Be(transformation);
         }
 
         [Fact]

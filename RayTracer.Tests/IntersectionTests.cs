@@ -190,5 +190,17 @@ namespace RayTracer.Tests
             var r = new Ray(Tuple.Point(0, 0, .75), Tuple.Vector(0, 0, -1));
             w.ColorAt(r).Should().Be(inner.Material.Color);
         }
+
+        [Fact]
+        public void HitShouldOffsetThePoint()
+        {
+            var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
+            var s = new Sphere();
+            s.Transform = Matrix.Identity().Translation(0, 0, 1).Apply();
+            var i = s.Intersection(5);
+            var comps = i.PrepareComputations(r);
+            comps.OverPoint.Z.Should().BeLessThan(-Constants.EPSILON/2);
+            comps.Point.Z.Should().BeGreaterThan(comps.OverPoint.Z);
+        }
     }
 }
