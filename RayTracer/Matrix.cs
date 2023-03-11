@@ -325,6 +325,7 @@ namespace RayTracer
             transform[0, 2] = Math.Sin(r);
             transform[2, 0] = -Math.Sin(r);
             transform[2, 2] = Math.Cos(r);
+
             _transformationChain.Push(transform);
             return this;
         }
@@ -336,6 +337,7 @@ namespace RayTracer
             transform[0, 1] = -Math.Sin(r);
             transform[1, 0] = Math.Sin(r);
             transform[1, 1] = Math.Cos(r);
+
             _transformationChain.Push(transform);
             return this;
         }
@@ -349,6 +351,7 @@ namespace RayTracer
             transform[1, 2] = yz;
             transform[2, 0] = zx;
             transform[2, 1] = zy;
+
             _transformationChain.Push(transform);
             return this;
         }

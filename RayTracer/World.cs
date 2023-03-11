@@ -32,7 +32,12 @@ namespace RayTracer
 
         public PointLight Light { get; set; }
 
-        public List<Sphere> Shapes { get; set; }
+        public List<Sphere> Shapes { get; private set; }
+
+        public void AddShape(Sphere s)
+        {
+            Shapes.Add(s);
+        }
 
         public Intersections Intersect(Ray ray)
         {

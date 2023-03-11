@@ -67,7 +67,7 @@ namespace RayTracer
             var c = new Canvas((int)HSize, (int)VSize);
             for (int y = 0; y < VSize; y++)
             {
-                for (int x = 0; x < VSize; x++)
+                for (int x = 0; x < HSize; x++)
                 {
                     var ray = RayForPixel(x, y);
                     var color = w.ColorAt(ray);
