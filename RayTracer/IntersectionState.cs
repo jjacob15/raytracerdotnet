@@ -1,4 +1,6 @@
-﻿namespace RayTracer
+﻿using RayTracer.Shapes;
+
+namespace RayTracer
 {
     public class IntersectionState
     {
@@ -25,7 +27,7 @@
         }
 
         public double T { get; }
-        public Sphere Obj { get; }
+        public IShape Obj { get; }
         public Tuple Point { get; }
         public Tuple OverPoint { get; }
         public Tuple EyeV { get; }

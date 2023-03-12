@@ -8,7 +8,7 @@ namespace RayTracer
     public class Color
     {
         public static Color Black = new Color(0, 0, 0);
-
+        public static Color White = new Color(1, 1, 1);
         public Color(double r, double g, double b)
         {
             Red = r;

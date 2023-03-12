@@ -1,4 +1,5 @@
 ﻿using RayTracer.Lights;
+using RayTracer.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace RayTracer
     {
         public World()
         {
-            Shapes = new List<Sphere>();
+            Shapes = new List<IShape>();
         }
 
         public static World DefaultWorld()
@@ -32,9 +33,9 @@ namespace RayTracer
 
         public PointLight Light { get; set; }
 
-        public List<Sphere> Shapes { get; private set; }
+        public List<IShape> Shapes { get; private set; }
 
-        public void AddShape(Sphere s)
+        public void AddShape(IShape s)
         {
             Shapes.Add(s);
         }
@@ -43,7 +44,7 @@ namespace RayTracer
         {
             List<Intersection> intersections = new List<Intersection>();
 
-            foreach (Sphere shape in Shapes)
+            foreach (IShape shape in Shapes)
                 intersections.AddRange(shape.Intersect(ray));
 
             return new Intersections(intersections);

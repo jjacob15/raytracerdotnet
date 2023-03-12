@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RayTracer.Shapes;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
@@ -8,9 +9,9 @@ namespace RayTracer
     public class Intersection : IComparable<Intersection>
     {
         public double T { get; }
-        public Sphere Object { get; }
+        public IShape Object { get; }
 
-        public Intersection(Sphere shape, double t)
+        public Intersection(IShape shape, double t)
         {
             Object = shape;
             T = t;
@@ -20,7 +21,7 @@ namespace RayTracer
         {
             return obj is Intersection intersection &&
                    T == intersection.T &&
-                   EqualityComparer<Sphere>.Default.Equals(Object, intersection.Object);
+                   EqualityComparer<IShape>.Default.Equals(Object, intersection.Object);
         }
 
         public override int GetHashCode()

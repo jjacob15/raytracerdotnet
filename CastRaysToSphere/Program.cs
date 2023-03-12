@@ -1,5 +1,6 @@
 ﻿using RayTracer;
 using RayTracer.Lights;
+using RayTracer.Shapes;
 using System;
 using Tuple = RayTracer.Tuple;
 
