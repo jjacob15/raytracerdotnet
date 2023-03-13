@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace RayTracer.Tests
+namespace RayTracer
 {
     public class IntersectionTests
     {
@@ -200,7 +200,7 @@ namespace RayTracer.Tests
             s.Transform = Matrix.Identity().Translation(0, 0, 1).Apply();
             var i = s.Intersection(5);
             var comps = i.PrepareComputations(r);
-            comps.OverPoint.Z.Should().BeLessThan(-Constants.EPSILON/2);
+            comps.OverPoint.Z.Should().BeLessThan(-double.Epsilon / 2);
             comps.Point.Z.Should().BeGreaterThan(comps.OverPoint.Z);
         }
     }

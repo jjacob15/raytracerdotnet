@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace RayTracer.Tests
+namespace RayTracer
 {
     public class PointLightTests
     {

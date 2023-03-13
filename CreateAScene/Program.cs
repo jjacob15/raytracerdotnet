@@ -21,21 +21,25 @@ namespace CreateAScene
         {
             World w = new World();
 
+
             var floor = new Plane();
-            floor.Transform = Matrix.Identity().Scaling(10, 0.01, 10).Apply();
+            floor.Material.Pattern = new RayTracer.Patterns.CheckerPattern(new Color(1, 0.9, 0.9), new Color(0.6, 0, 0));
+            //floor.Transform = Matrix.Identity().Apply();
             floor.Material.Color = new Color(1, 0.9, 0.9);
             floor.Material.Specular = 0;
             w.AddShape(floor);
 
             var wall = new Plane();
-            wall.Transform = Matrix.Identity().Scaling(10, 0.01, 10).RotateX(Math.PI / 2).Translation(0, 0, 5).Apply();
+            wall.Material.Pattern = new RayTracer.Patterns.StrippedPattern(new Color(1, 0.9, 0.9), new Color(0.6, 0, 0));
+            wall.Transform = Matrix.Identity().RotateX(Math.PI / 2).Translation(0, 0, 5).Apply();
             wall.Material.Color = new Color(1, 0.9, 0.9);
             wall.Material.Specular = 0;
             w.AddShape(wall);
 
             var right = new Sphere();
-            right.Transform = Matrix.Identity().Scaling(0.5, 0.5, 0.5).Translation(1.5, 0.5, 5).Apply();
-            right.Material.Color = new Color(0.5, 1, 0.1);
+            right.Material.Pattern = new RayTracer.Patterns.StrippedPattern(new Color(1, 0, 0), new Color(0, 1, 0));
+            right.Transform = Matrix.Identity().Translation(0.5, 1, 1).Apply();
+            //right.Material.Color = new Color(0.5, 1, 0.1);
             right.Material.Diffuse = 0.7;
             right.Material.Specular = 0.3;
             w.AddShape(right);
@@ -59,7 +63,7 @@ namespace CreateAScene
         {
             World w = new World();
             var screen = new Sphere();
-            screen.Transform = Matrix.Identity().Scaling(20, 0.1, 20).RotateX(Math.PI/2).Translation(0,0,10).Apply();
+            screen.Transform = Matrix.Identity().Scaling(20, 0.1, 20).RotateX(Math.PI / 2).Translation(0, 0, 10).Apply();
             screen.Material.Color = new Color(0.5, 0.5, .5);
             screen.Material.Specular = 0;
             w.AddShape(screen);
@@ -73,7 +77,7 @@ namespace CreateAScene
 
 
             var sphere2 = new Sphere();
-            sphere2.Transform = Matrix.Identity().Scaling(0.5,0.5,0.5).Translation(-0.5, 1, -0.5).Apply();
+            sphere2.Transform = Matrix.Identity().Scaling(0.5, 0.5, 0.5).Translation(-0.5, 1, -0.5).Apply();
             sphere2.Material.Color = new Color(1, 1, 0);
             sphere2.Material.Diffuse = 0.7;
             sphere2.Material.Specular = 0.3;
@@ -135,7 +139,7 @@ namespace CreateAScene
             w.Light = new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1));
 
             Camera c = new Camera(800, 400, Math.PI / 3);
-            c.Transform = Matrix.ViewTransform(Tuple.Point(0, 1.5, -5), 
+            c.Transform = Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
                 Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0));
             return c.Render(w);
         }

@@ -4,6 +4,7 @@ namespace RayTracer
 {
     public class IntersectionState
     {
+        private const double Epsilon = 1e-5;
         public IntersectionState(Intersection intersection, Ray ray)
         {
             //instantiate a data structure for storing some precomputed values
@@ -23,7 +24,9 @@ namespace RayTracer
                 NormalV = -NormalV;
             }
 
-            OverPoint = Point + NormalV * Constants.EPSILON;
+
+            //do not use double.Epsilon
+            OverPoint = Point + NormalV * Epsilon;
         }
 
         public double T { get; }

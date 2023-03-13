@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RayTracer.Shapes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,7 +11,12 @@ namespace RayTracer.Patterns
         {
         }
 
-        public override Color StipeAt(Tuple point)
+        public StrippedPattern() : this(Color.White, Color.Black)
+        {
+
+        }
+
+        public override Color PatternAt(Tuple point)
         {
             if (Math.Floor(point.X) % 2 == 0) return A;
 

@@ -1,4 +1,6 @@
 ﻿using RayTracer.Lights;
+using RayTracer.Patterns;
+using RayTracer.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,8 +29,14 @@ namespace RayTracer
         public double Specular { get; set; }
         public double Shininess { get; set; }
 
-        public Color Lighting(PointLight light, Tuple point, Tuple eyeV, Tuple normalV, bool inShadow)
+        public IPattern Pattern { get; set; }
+
+        public Color Lighting(IShape shape, PointLight light, Tuple point, Tuple eyeV, Tuple normalV, bool inShadow)
         {
+            if (Pattern != null)
+            {
+                Color = Pattern.PatternAtShape(shape, point);
+            }
             //combine the surface color with the light's color/intensity
             var effectiveColor = Color * light.Intensity;
             //find the direction to the light source

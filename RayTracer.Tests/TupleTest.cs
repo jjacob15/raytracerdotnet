@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 
-namespace RayTracer.Tests
+namespace RayTracer
 {
     public class TupleTest
     {

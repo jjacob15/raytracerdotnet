@@ -57,7 +57,7 @@ namespace CastRaysToSphere
                         var point = ray.Position(xs.Hit().T);
                         var normal = sphere.NormalAt(point);
                         var eye = -ray.Direction;
-                        canvas[x, y] = sphere.Material.Lighting(light, point, eye, normal,false);
+                        canvas[x, y] = sphere.Material.Lighting(sphere, light, point, eye, normal, false);
                     }
                 }
             }

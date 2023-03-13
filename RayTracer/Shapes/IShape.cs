@@ -1,9 +1,8 @@
 ﻿namespace RayTracer.Shapes
 {
-    public interface IShape
+    public interface IShape : ITransformable
     {
         Material Material { get; set; }
-        Matrix Transform { get; set; }
 
         Intersections Intersect(Ray ray);
         Intersections IntersectLocal(Ray ray);

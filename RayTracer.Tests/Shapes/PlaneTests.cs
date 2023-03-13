@@ -6,7 +6,7 @@ using System.Text;
 using System.Linq;
 using Xunit;
 
-namespace RayTracer.Tests.Shapes
+namespace RayTracer.Shapes
 {
     public class PlaneTests
     {

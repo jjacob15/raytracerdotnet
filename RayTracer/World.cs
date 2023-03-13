@@ -53,7 +53,7 @@ namespace RayTracer
         public Color ShadeHits(IntersectionState comps)
         {
             var shadowed = IsShadowed(comps.OverPoint);
-            return comps.Obj.Material.Lighting(Light, comps.OverPoint, comps.EyeV, comps.NormalV, shadowed);
+            return comps.Obj.Material.Lighting(comps.Obj, Light, comps.OverPoint, comps.EyeV, comps.NormalV, shadowed);
         }
 
         public Color ColorAt(Ray ray)
