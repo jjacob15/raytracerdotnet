@@ -38,10 +38,9 @@ namespace RayTracer
             return 0;
         }
 
-        public IntersectionState PrepareComputations(Ray ray)
+        public IntersectionState PrepareComputations(Ray ray, Intersections xs = null)
         {
-            //return new IntersectionState(T, Object, ray.Position(T), -ray.Direction, Object.NormalAt(ray.Position(T)));
-            return new IntersectionState(this, ray);
+            return new IntersectionState(this, ray, xs);
         }
     }
 }

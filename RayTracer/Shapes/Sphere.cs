@@ -4,6 +4,14 @@ namespace RayTracer.Shapes
 {
     public class Sphere : AbstractShape
     {
+        public static Sphere GlassSphere()
+        {
+            var s = new Sphere();
+            s.Material.Transparency = 1;
+            s.Material.RefractiveIndex = 1.5;
+            return s;
+        }
+
         public Intersection Intersection(double t)
         {
             return new Intersection(this, t);
@@ -29,7 +37,7 @@ namespace RayTracer.Shapes
             return intersections;
 
         }
-        
+
         public override Tuple NormalAtLocal(Tuple localPoint)
         {
             return localPoint - Tuple.Point(0, 0, 0);

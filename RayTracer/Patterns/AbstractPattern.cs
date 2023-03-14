@@ -20,6 +20,10 @@ namespace RayTracer.Patterns
             return PatternAt(patternPoint);
         }
 
+        public AbstractPattern()
+        {
+
+        }
         public AbstractPattern(Color a, Color b)
         {
             A = a;

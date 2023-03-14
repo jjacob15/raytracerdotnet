@@ -9,13 +9,17 @@ namespace RayTracer
 {
     public class Material
     {
-        public Material(Color color, double ambient = 0.1, double diffuse = 0.9, double specular = 0.9, int shininess = 200)
+        public Material(Color color, double ambient = 0.1, double diffuse = 0.9, double specular = 0.9, int shininess = 200,
+            double reflective = 0.0, double transparency = 0, double refractiveIndex = 1)
         {
             Color = color;
             Ambient = ambient;
             Diffuse = diffuse;
             Specular = specular;
             Shininess = shininess;
+            Reflective = reflective;
+            Transparency = transparency;
+            RefractiveIndex = refractiveIndex;
         }
 
         public Material() : this(new Color(1, 1, 1))
@@ -28,6 +32,9 @@ namespace RayTracer
         public double Diffuse { get; set; }
         public double Specular { get; set; }
         public double Shininess { get; set; }
+        public double Reflective { get; set; }
+        public double Transparency { get; set; }
+        public double RefractiveIndex { get; set; }
 
         public IPattern Pattern { get; set; }
 

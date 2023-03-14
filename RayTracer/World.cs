@@ -50,21 +50,24 @@ namespace RayTracer
             return new Intersections(intersections);
         }
 
-        public Color ShadeHits(IntersectionState comps)
+        public Color ShadeHits(IntersectionState comps, int remaining = 4)
         {
             var shadowed = IsShadowed(comps.OverPoint);
-            return comps.Obj.Material.Lighting(comps.Obj, Light, comps.OverPoint, comps.EyeV, comps.NormalV, shadowed);
+            var surface = comps.Obj.Material.Lighting(comps.Obj, Light, comps.OverPoint, comps.EyeV, comps.NormalV, shadowed);
+            var reflected = ReflectedColor(comps, remaining);
+            var refracted = RefractedColor(comps, remaining);
+            return surface + reflected + refracted ;
         }
 
-        public Color ColorAt(Ray ray)
+        public Color ColorAt(Ray ray, int remaining = 4)
         {
             var xs = Intersect(ray);
             if (xs.Hit() == null)
                 return Color.Black;
             else
             {
-                var comp = xs.Hit().PrepareComputations(ray);
-                return ShadeHits(comp);
+                var comp = xs.Hit().PrepareComputations(ray, xs);
+                return ShadeHits(comp, remaining);
             }
         }
 
@@ -83,6 +86,36 @@ namespace RayTracer
             }
 
             return false;
+        }
+
+        public Color RefractedColor(IntersectionState comps, int remaining = 4)
+        {
+            if (remaining < 1) return Color.Black;
+
+            if (comps.Obj.Material.Transparency == 0) return Color.Black;
+
+            var nRatio = comps.N1 / comps.N2;
+            var cosI = comps.EyeV.Dot(comps.NormalV);
+            var sin2T = nRatio * nRatio * (1 - cosI * cosI);
+            if (sin2T > 1)
+            {
+                return Color.Black;
+            }
+
+            var cosT = Math.Sqrt(1.0 - sin2T);
+            var direction = comps.NormalV * (nRatio * cosI - cosT) - comps.EyeV * nRatio;
+            var refractedRay = new Ray(comps.UnderPoint, direction);
+            return ColorAt(refractedRay, remaining - 1) * comps.Obj.Material.Transparency;
+        }
+        public Color ReflectedColor(IntersectionState comps, int remaining = 4)
+        {
+            if (remaining < 1) return Color.Black;
+
+            if (comps.Obj.Material.Ambient == 1)
+                return Color.Black;
+            var reflectedRay = new Ray(comps.OverPoint, comps.ReflectV);
+            var color = ColorAt(reflectedRay, remaining - 1);
+            return color * comps.Obj.Material.Reflective;
         }
     }
 }

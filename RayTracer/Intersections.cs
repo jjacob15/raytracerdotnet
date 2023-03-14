@@ -9,6 +9,8 @@ namespace RayTracer
 {
     public class Intersections : List<Intersection>
     {
+        public static Intersections New() => new Intersections();
+
         public Intersections(params Intersection[] intersections) : base(intersections)
         {
             Sort();
@@ -17,6 +19,11 @@ namespace RayTracer
         public Intersections(List<Intersection> intersections) : base(intersections)
         {
             Sort();
+        }
+
+        public Intersections()
+        {
+
         }
 
         public Intersection Hit() => this.OrderBy(x => x.T).FirstOrDefault(x => x.T >= 0);

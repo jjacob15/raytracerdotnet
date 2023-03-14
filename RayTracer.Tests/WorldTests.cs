@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using RayTracer.Lights;
+using RayTracer.Patterns;
 using RayTracer.Shapes;
 using System;
 using System.Collections.Generic;
@@ -85,6 +86,89 @@ namespace RayTracer
             var comps = i.PrepareComputations(r);
             var c = w.ShadeHits(comps);
             c.Should().Be(new Color(0.1, 0.1, 0.1));
+        }
+
+        [Fact]
+        public void RefractedColorWithOpaqueSurface()
+        {
+            var w = World.DefaultWorld();
+            var s = w.Shapes[0];
+            var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
+            var xs = new Intersections(new Intersection(s, 4), new Intersection(s, 6));
+            var comps = xs[0].PrepareComputations(r, xs);
+            w.RefractedColor(comps, 5).Should().Be(Color.Black);
+        }
+
+
+        [Fact]
+        public void RefractedColorAtMaxDepth()
+        {
+            var w = World.DefaultWorld();
+            var s = w.Shapes[0];
+            s.Material.Transparency = 1;
+            s.Material.RefractiveIndex = 1.5;
+
+            var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
+            var xs = new Intersections(new Intersection(s, 4), new Intersection(s, 6));
+            var comps = xs[0].PrepareComputations(r, xs);
+            w.RefractedColor(comps, 0).Should().Be(Color.Black);
+        }
+
+        [Fact]
+        public void RefractedColorUnderTotalReflection()
+        {
+            var w = World.DefaultWorld();
+            var s = w.Shapes[0];
+            s.Material.Transparency = 1;
+            s.Material.RefractiveIndex = 1.5;
+
+            var r = new Ray(Tuple.Point(0, 0, Math.Sqrt(2)/2), Tuple.Vector(0, 1, 0));
+            var xs = new Intersections(new Intersection(s, -Math.Sqrt(2)/2), new Intersection(s, Math.Sqrt(2) / 2));
+            var comps = xs[1].PrepareComputations(r, xs);
+            w.RefractedColor(comps, 5).Should().Be(Color.Black);
+        }
+
+        [Fact]
+        public void RefractedColorWithARefractedRay()
+        {
+            var w = World.DefaultWorld();
+            var a = w.Shapes[0];
+            a.Material.Ambient = 1;
+            a.Material.Pattern = new TestPattern();
+
+            var b = w.Shapes[1];
+            b.Material.Transparency = 1;
+            b.Material.RefractiveIndex = 1.5;
+
+            var r = new Ray(Tuple.Point(0, 0, 0.1), Tuple.Vector(0, 1, 0));
+            var xs = new Intersections(new Intersection(a, -0.9899), new Intersection(b, -0.4899), new Intersection(b, 0.4899), new Intersection(a, 0.9899));
+            var comps = xs[2].PrepareComputations(r, xs);
+            w.RefractedColor(comps, 5).Should().Be(new Color(0, 0.99888, 0.04725));
+        }
+
+        [Fact]
+        public void ShadeHitWithTransparentMaterial()
+        {
+            var w = World.DefaultWorld();
+            
+            var floor = new Plane();
+            floor.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
+            floor.Material.Transparency = 0.5;
+            floor.Material.RefractiveIndex = 1.5;
+            w.AddShape(floor);
+
+            var ball = new Sphere();
+            ball.Material.Color = new Color(1, 0, 0);
+            ball.Material.Ambient = 0.5;
+            ball.Transform = Matrix.Identity().Translation(0, -3.5, -0.5).Apply();
+            w.AddShape(ball);
+
+            var r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
+
+            var xs = new Intersections(new Intersection(floor, Math.Sqrt(2)));
+
+            var comps = xs[0].PrepareComputations(r, xs);
+            w.ShadeHits(comps, 5).Should().Be(new Color(0.93642, 0.68642, 0.68642));
         }
     }
 }

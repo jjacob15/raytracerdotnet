@@ -12,9 +12,53 @@ namespace CreateAScene
         {
             //var c = CreateAScene();
             //var c = CustomScene();
-            var c = CanvasWithPlane();
+            //var c = CanvasWithPlane();
+            var c = SimpleSceneWithReflection();
             c.Save(@"c:\\users\\jaison.jacob\\desktop\\simplescene1.ppm");
             Console.WriteLine("Hello World!");
+        }
+
+        static Canvas SimpleSceneWithReflection()
+        {
+            World w = new World();
+
+
+            var floor = new Plane();
+            floor.Material.Pattern = new RayTracer.Patterns.CheckerPattern(new Color(1, 0.9, 0.9), new Color(0.6, 0, 0));
+            floor.Material.Reflective = 0.5;
+            //floor.Transform = Matrix.Identity().Apply();
+            floor.Material.Color = new Color(1, 0.9, 0.9);
+            floor.Material.Specular = 0;
+            w.AddShape(floor);
+
+            var wall = new Plane();
+            wall.Material.Pattern = new RayTracer.Patterns.StrippedPattern(new Color(1, 0.9, 0.9), new Color(0.6, 0, 0));
+            wall.Transform = Matrix.Identity().RotateX(Math.PI / 2).Translation(0, 0, 5).Apply();
+            wall.Material.Color = new Color(1, 0.9, 0.9);
+            wall.Material.Specular = 0;
+            w.AddShape(wall);
+
+            var right = new Sphere();
+            right.Transform = Matrix.Identity().Translation(0.5, 1, 1).Apply();
+            right.Material.Color = new Color(0.5, 1, 0.1);
+            right.Material.Diffuse = 0.7;
+            right.Material.Specular = 0.3;
+            w.AddShape(right);
+
+
+            var left = new Sphere();
+            left.Transform = Matrix.Identity().Scaling(.33, .33, .33).Translation(-1.5, 0.33, -0.75).Apply();
+            left.Material.Color = new Color(1, 0.8, 0.1);
+            left.Material.Diffuse = 0.7;
+            left.Material.Specular = 0.3;
+            w.AddShape(left);
+
+            w.Light = new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1));
+
+            Camera c = new Camera(100, 50, Math.PI / 3);
+            c.Transform = Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+                Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0));
+            return c.Render(w);
         }
 
         static Canvas CanvasWithPlane()

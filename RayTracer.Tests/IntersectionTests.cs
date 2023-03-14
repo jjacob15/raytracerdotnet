@@ -203,5 +203,142 @@ namespace RayTracer
             comps.OverPoint.Z.Should().BeLessThan(-double.Epsilon / 2);
             comps.Point.Z.Should().BeGreaterThan(comps.OverPoint.Z);
         }
+
+        [Fact]
+        public void ReflectNormalTest()
+        {
+            var p = new Plane();
+            var r = new Ray(Tuple.Point(0, 1, -1), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
+            var i = new Intersection(p, Math.Sqrt(2));
+            var comps = i.PrepareComputations(r);
+            comps.ReflectV.Should().Be(Tuple.Vector(0, Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
+        }
+
+        [Fact]
+        public void ReflectColorForNonreflectiveSurface()
+        {
+            var w = World.DefaultWorld();
+            var r = new Ray(Tuple.Point(0, 0, 0), Tuple.Vector(0, 0, 1));
+            var s = w.Shapes[1];
+            s.Material.Ambient = 1;
+            var i = new Intersection(s, 1);
+            var comps = i.PrepareComputations(r);
+            w.ReflectedColor(comps).Should().Be(Color.Black);
+        }
+
+        [Fact]
+        public void ReflectColorForReflectiveSurface()
+        {
+            var w = World.DefaultWorld();
+            var p = new Plane();
+            p.Material.Reflective = 0.5;
+            p.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
+            w.AddShape(p);
+
+            var r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
+            var i = new Intersection(p, Math.Sqrt(2));
+            var comps = i.PrepareComputations(r);
+            w.ReflectedColor(comps).Should().Be(new Color(0.19032, 0.2379, 0.14274));
+        }
+        [Fact]
+        public void ShadeHitWithReflectiveMaterial()
+        {
+            var w = World.DefaultWorld();
+            var p = new Plane();
+            p.Material.Reflective = 0.5;
+            p.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
+            w.AddShape(p);
+
+            var r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
+            var i = new Intersection(p, Math.Sqrt(2));
+            var comps = i.PrepareComputations(r);
+            var c = w.ShadeHits(comps);
+            c.Should().Be(new Color(0.87677, 0.92436, 0.82918));
+        }
+
+        [Fact]
+        public void ColorAtMutuallyReflectiveSurfaces()
+        {
+            var w = new World();
+            w.Light = new PointLight(Tuple.Point(0, 0, 0), Color.White);
+            var lower = new Plane();
+            lower.Material.Reflective = 1;
+            lower.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
+            w.AddShape(lower);
+
+            var upper = new Plane();
+            upper.Material.Reflective = 1;
+            upper.Transform = Matrix.Identity().Translation(0, 1, 0).Apply();
+            w.AddShape(upper);
+
+            var r = new Ray(Tuple.Point(0, 0, 0), Tuple.Vector(0, 1, 0));
+            var color = w.ColorAt(r);
+            color.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ReflectedColorAtMaxDepth()
+        {
+            var w = World.DefaultWorld();
+            var shape = new Plane();
+            shape.Material.Reflective = 0.5;
+            shape.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
+            w.AddShape(shape);
+
+            var r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
+            var i = new Intersection(shape, Math.Sqrt(2));
+            var comps = i.PrepareComputations(r);
+            w.ReflectedColor(comps, 0).Should().Be(Color.Black);
+        }
+
+        [Fact]
+        public void RefractiveIndexOfDefaultMaterial()
+        {
+            var s = Sphere.GlassSphere();
+            s.Material.Transparency.Should().Be(1);
+            s.Material.RefractiveIndex.Should().Be(1.5);
+        }
+
+        [Theory]
+        [InlineData(0, 1, 1.5)]
+        [InlineData(1, 1.5, 2)]
+        [InlineData(2, 2, 2.5)]
+        [InlineData(3, 2.5, 2.5)]
+        [InlineData(4, 2.5, 1.5)]
+        [InlineData(5, 1.5, 1)]
+        public void FindingN1AndN2AtVariousIntersections(int i, double n1, double n2)
+        {
+            var a = Sphere.GlassSphere();
+            a.Transform = Matrix.Identity().Scaling(2, 2, 2).Apply();
+            a.Material.RefractiveIndex = 1.5;
+
+            var b = Sphere.GlassSphere();
+            b.Transform = Matrix.Identity().Translation(0, 0, -0.25).Apply();
+            b.Material.RefractiveIndex = 2;
+
+            var c = Sphere.GlassSphere();
+            b.Transform = Matrix.Identity().Translation(0, 0, 0.25).Apply();
+            c.Material.RefractiveIndex = 2.5;
+
+            var r = new Ray(Tuple.Point(0, 0, -4), Tuple.Vector(0, 0, 1));
+            var xs = new Intersections(new Intersection(a, 2), new Intersection(b, 2.75), new Intersection(c, 3.25), new Intersection(b, 4.75), new Intersection(c, 5.25), new Intersection(a, 6));
+
+            var comps = xs[i].PrepareComputations(r, xs);
+            comps.N1.Should().Be(n1);
+            comps.N2.Should().Be(n2);
+        }
+
+        [Fact]
+        public void UnderpointIsOffsetBelowSurface()
+        {
+            var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
+            var s = Sphere.GlassSphere();
+            s.Transform = Matrix.Identity().Translation(0, 0, 1).Apply();
+            var i = new Intersection(s, 5);
+            var xs = new Intersections(i);
+            var comps = i.PrepareComputations(r, xs);
+            comps.UnderPoint.Z.Should().BeGreaterThan(Constants.Epsilon / 2);
+            comps.Point.Z.Should().BeLessThan(comps.UnderPoint.Z);
+        }
     }
 }
