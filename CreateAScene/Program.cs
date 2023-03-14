@@ -31,12 +31,21 @@ namespace CreateAScene
             floor.Material.Specular = 0;
             w.AddShape(floor);
 
-            var wall = new Plane();
-            wall.Material.Pattern = new RayTracer.Patterns.StrippedPattern(new Color(1, 0.9, 0.9), new Color(0.6, 0, 0));
-            wall.Transform = Matrix.Identity().RotateX(Math.PI / 2).Translation(0, 0, 5).Apply();
-            wall.Material.Color = new Color(1, 0.9, 0.9);
-            wall.Material.Specular = 0;
-            w.AddShape(wall);
+            var leftWall = new Plane();
+            leftWall.Transform = Matrix.Identity().RotateX(Math.PI / 2)
+                .RotateY(-Math.PI / 4).Translation(0, 0, 5).Apply();
+            leftWall.Material.Color = new Color(1, 0.9, 0.9);
+            leftWall.Material.Reflective = 1;
+            leftWall.Material.Transparency = 0.5;
+            w.AddShape(leftWall);
+
+            var rightWall = new Plane();
+            rightWall.Transform = Matrix.Identity().RotateX(Math.PI / 2)
+                 .RotateY(Math.PI / 4).Translation(0, 0, 5).Apply();
+            rightWall.Material.Color = new Color(1, 1,1);
+            rightWall.Material.Reflective = 1;
+            rightWall.Material.Transparency = 0.5;
+            w.AddShape(rightWall);
 
             var right = new Sphere();
             right.Transform = Matrix.Identity().Translation(0.5, 1, 1).Apply();
@@ -55,7 +64,7 @@ namespace CreateAScene
 
             w.Light = new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1));
 
-            Camera c = new Camera(100, 50, Math.PI / 3);
+            Camera c = new Camera(800,200, Math.PI / 3);
             c.Transform = Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
                 Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0));
             return c.Render(w);
