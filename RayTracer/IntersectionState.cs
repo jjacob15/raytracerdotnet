@@ -13,12 +13,12 @@ namespace RayTracer
 
             //copy the intersection's properties, for convenience
             T = intersection.T;
-            Obj = intersection.Object;
+            Object = intersection.Object;
 
             //precompute some useful values
             Point = ray.Position(T);
             EyeV = -ray.Direction;
-            NormalV = Obj.NormalAt(ray.Position(T));
+            NormalV = Object.NormalAt(ray.Position(T));
             ReflectV = ray.Direction.Reflect(-NormalV);
 
             if (NormalV.Dot(EyeV) < 0)
@@ -81,7 +81,7 @@ namespace RayTracer
         }
 
         public double T { get; }
-        public IShape Obj { get; }
+        public IShape Object { get; }
         public Tuple Point { get; }
         public Tuple OverPoint { get; }
         public Tuple UnderPoint { get; }

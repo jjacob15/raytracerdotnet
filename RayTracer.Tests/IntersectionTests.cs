@@ -100,7 +100,7 @@ namespace RayTracer
             var comps = i.PrepareComputations(r);
 
             comps.T.Should().Be(i.T);
-            comps.Obj.Should().Be(i.Object);
+            comps.Object.Should().Be(i.Object);
             comps.Point.Should().Be(Tuple.Point(0, 0, -1));
             comps.EyeV.Should().Be(Tuple.Vector(0, 0, -1));
             comps.NormalV.Should().Be(Tuple.Vector(0, 0, -1));

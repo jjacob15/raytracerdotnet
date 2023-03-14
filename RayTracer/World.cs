@@ -53,11 +53,11 @@ namespace RayTracer
         public Color ShadeHits(IntersectionState comps, int remaining = 4)
         {
             var shadowed = IsShadowed(comps.OverPoint);
-            var surface = comps.Obj.Material.Lighting(comps.Obj, Light, comps.OverPoint, comps.EyeV, comps.NormalV, shadowed);
+            var surface = comps.Object.Material.Lighting(comps.Object, Light, comps.OverPoint, comps.EyeV, comps.NormalV, shadowed);
             var reflected = ReflectedColor(comps, remaining);
             var refracted = RefractedColor(comps, remaining);
 
-            var material = comps.Obj.Material;
+            var material = comps.Object.Material;
             if (material.Reflective > 0 && material.Transparency > 0)
             {
                 var reflectance = comps.Schlick();
@@ -100,7 +100,7 @@ namespace RayTracer
         {
             if (remaining < 1) return Color.Black;
 
-            if (comps.Obj.Material.Transparency == 0) return Color.Black;
+            if (comps.Object.Material.Transparency == 0) return Color.Black;
 
             var nRatio = comps.N1 / comps.N2;
             var cosI = comps.EyeV.Dot(comps.NormalV);
@@ -113,17 +113,17 @@ namespace RayTracer
             var cosT = Math.Sqrt(1.0 - sin2T);
             var direction = comps.NormalV * (nRatio * cosI - cosT) - comps.EyeV * nRatio;
             var refractedRay = new Ray(comps.UnderPoint, direction);
-            return ColorAt(refractedRay, remaining - 1) * comps.Obj.Material.Transparency;
+            return ColorAt(refractedRay, remaining - 1) * comps.Object.Material.Transparency;
         }
         public Color ReflectedColor(IntersectionState comps, int remaining = 4)
         {
             if (remaining < 1) return Color.Black;
 
-            if (comps.Obj.Material.Ambient == 1)
+            if (comps.Object.Material.Ambient == 1)
                 return Color.Black;
             var reflectedRay = new Ray(comps.OverPoint, comps.ReflectV);
             var color = ColorAt(reflectedRay, remaining - 1);
-            return color * comps.Obj.Material.Reflective;
+            return color * comps.Object.Material.Reflective;
         }
     }
 }
