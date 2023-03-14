@@ -1,4 +1,5 @@
 ﻿using RayTracer.Shapes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -65,7 +66,18 @@ namespace RayTracer
 
         public double Schlick()
         {
-            return 1;
+            var cos = EyeV.Dot(NormalV);
+            if (N1 > N2)
+            {
+                var n = N1 / N2;
+                var sin2T = n * n * (1 - cos * cos);
+                if (sin2T > 1) return 1;
+
+                var cos_t = Math.Sqrt(1 - sin2T);
+                cos = cos_t;
+            }
+            var r0 = Math.Pow((N1 - N2) / (N1 + N2), 2);
+            return r0 + (1 - r0) * Math.Pow(1 - cos, 5);
         }
 
         public double T { get; }

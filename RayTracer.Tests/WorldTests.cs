@@ -122,8 +122,8 @@ namespace RayTracer
             s.Material.Transparency = 1;
             s.Material.RefractiveIndex = 1.5;
 
-            var r = new Ray(Tuple.Point(0, 0, Math.Sqrt(2)/2), Tuple.Vector(0, 1, 0));
-            var xs = new Intersections(new Intersection(s, -Math.Sqrt(2)/2), new Intersection(s, Math.Sqrt(2) / 2));
+            var r = new Ray(Tuple.Point(0, 0, Math.Sqrt(2) / 2), Tuple.Vector(0, 1, 0));
+            var xs = new Intersections(new Intersection(s, -Math.Sqrt(2) / 2), new Intersection(s, Math.Sqrt(2) / 2));
             var comps = xs[1].PrepareComputations(r, xs);
             w.RefractedColor(comps, 5).Should().Be(Color.Black);
         }
@@ -150,7 +150,7 @@ namespace RayTracer
         public void ShadeHitWithTransparentMaterial()
         {
             var w = World.DefaultWorld();
-            
+
             var floor = new Plane();
             floor.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
             floor.Material.Transparency = 0.5;
@@ -169,6 +169,31 @@ namespace RayTracer
 
             var comps = xs[0].PrepareComputations(r, xs);
             w.ShadeHits(comps, 5).Should().Be(new Color(0.93642, 0.68642, 0.68642));
+        }
+        [Fact]
+        public void ShadeHitWithReflectiveTransparentMaterial()
+        {
+            var sqrt2 = Math.Sqrt(2);
+            var w = World.DefaultWorld();
+            var r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -sqrt2 / 2, sqrt2 / 2));
+            var floor = new Plane();
+            floor.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
+            floor.Material.Reflective = 0.5;
+            floor.Material.Transparency = 0.5;
+            floor.Material.RefractiveIndex = 1.5;
+
+            w.AddShape(floor);
+
+            var ball = new Sphere();
+            ball.Material.Color = new Color(1, 0, 0);
+            ball.Material.Ambient = 0.5;
+            ball.Transform = Matrix.Identity().Translation(0, -3.5, -0.5).Apply();
+
+            w.AddShape(ball);
+            var xs = new Intersections(new Intersection(floor, sqrt2));
+            var comps = xs[0].PrepareComputations(r, xs);
+            w.ShadeHits(comps, 5).Should().Be(new Color(0.93391, 0.69643, 0.69243));
+
         }
     }
 }

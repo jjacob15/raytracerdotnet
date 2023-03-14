@@ -295,6 +295,7 @@ namespace RayTracer
             _transformationChain.Push(transform);
             return this;
         }
+
         public Matrix Translation(double x, double y, double z)
         {
             var transform = Identity();

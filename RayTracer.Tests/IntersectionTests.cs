@@ -340,5 +340,37 @@ namespace RayTracer
             comps.UnderPoint.Z.Should().BeGreaterThan(Constants.Epsilon / 2);
             comps.Point.Z.Should().BeLessThan(comps.UnderPoint.Z);
         }
+
+        [Fact]
+        public void SchlickApproxUnderTotalInternalReflection()
+        {
+            var sqrtTwo = Math.Sqrt(2);
+            var s = Sphere.GlassSphere();
+            var r = new Ray(Tuple.Point(0, 0, sqrtTwo / 2), Tuple.Vector(0, 1, 0));
+            var xs = new Intersections(new Intersection(s, -sqrtTwo / 2), new Intersection(s, sqrtTwo / 2));
+            var comps = xs[1].PrepareComputations(r, xs);
+            comps.Schlick().Should().Be(1.0);
+        }
+
+
+        [Fact]
+        public void SchlickApproxWithPerpendicularViewingAngle()
+        {
+            var s = Sphere.GlassSphere();
+            var r = new Ray(Tuple.Point(0, 0, 0), Tuple.Vector(0, 1, 0));
+            var xs = new Intersections(new Intersection(s, -1), new Intersection(s, 1));
+            var comps = xs[1].PrepareComputations(r, xs);
+            comps.Schlick().Should().BeApproximately(0.04, Constants.Epsilon);
+        }
+
+        [Fact]
+        public void SchlickApproxWithSmallAngleN2GTN1()
+        {
+            var s = Sphere.GlassSphere();
+            var r = new Ray(Tuple.Point(0, 0.99, -2), Tuple.Vector(0, 0, 1));
+            var xs = new Intersections(new Intersection(s, 1.8589));
+            var comps = xs[0].PrepareComputations(r, xs);
+            comps.Schlick().Should().BeApproximately(0.48873, Constants.Epsilon);
+        }
     }
 }
