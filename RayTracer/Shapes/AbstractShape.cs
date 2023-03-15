@@ -12,6 +12,11 @@ namespace RayTracer.Shapes
 
         public Intersections Intersect(Ray ray)
         {
+            if (ReferenceEquals(Transform, Matrix.Identity()))
+            {
+                return IntersectLocal(ray);
+            }
+
             var transformedRay = ray.Transform(Transform.Inverse());
             return IntersectLocal(transformedRay);
         }

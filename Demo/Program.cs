@@ -25,8 +25,7 @@ namespace Demo
             var renderParams = RendererParameters.HighQuality;
 
             List<Type> scenes = new List<Type> {
-                typeof(SimpleScene),
-                typeof(SimpleSceneTwo)};
+                typeof(SimpleScene)};
 
             string dir = Path.Combine(Path.GetTempPath(), "raytracing");
             if (Directory.Exists(dir))
