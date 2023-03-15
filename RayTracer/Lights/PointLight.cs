@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RayTracer.Lights
 {
-    public class PointLight
+    public class PointLight : ILight
     {
         public PointLight(Tuple position, Color intensity)
         {

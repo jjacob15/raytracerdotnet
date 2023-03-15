@@ -9,6 +9,10 @@ namespace RayTracer.Patterns
         public CheckerPattern(Color a, Color b) : base(a, b)
         {
         }
+        public CheckerPattern() : this(Color.Black, Color.White)
+        {
+
+        }
 
         public override Color PatternAt(Tuple point)
         {

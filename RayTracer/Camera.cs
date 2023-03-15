@@ -67,7 +67,6 @@ namespace RayTracer
             var c = new Canvas((int)HSize, (int)VSize);
             for (int y = 0; y < VSize; y++)
             {
-                Console.Write("\r{0}%   ", Math.Round((y / VSize) * 100),2);
                 for (int x = 0; x < HSize; x++)
                 {
                     var ray = RayForPixel(x, y);
@@ -75,7 +74,6 @@ namespace RayTracer
                     c[x, y] = color;
                 }
             }
-            Console.WriteLine("Complete");
             return c;
         }
     }

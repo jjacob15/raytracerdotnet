@@ -38,7 +38,7 @@ namespace RayTracer
 
         public IPattern Pattern { get; set; }
 
-        public Color Lighting(IShape shape, PointLight light, Tuple point, Tuple eyeV, Tuple normalV, bool inShadow)
+        public Color Lighting(IShape shape, ILight light, Tuple point, Tuple eyeV, Tuple normalV, bool inShadow)
         {
             if (Pattern != null)
             {

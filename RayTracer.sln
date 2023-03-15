@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CastRaysToSphere", "CastRay
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter7", "Chapter7", "{70367E9E-6576-40D5-921A-C585E49ECBD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateAScene", "CreateAScene\CreateAScene.csproj", "{275A7D45-8C5E-4175-B8F3-C285164662D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreateAScene", "CreateAScene\CreateAScene.csproj", "{275A7D45-8C5E-4175-B8F3-C285164662D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{0DCF2963-0024-4AEC-B46E-73C599C00DC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{275A7D45-8C5E-4175-B8F3-C285164662D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{275A7D45-8C5E-4175-B8F3-C285164662D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{275A7D45-8C5E-4175-B8F3-C285164662D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DCF2963-0024-4AEC-B46E-73C599C00DC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DCF2963-0024-4AEC-B46E-73C599C00DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DCF2963-0024-4AEC-B46E-73C599C00DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DCF2963-0024-4AEC-B46E-73C599C00DC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

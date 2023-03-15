@@ -146,7 +146,7 @@ namespace RayTracer
         public void ShadingAnIntersectionFromInside()
         {
             var w = World.DefaultWorld();
-            w.Light = new PointLight(Tuple.Point(0, 0.25, 0), new Color(1, 1, 1));
+            w.SetLight(new PointLight(Tuple.Point(0, 0.25, 0), new Color(1, 1, 1)));
 
             var r = new Ray(Tuple.Point(0, 0, 0), Tuple.Vector(0, 0, 1));
             var shape = w.Shapes[1];
@@ -260,7 +260,7 @@ namespace RayTracer
         public void ColorAtMutuallyReflectiveSurfaces()
         {
             var w = new World();
-            w.Light = new PointLight(Tuple.Point(0, 0, 0), Color.White);
+            w.SetLight(new PointLight(Tuple.Point(0, 0, 0), Color.White));
             var lower = new Plane();
             lower.Material.Reflective = 1;
             lower.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();

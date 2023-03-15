@@ -76,7 +76,7 @@ namespace RayTracer
         public void ShadeHitWithIntersectionInShadow()
         {
             var w = new World();
-            w.Light = new PointLight(Tuple.Point(0, 0, -10), new Color(1, 1, 1));
+            w.SetLight(new PointLight(Tuple.Point(0, 0, -10), new Color(1, 1, 1)));
             w.AddShape(new Sphere());
             var s2 = new Sphere();
             s2.Transform = Matrix.Identity().Translation(0, 0, 10).Apply();

@@ -42,7 +42,7 @@ namespace CreateAScene
             var rightWall = new Plane();
             rightWall.Transform = Matrix.Identity().RotateX(Math.PI / 2)
                  .RotateY(Math.PI / 4).Translation(0, 0, 5).Apply();
-            rightWall.Material.Color = new Color(1, 1,1);
+            rightWall.Material.Color = new Color(1, 1, 1);
             rightWall.Material.Reflective = 1;
             rightWall.Material.Transparency = 0.5;
             w.AddShape(rightWall);
@@ -55,16 +55,16 @@ namespace CreateAScene
             w.AddShape(right);
 
 
-            var left = new Sphere();
+            var left = Sphere.GlassSphere();
             left.Transform = Matrix.Identity().Scaling(.33, .33, .33).Translation(-1.5, 0.33, -0.75).Apply();
-            left.Material.Color = new Color(1, 0.8, 0.1);
-            left.Material.Diffuse = 0.7;
-            left.Material.Specular = 0.3;
+            //left.Material.Color = new Color(1, 0.8, 0.1);
+            //left.Material.Diffuse = 0.7;
+            //left.Material.Specular = 0.3;
             w.AddShape(left);
 
-            w.Light = new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1));
+            w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
-            Camera c = new Camera(800,200, Math.PI / 3);
+            Camera c = new Camera(400, 200, Math.PI / 3);
             c.Transform = Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
                 Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0));
             return c.Render(w);
@@ -105,7 +105,7 @@ namespace CreateAScene
             left.Material.Specular = 0.3;
             w.AddShape(left);
 
-            w.Light = new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1));
+            w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
             Camera c = new Camera(100, 50, Math.PI / 3);
             c.Transform = Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
@@ -137,7 +137,7 @@ namespace CreateAScene
             w.AddShape(sphere2);
 
 
-            w.Light = new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1));
+            w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
             Camera c = new Camera(100, 50, Math.PI / 3);
             c.Transform = Matrix.ViewTransform(Tuple.Point(0, 1.5, -7),
@@ -189,7 +189,7 @@ namespace CreateAScene
             left.Material.Specular = 0.3;
             w.AddShape(left);
 
-            w.Light = new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1));
+            w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
             Camera c = new Camera(800, 400, Math.PI / 3);
             c.Transform = Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),

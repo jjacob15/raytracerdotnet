@@ -6,7 +6,7 @@ using System.Text;
 
 namespace RayTracer
 {
-    public class World
+    public class World : IWorld
     {
         public World()
         {
@@ -31,13 +31,18 @@ namespace RayTracer
             return w;
         }
 
-        public PointLight Light { get; set; }
+        public ILight Light { get; private set; }
 
         public List<IShape> Shapes { get; private set; }
 
         public void AddShape(IShape s)
         {
             Shapes.Add(s);
+        }
+
+        public void SetLight(ILight light)
+        {
+            Light = light;
         }
 
         public Intersections Intersect(Ray ray)
