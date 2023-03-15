@@ -65,8 +65,8 @@ namespace CreateAScene
             w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
             Camera c = new Camera(400, 200, Math.PI / 3);
-            c.Transform = Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
-                Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0));
+            c.SetTransform(Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+                Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c.Render(w);
         }
 
@@ -108,8 +108,8 @@ namespace CreateAScene
             w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
             Camera c = new Camera(100, 50, Math.PI / 3);
-            c.Transform = Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
-                Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0));
+            c.SetTransform(Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+                Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c.Render(w);
         }
         static Canvas CustomScene()
@@ -140,8 +140,8 @@ namespace CreateAScene
             w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
             Camera c = new Camera(100, 50, Math.PI / 3);
-            c.Transform = Matrix.ViewTransform(Tuple.Point(0, 1.5, -7),
-                Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0));
+            c.SetTransform(Matrix.ViewTransform(Tuple.Point(0, 1.5, -7),
+                Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c.Render(w);
         }
 
@@ -192,8 +192,8 @@ namespace CreateAScene
             w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
             Camera c = new Camera(800, 400, Math.PI / 3);
-            c.Transform = Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
-                Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0));
+            c.SetTransform(Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+                Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c.Render(w);
         }
     }

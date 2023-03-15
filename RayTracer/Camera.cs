@@ -11,8 +11,15 @@ namespace RayTracer
             HSize = hSize;
             VSize = vSize;
             FieldOfView = fieldOfView;
-
             ComputePixelSize();
+
+            SetTransform(Matrix.Identity());
+        }
+
+        public void SetTransform(Matrix transform)
+        {
+            Transform = transform;
+            _transformInverse = transform.Inverse();
         }
 
         private void ComputePixelSize()
@@ -35,7 +42,8 @@ namespace RayTracer
         public double HSize { get; }
         public double VSize { get; }
         public double FieldOfView { get; }
-        public Matrix Transform { get; set; } = Matrix.Identity();
+        public Matrix Transform { get; private set; }
+        private Matrix _transformInverse;
 
         public double PixelSize { get; private set; }
         public double HalfWidth { get; private set; }
@@ -55,8 +63,8 @@ namespace RayTracer
             //using the camera matrix, transform the canvas point and the origin,
             //and then compute the ray's direction vector.
             //(remember that the canvas is at z=-1)
-            var pixel = Transform.Inverse() * Tuple.Point(worldX, worldY, -1);
-            var origin = Transform.Inverse() * Tuple.ZeroPoint();
+            var pixel = _transformInverse * Tuple.Point(worldX, worldY, -1);
+            var origin = _transformInverse * Tuple.ZeroPoint();
             var direction = (pixel - origin).Normalize();
 
             return new Ray(origin, direction);

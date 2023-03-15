@@ -15,7 +15,7 @@ namespace Demo
         public List<int> XList = new List<int>();
         public List<int> YList = new List<int>();
 
-        public RenderJob(IWorld world, Camera camera, Canvas canvas,RendererStats stats)
+        public RenderJob(IWorld world, Camera camera, Canvas canvas, RendererStats stats)
         {
             Camera = camera;
             World = world;
@@ -27,9 +27,11 @@ namespace Demo
         {
             for (int i = 0; i < XList.Count; i++)
             {
-                var ray = Camera.RayForPixel(XList[i], YList[i]);
+                int x = XList[i];
+                int y = YList[i];
+                var ray = Camera.RayForPixel(x, y);
                 var color = World.ColorAt(ray);
-                Canvas[XList[i], YList[i]] = color;
+                Canvas[x, y] = color;
                 Stats.IncrementPixelCount();
             }
         }

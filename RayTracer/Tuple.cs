@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace RayTracer
 {
-    public class Tuple
+    public struct Tuple
     {
         public static Tuple ZeroPoint() => new Tuple(0, 0, 0, 1);
         public static Tuple ZeroVector() => new Tuple(0, 0, 0, 0);

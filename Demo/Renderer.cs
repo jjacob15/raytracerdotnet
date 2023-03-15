@@ -80,7 +80,7 @@ namespace Demo
             Thread[] threads = new Thread[threadCount];
             for (int i = 0; i < threadCount; i++)
             {
-                threads[i] = new Thread(RunTask);
+                threads[i] = new Thread(RunTask) { Name = $"worker_{i}" };
                 threads[i].Start();
             }
 
@@ -101,6 +101,7 @@ namespace Demo
 
         private void RunTask()
         {
+            Console.WriteLine($"In worker {Thread.CurrentThread.Name}");
             while (RenderJobs.TryDequeue(out var renderJob))
             {
                 renderJob.Work();
@@ -110,8 +111,8 @@ namespace Demo
         private Camera BuildCamera(RendererParameters rendererParameters)
         {
             var c = new Camera(rendererParameters.Width, rendererParameters.Height, Math.PI / 3);
-            c.Transform = Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
-              Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0));
+            c.SetTransform(Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+              Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c;
         }
     }

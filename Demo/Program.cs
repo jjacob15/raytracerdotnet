@@ -20,9 +20,9 @@ namespace Demo
             Console.WriteLine($"IsHardwareAccelerated: {Vector.IsHardwareAccelerated}");
             Console.WriteLine($"Avx2: {Avx2.IsSupported}");
 
-            var threadCount = Environment.ProcessorCount;
-            var display = true;
-            var renderParams = RendererParameters.HighQuality;
+            var threadCount =  Environment.ProcessorCount;
+            var display = false;
+            var renderParams = RendererParameters.DefaultQuality;
 
             List<Type> scenes = new List<Type> {
                 typeof(SimpleScene)};

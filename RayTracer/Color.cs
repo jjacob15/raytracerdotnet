@@ -5,10 +5,11 @@ using System.Text;
 
 namespace RayTracer
 {
-    public class Color
+    public struct Color
     {
         public static Color Black = new Color(0, 0, 0);
         public static Color White = new Color(1, 1, 1);
+
         public Color(double r, double g, double b)
         {
             Red = r;
@@ -16,17 +17,9 @@ namespace RayTracer
             Blue = b;
         }
 
-        public double Red { get; set; }
-        public double Green { get; set; }
-        public double Blue { get; set; }
-
-        //public bool Equals([AllowNull] Color other)
-        //{
-        //    if (other == null) return false;
-        //    if (ReferenceEquals(this, other)) return true;
-
-        //    return Red.DoubleEqual(other.Red) && Green.DoubleEqual(other.Green) && Blue.DoubleEqual(other.Blue);
-        //}
+        public double Red { get;  }
+        public double Green { get;  }
+        public double Blue { get;  }
 
         public static Color operator +(Color a, Color b)
         {

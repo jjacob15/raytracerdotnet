@@ -44,7 +44,7 @@ namespace RayTracer
         public void RayWhenCameraIsTransformed()
         {
             Camera c = new Camera(201, 101, Math.PI / 2);
-            c.Transform = Matrix.Identity().Translation(0, -2, 5).RotateY(Math.PI / 4).Apply();
+            c.SetTransform(Matrix.Identity().Translation(0, -2, 5).RotateY(Math.PI / 4).Apply());
             Ray r = c.RayForPixel(100, 50);
             r.Origin.Should().Be(Tuple.Point(0, 2, -5));
             r.Direction.Should().Be(Tuple.Vector(Math.Sqrt(2) / 2, 0, -Math.Sqrt(2) / 2));
@@ -58,7 +58,7 @@ namespace RayTracer
             var from = Tuple.Point(0, 0, -5);
             var to = Tuple.Point(0, 0, 0);
             var up = Tuple.Vector(0, 1, 0);
-            c.Transform = Matrix.ViewTransform(from, to, up);
+            c.SetTransform(Matrix.ViewTransform(from, to, up));
             var canvas = c.Render(w);
             canvas[5, 5].Should().Be(new Color(0.38066, 0.47583, 0.2855));
 
