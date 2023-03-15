@@ -57,8 +57,12 @@ namespace RayTracer
 
         public Color ShadeHits(IntersectionState comps, int remaining = 4)
         {
+            var overpoint = comps.OverPoint;
+            var eyeV = comps.EyeV;
+            var normalV = comps.NormalV;
+
             var shadowed = IsShadowed(comps.OverPoint);
-            var surface = comps.Object.Material.Lighting(comps.Object, Light, comps.OverPoint, comps.EyeV, comps.NormalV, shadowed);
+            var surface = comps.Object.Material.Lighting(comps.Object, Light, ref overpoint,ref eyeV, ref normalV, shadowed);
             var reflected = ReflectedColor(comps, remaining);
             var refracted = RefractedColor(comps, remaining);
 
