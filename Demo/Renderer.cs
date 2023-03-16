@@ -27,7 +27,7 @@ namespace Demo
             Output = outputDir;
         }
 
-
+        private Thread[] threads;
 
 
         public void Render(Type type, RendererParameters renderParams, int threads)
@@ -60,7 +60,7 @@ namespace Demo
                 }
             }
 
-            const int Batch = 1000;
+            const int Batch = 128;
             for (int i = 0; i < point.Count; i += Batch)
             {
                 RenderJob job = new RenderJob(world, camera, canvas, Stats);
@@ -77,18 +77,27 @@ namespace Demo
                 RenderJobs.Enqueue(job);
             }
 
-            Thread[] threads = new Thread[threadCount];
-            for (int i = 0; i < threadCount; i++)
+            if (threadCount < 2)
             {
-                threads[i] = new Thread(RunTask) { Name = $"worker_{i}" };
-                threads[i].Start();
+                RunTask();
+                return;
             }
 
+            threads = new Thread[threadCount];
+            for (int i = 0; i < threadCount; i++)
+            {
+                threads[i] = new Thread(RunTask) { Name = $"worker_{i}", IsBackground = true };
+                threads[i].Start();
+            }
+        }
+
+        public void Wait()
+        {
+            if (threads == null) return;
             foreach (var thread in threads)
             {
                 thread.Join();
             }
-
             Stats.Stop();
         }
 

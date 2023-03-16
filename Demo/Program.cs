@@ -16,13 +16,11 @@ namespace Demo
     {
         static void Main(string[] args)
         {
-            //GCSettings.LatencyMode = GCLatencyMode.Batch;
-            Console.WriteLine($"IsHardwareAccelerated: {Vector.IsHardwareAccelerated}");
-            Console.WriteLine($"Avx2: {Avx2.IsSupported}");
+            GCSettings.LatencyMode = GCLatencyMode.Batch;
 
-            var threadCount =  Environment.ProcessorCount;
+            var threadCount = Environment.ProcessorCount;
             var display = false;
-            var renderParams = RendererParameters.DefaultQuality;
+            var renderParams = RendererParameters.HighQuality;
 
             List<Type> scenes = new List<Type> {
                 typeof(SimpleScene)};
@@ -59,7 +57,10 @@ namespace Demo
                 };
                 timer.Elapsed += (sender, args) => { ConsoleStats(scene.Name, renderer); };
                 timer.Start();
-                renderer.Render(scene, renderParams,threadCount);
+
+                renderer.Render(scene, renderParams, threadCount);
+                renderer.Wait();
+
                 timer.Stop();
                 Console.WriteLine();
 
