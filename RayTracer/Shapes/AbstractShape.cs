@@ -12,7 +12,7 @@ namespace RayTracer.Shapes
 
         public Intersections Intersect(Ray ray)
         {
-            if (ReferenceEquals(Transform, Matrix.Identity()))
+            if (Transform.IsIdentity)
             {
                 return IntersectLocal(ray);
             }

@@ -19,7 +19,8 @@ namespace Demo
             GCSettings.LatencyMode = GCLatencyMode.Batch;
 
             var threadCount = Environment.ProcessorCount;
-            var display = false;
+            //var threadCount = 1;
+            var display = true;
             var renderParams = RendererParameters.HighQuality;
 
             List<Type> scenes = new List<Type> {

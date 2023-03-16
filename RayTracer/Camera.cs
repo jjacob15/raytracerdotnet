@@ -6,6 +6,13 @@ namespace RayTracer
 {
     public class Camera
     {
+        public static Camera DefaultCamera()
+        {
+            var c = new Camera(640, 400, Math.PI / 3);
+            c.SetTransform(Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+                  Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
+            return c;
+        }
         public Camera(double hSize, double vSize, double fieldOfView)
         {
             HSize = hSize;
@@ -65,6 +72,27 @@ namespace RayTracer
             //(remember that the canvas is at z=-1)
             var pixel = _transformInverse * Tuple.Point(worldX, worldY, -1);
             var origin = _transformInverse * Tuple.ZeroPoint();
+            var direction = (pixel - origin).Normalize();
+
+            return new Ray(origin, direction);
+        }
+
+        public Ray RayForPixelOld(int px, int py)
+        {
+            //the offset from the edge of the canvas to the pixel's center
+            double xOffset = (px + 0.5) * PixelSize;
+            double yOffset = (py + 0.5) * PixelSize;
+
+            //the untransformed coordinates of the pixel in world space.
+            //(remember that the camera looks toward -z, so +x is to the *left*.)
+            double worldX = HalfWidth - xOffset;
+            double worldY = HalfHeight - yOffset;
+
+            //using the camera matrix, transform the canvas point and the origin,
+            //and then compute the ray's direction vector.
+            //(remember that the canvas is at z=-1)
+            var pixel = Transform.Inverse() * Tuple.Point(worldX, worldY, -1);
+            var origin = Transform.Inverse() * Tuple.ZeroPoint();
             var direction = (pixel - origin).Normalize();
 
             return new Ray(origin, direction);

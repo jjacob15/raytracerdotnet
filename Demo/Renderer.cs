@@ -86,8 +86,9 @@ namespace Demo
             threads = new Thread[threadCount];
             for (int i = 0; i < threadCount; i++)
             {
-                threads[i] = new Thread(RunTask) { Name = $"worker_{i}", IsBackground = true };
-                threads[i].Start();
+                Thread t = new Thread(RunTask) { Name = $"worker_{i}", IsBackground = true };
+                t.Start();
+                threads[i] = t;
             }
         }
 

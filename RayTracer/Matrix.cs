@@ -8,11 +8,17 @@ namespace RayTracer
     {
         public int Size;
         private double[,] _m;
+        public bool IsIdentity { get; set; }
 
-        public static Matrix Identity() => new Matrix(1, 0, 0, 0,
-            0, 1, 0, 0,
-            0, 0, 1, 0,
-            0, 0, 0, 1);
+        public static Matrix Identity()
+        {
+            var m = new Matrix(1, 0, 0, 0,
+                   0, 1, 0, 0,
+                   0, 0, 1, 0,
+                   0, 0, 0, 1);
+            m.IsIdentity = true;
+            return m;
+        }
 
         public static Matrix ViewTransform(Tuple from, Tuple to, Tuple up)
         {
@@ -105,6 +111,16 @@ namespace RayTracer
             Initialize(intializeWith);
         }
 
+        public Matrix(Matrix m)
+        {
+            Size = m.Size;
+            _m = new double[Size, Size];
+
+            for (int r = 0; r < Size; r++)
+                for (int c = 0; c < Size; c++)
+                    _m[r, c] = m[r, c];
+        }
+
         private void Initialize(double val)
         {
             for (int r = 0; r < Size; r++)
@@ -171,6 +187,7 @@ namespace RayTracer
 
         public Matrix Transpose()
         {
+            if (IsIdentity) return this;
             Matrix m = new Matrix(Size);
             for (int r = 0; r < Size; r++)
             {
@@ -206,10 +223,21 @@ namespace RayTracer
             return result;
         }
 
+        private double _determinant = double.NaN;
+        public void ResetDeterminant()
+        {
+            _determinant = Double.NaN;
+        }
         public double Determinant()
         {
+            if (!double.IsNaN(_determinant))
+                return _determinant;
+
             if (Size == 2)
-                return _m[0, 0] * _m[1, 1] - _m[0, 1] * _m[1, 0];
+            {
+                _determinant = _m[0, 0] * _m[1, 1] - _m[0, 1] * _m[1, 0];
+                return _determinant;
+            }
             else
             {
                 double det = 0;
@@ -217,7 +245,8 @@ namespace RayTracer
                 {
                     det += _m[0, c] * Cofactor(0, c);
                 }
-                return det;
+                _determinant = det;
+                return _determinant;
             }
         }
 
@@ -260,6 +289,9 @@ namespace RayTracer
         {
             if (!IsInvertable()) throw new NotSupportedException("This matrix is not invertable");
 
+            if (IsIdentity) 
+                return this;
+
             Matrix result = new Matrix(Size);
             for (var row = 0; row < Size; row++)
             {
@@ -276,7 +308,8 @@ namespace RayTracer
 
         public Matrix Apply()
         {
-            Matrix result = this;
+            Matrix result = new Matrix(this);
+            result.IsIdentity = false;
             while (_transformationChain.Count > 0)
             {
                 var transform = _transformationChain.Pop();

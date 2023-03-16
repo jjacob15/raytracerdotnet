@@ -55,7 +55,7 @@ namespace RayTracer
             return new Intersections(intersections);
         }
 
-        public Color ShadeHits(IntersectionState comps, int remaining = 4)
+        public unsafe Color ShadeHits(IntersectionState comps, int remaining = 4)
         {
             var overpoint = comps.OverPoint;
             var eyeV = comps.EyeV;
@@ -131,6 +131,7 @@ namespace RayTracer
 
             if (comps.Object.Material.Ambient == 1)
                 return Color.Black;
+
             var reflectedRay = new Ray(comps.OverPoint, comps.ReflectV);
             var color = ColorAt(reflectedRay, remaining - 1);
             return color * comps.Object.Material.Reflective;

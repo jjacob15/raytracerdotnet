@@ -37,11 +37,12 @@ namespace RayTracer
 
         public override int GetHashCode()
         {
-            double hashcode = 23;
-            hashcode = (hashcode * 37) + X;
-            hashcode = (hashcode * 37) + Y;
-            hashcode = (hashcode * 37) + Z;
-            return (int) Math.Round((hashcode * 37) + W);
+            return base.GetHashCode();
+            //double hashcode = 23;
+            //hashcode = (hashcode * 37) + X;
+            //hashcode = (hashcode * 37) + Y;
+            //hashcode = (hashcode * 37) + Z;
+            //return (int) Math.Round((hashcode * 37) + W);
         }
 
         public static bool operator ==(Tuple a, Tuple b)
