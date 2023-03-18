@@ -134,7 +134,7 @@ namespace RayTracer
         [Fact]
         public void ShadingAnIntersection()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             var shape = w.Shapes.First();
             var i = new Intersection(shape, 4);
@@ -145,7 +145,7 @@ namespace RayTracer
         [Fact]
         public void ShadingAnIntersectionFromInside()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             w.SetLight(new PointLight(Tuple.Point(0, 0.25, 0), new Color(1, 1, 1)));
 
             var r = new Ray(Tuple.Point(0, 0, 0), Tuple.Vector(0, 0, 1));
@@ -158,7 +158,7 @@ namespace RayTracer
         [Fact]
         public void ColorWhenRayMisses()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 1, 0));
             w.ColorAt(r).Should().Be(Color.Black);
         }
@@ -166,7 +166,7 @@ namespace RayTracer
         [Fact]
         public void ColorWhenRayHits()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             w.ColorAt(r).Should().Be(new Color(0.38066, 0.47583, 0.2855));
         }
@@ -174,7 +174,7 @@ namespace RayTracer
         [Fact]
         public void ColorWhenIntersectionBehindRay()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             w.ColorAt(r).Should().Be(new Color(0.38066, 0.47583, 0.2855));
         }
@@ -182,7 +182,7 @@ namespace RayTracer
         [Fact]
         public void ColorWithIntersectionBehindTheRay()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             var outer = w.Shapes.First();
             outer.Material.Ambient = 1;
 
@@ -217,7 +217,7 @@ namespace RayTracer
         [Fact]
         public void ReflectColorForNonreflectiveSurface()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             var r = new Ray(Tuple.Point(0, 0, 0), Tuple.Vector(0, 0, 1));
             var s = w.Shapes[1];
             s.Material.Ambient = 1;
@@ -229,7 +229,7 @@ namespace RayTracer
         [Fact]
         public void ReflectColorForReflectiveSurface()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             var p = new Plane();
             p.Material.Reflective = 0.5;
             p.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
@@ -243,7 +243,7 @@ namespace RayTracer
         [Fact]
         public void ShadeHitWithReflectiveMaterial()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             var p = new Plane();
             p.Material.Reflective = 0.5;
             p.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
@@ -279,7 +279,7 @@ namespace RayTracer
         [Fact]
         public void ReflectedColorAtMaxDepth()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             var shape = new Plane();
             shape.Material.Reflective = 0.5;
             shape.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();

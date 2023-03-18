@@ -35,7 +35,27 @@ namespace RayTracer.Shapes
             intersections.Add(new Intersection(this, (-b + Math.Sqrt(discriminant)) / (2 * a)));
 
             return intersections;
+        }
 
+        public override Intersections IntersectLocal(ref Tuple origin, ref Tuple direction)
+        {
+            var intersections = new Intersections();
+
+            var SphereToRay = origin - Tuple.Point(0, 0, 0);
+            var a = direction.Dot(direction);
+            var b = 2 * direction.Dot(SphereToRay);
+            var c = SphereToRay.Dot(SphereToRay) - 1;
+            var discriminant = b * b - 4 * a * c;
+
+            if (discriminant < 0)
+            {
+                return intersections;
+            }
+
+            intersections.Add(new Intersection(this, (-b - Math.Sqrt(discriminant)) / (2 * a)));
+            intersections.Add(new Intersection(this, (-b + Math.Sqrt(discriminant)) / (2 * a)));
+
+            return intersections;
         }
 
         public override Tuple NormalAtLocal(Tuple localPoint)

@@ -7,6 +7,36 @@ namespace RayTracer
 {
     public class IntersectionState
     {
+        public IntersectionState(Intersection intersection, ref Tuple origin,ref Tuple direction, Intersections intersections)
+        {
+            //instantiate a data structure for storing some precomputed values
+
+            //copy the intersection's properties, for convenience
+            T = intersection.T;
+            Object = intersection.Object;
+
+            //precompute some useful values
+            Point = origin + direction * T;
+            EyeV = -direction;
+            NormalV = Object.NormalAt(Point);
+            ReflectV = direction.Reflect(-NormalV);
+
+            if (NormalV.Dot(EyeV) < 0)
+            {
+                Inside = true;
+                NormalV = -NormalV;
+            }
+
+
+            //do not use double.Epsilon
+            OverPoint = Point + NormalV * Constants.Epsilon;
+            UnderPoint = Point - NormalV * Constants.Epsilon;
+
+            if (intersections != null)
+            {
+                ComputeN1N2(intersection, intersections);
+            }
+        }
         public IntersectionState(Intersection intersection, Ray ray, Intersections intersections)
         {
             //instantiate a data structure for storing some precomputed values

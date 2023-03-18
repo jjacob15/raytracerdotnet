@@ -2,8 +2,9 @@
 using RayTracer;
 using System;
 
-namespace PerformanceTesting
+namespace Profiling
 {
+    [MemoryDiagnoser]
     public class CameraBenchmarks
     {
         Camera c;

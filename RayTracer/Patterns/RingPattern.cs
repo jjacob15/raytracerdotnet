@@ -13,7 +13,7 @@ namespace RayTracer.Patterns
         public override Color PatternAt(Tuple point)
         {
             var distance = Math.Sqrt(point.X * point.X + point.Z * point.Z);
-            if (distance % 2 == 0) return A;
+            if (Math.Floor(distance) % 2 < Constants.Epsilon) return A;
             return B;
         }
     }

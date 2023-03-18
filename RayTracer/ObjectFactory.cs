@@ -6,8 +6,12 @@ using System.Text;
 
 namespace RayTracer
 {
-    public class TestObjects
+    public class ObjectFactory
     {
+        public static Ray IntersectingRay()
+        {
+            return new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
+        }
         public static World DefaultWorld()
         {
             World w = new World();

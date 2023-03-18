@@ -53,7 +53,7 @@ namespace RayTracer
         [Fact]
         public void RenderingWorldWithCamera()
         {
-            World w = TestObjects.DefaultWorld();
+            World w = ObjectFactory.DefaultWorld();
             Camera c = new Camera(11, 11, Math.PI / 2);
             var from = Tuple.Point(0, 0, -5);
             var to = Tuple.Point(0, 0, 0);

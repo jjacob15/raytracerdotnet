@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RayTracer
 {
-    public class Ray
+    public struct Ray
     {
         public Ray(Tuple origin, Tuple direction)
         {

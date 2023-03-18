@@ -18,13 +18,15 @@ namespace Demo
         {
             GCSettings.LatencyMode = GCLatencyMode.Batch;
 
-            var threadCount = Environment.ProcessorCount;
-            //var threadCount = 1;
+            var threading = true;
+            var threadCount = threading ? Environment.ProcessorCount : 1;
             var display = true;
-            var renderParams = RendererParameters.HighQuality;
+
+            var renderParams = RendererParameters.DefaultQuality;
 
             List<Type> scenes = new List<Type> {
-                typeof(SimpleScene)};
+                //typeof(SimpleScene),
+            typeof(StrippedPatternScene)};
 
             string dir = Path.Combine(Path.GetTempPath(), "raytracing");
             if (Directory.Exists(dir))

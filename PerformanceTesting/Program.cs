@@ -1,12 +1,14 @@
 ﻿using BenchmarkDotNet.Running;
+using Profiling;
 
-namespace PerformanceTesting
+namespace Profiling
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var summary = BenchmarkRunner.Run<CameraBenchmarks>();
+            //BenchmarkRunner.Run<CameraBenchmarks>();
+            BenchmarkRunner.Run<WorldBenchmark>();
         }
     }
 }

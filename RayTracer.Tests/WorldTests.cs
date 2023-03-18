@@ -19,7 +19,7 @@ namespace RayTracer
             Sphere s2 = new Sphere();
             s2.Transform = Matrix.Identity().Scaling(0.5, 0.5, 0.5).Apply();
 
-            var world = TestObjects.DefaultWorld();
+            var world = ObjectFactory.DefaultWorld();
             world.Shapes[0].Should().Be(s1);
             world.Shapes[1].Should().Be(s2);
 
@@ -29,10 +29,12 @@ namespace RayTracer
         [Fact]
         public void DefaultWorldIntersections()
         {
-            var world = TestObjects.DefaultWorld();
+            var world = ObjectFactory.DefaultWorld();
             var ray = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
 
-            var xs = world.Intersect(ray);
+
+            var xs = new Intersections();
+            world.Intersect(ray, xs);
             xs.Count.Should().Be(4);
             xs[0].T.Should().Be(4);
             xs[1].T.Should().Be(4.5);
@@ -43,7 +45,7 @@ namespace RayTracer
         [Fact]
         public void NoShadowWhenNothingIsCollinearWithPointAndLight()
         {
-            World w = TestObjects.DefaultWorld();
+            World w = ObjectFactory.DefaultWorld();
             var p = Tuple.Point(0, 10, 0);
             w.IsShadowed(p).Should().Be(false);
         }
@@ -51,7 +53,7 @@ namespace RayTracer
         [Fact]
         public void ShadowWhenObjectBetweenPointAndLight()
         {
-            World w = TestObjects.DefaultWorld();
+            World w = ObjectFactory.DefaultWorld();
             var p = Tuple.Point(10, -10, 10);
             w.IsShadowed(p).Should().Be(true);
         }
@@ -59,7 +61,7 @@ namespace RayTracer
         [Fact]
         public void NoShadowWhenObjectBehindTheLight()
         {
-            World w = TestObjects.DefaultWorld();
+            World w = ObjectFactory.DefaultWorld();
             var p = Tuple.Point(-20, 20, -20);
             w.IsShadowed(p).Should().Be(false);
         }
@@ -67,7 +69,7 @@ namespace RayTracer
         [Fact]
         public void ShadowWhenObjectBetweenPoint()
         {
-            World w = TestObjects.DefaultWorld();
+            World w = ObjectFactory.DefaultWorld();
             var p = Tuple.Point(-2, 2, -2);
             w.IsShadowed(p).Should().Be(false);
         }
@@ -91,7 +93,7 @@ namespace RayTracer
         [Fact]
         public void RefractedColorWithOpaqueSurface()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             var s = w.Shapes[0];
             var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             var xs = new Intersections(new Intersection(s, 4), new Intersection(s, 6));
@@ -103,7 +105,7 @@ namespace RayTracer
         [Fact]
         public void RefractedColorAtMaxDepth()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             var s = w.Shapes[0];
             s.Material.Transparency = 1;
             s.Material.RefractiveIndex = 1.5;
@@ -117,7 +119,7 @@ namespace RayTracer
         [Fact]
         public void RefractedColorUnderTotalReflection()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             var s = w.Shapes[0];
             s.Material.Transparency = 1;
             s.Material.RefractiveIndex = 1.5;
@@ -131,7 +133,7 @@ namespace RayTracer
         [Fact]
         public void RefractedColorWithARefractedRay()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             var a = w.Shapes[0];
             a.Material.Ambient = 1;
             a.Material.Pattern = new TestPattern();
@@ -149,7 +151,7 @@ namespace RayTracer
         [Fact]
         public void ShadeHitWithTransparentMaterial()
         {
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
 
             var floor = new Plane();
             floor.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
@@ -170,11 +172,12 @@ namespace RayTracer
             var comps = xs[0].PrepareComputations(r, xs);
             w.ShadeHits(comps, 5).Should().Be(new Color(0.93642, 0.68642, 0.68642));
         }
+
         [Fact]
         public void ShadeHitWithReflectiveTransparentMaterial()
         {
             var sqrt2 = Math.Sqrt(2);
-            var w = TestObjects.DefaultWorld();
+            var w = ObjectFactory.DefaultWorld();
             var r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -sqrt2 / 2, sqrt2 / 2));
             var floor = new Plane();
             floor.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();

@@ -42,5 +42,10 @@ namespace RayTracer
         {
             return new IntersectionState(this, ray, xs);
         }
+
+        public IntersectionState PrepareComputations(ref Tuple origin, ref Tuple direction, Intersections xs = null)
+        {
+            return new IntersectionState(this, ref origin, ref direction, xs);
+        }
     }
 }

@@ -17,6 +17,17 @@ namespace RayTracer.Shapes
             return new Intersections(new Intersection(this, t));
         }
 
+        public override Intersections IntersectLocal(ref Tuple origin, ref Tuple direction)
+        {
+            if (Math.Abs(direction.Y) < double.Epsilon)
+            {
+                return new Intersections();
+            }
+
+            var t = -origin.Y / direction.Y;
+            return new Intersections(new Intersection(this, t));
+        }
+
         public override Tuple NormalAtLocal(Tuple localPoint)
         {
             return Tuple.Vector(0, 1, 0);

@@ -17,15 +17,28 @@ namespace RayTracer
             Y = y;
             Z = z;
             W = w;
+
+            _magnitude = double.MinValue;
         }
 
         public double X { get; }
         public double Y { get; }
         public double Z { get; }
-        public double W { get; set; }
+        public double W { get; private set; }
 
         public bool IsPoint => W == 1;
         public bool IsVector => W == 0;
+
+        public void SetW(int val)
+        {
+            W = val;
+            ResetMagnitude();
+        }
+
+        private void ResetMagnitude()
+        {
+            _magnitude = double.MinValue;
+        }
 
         public override bool Equals(object obj)
         {
@@ -91,10 +104,16 @@ namespace RayTracer
             return new Tuple(a.X * multiplier, a.Y * multiplier, a.Z * multiplier, a.W * multiplier);
         }
 
+        private double _magnitude { get; set; }
+
         public double Magnitude()
         {
-            return Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2) + Math.Pow(W, 2));
+            if (_magnitude != double.MinValue) return _magnitude;
+
+            _magnitude = Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2) + Math.Pow(W, 2));
+            return _magnitude;
         }
+
 
         public Tuple Normalize()
         {
@@ -119,7 +138,7 @@ namespace RayTracer
 
         public override string ToString()
         {
-            return $"x {Math.Round(X,2)} y {Math.Round(Y, 2)} z {Math.Round(Z, 2)} w {Math.Round(W, 2)}";
+            return $"x {Math.Round(X, 2)} y {Math.Round(Y, 2)} z {Math.Round(Z, 2)} w {Math.Round(W, 2)}";
         }
 
         public Tuple Reflect(Tuple normal)

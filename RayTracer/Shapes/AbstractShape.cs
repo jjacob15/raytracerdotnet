@@ -8,6 +8,7 @@ namespace RayTracer.Shapes
         public Material Material { get; set; } = new Material();
 
         public abstract Intersections IntersectLocal(Ray ray);
+        public abstract Intersections IntersectLocal(ref Tuple origin, ref Tuple direction);
         public abstract Tuple NormalAtLocal(Tuple localPoint);
 
         public Intersections Intersect(Ray ray)
@@ -21,13 +22,27 @@ namespace RayTracer.Shapes
             return IntersectLocal(transformedRay);
         }
 
+        public Intersections Intersect(ref Tuple origin, ref Tuple direction)
+        {
+            if (Transform.IsIdentity)
+            {
+                return IntersectLocal(ref origin, ref direction);
+            }
+
+            var transformInverse = Transform.Inverse();
+            //var transformedRay = ray.Transform(Transform.Inverse());
+            var transformedOrigin = origin * transformInverse;
+            var transformedDirection = direction * transformInverse;
+            return IntersectLocal(ref transformedOrigin, ref transformedDirection);
+        }
+
         public Tuple NormalAt(Tuple worldPoint)
         {
             var localPoint = Transform.Inverse() * worldPoint;
             //var localNormal = localPoint - Tuple.Point(0, 0, 0);
             var localNormal = NormalAtLocal(localPoint);
             var worldNormal = Transform.Inverse().Transpose() * localNormal;
-            worldNormal.W = 0;
+            worldNormal.SetW(0);
             return worldNormal.Normalize();
         }
 

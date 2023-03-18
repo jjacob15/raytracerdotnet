@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreateAScene", "CreateAScen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo", "Demo\Demo.csproj", "{0DCF2963-0024-4AEC-B46E-73C599C00DC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerformanceTesting", "PerformanceTesting\PerformanceTesting.csproj", "{875C1111-AF68-480A-8EC3-4050F973F2AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Profiling", "PerformanceTesting\Profiling.csproj", "{875C1111-AF68-480A-8EC3-4050F973F2AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

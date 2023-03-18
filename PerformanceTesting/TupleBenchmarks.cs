@@ -2,7 +2,7 @@
 using RayTracer;
 using System;
 
-namespace PerformanceTesting
+namespace Profiling
 {
     public class TupleBenchmarks
     {

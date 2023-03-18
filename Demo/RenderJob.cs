@@ -29,7 +29,7 @@ namespace Demo
             {
                 int x = XList[i];
                 int y = YList[i];
-                var ray = Camera.RayForPixel(x, y);
+                Ray ray = Camera.RayForPixel(x, y);
                 var color = World.ColorAt(ray);
                 Canvas[x, y] = color;
                 Stats.IncrementPixelCount();
