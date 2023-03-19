@@ -197,7 +197,7 @@ namespace RayTracer
         }
 
         [Fact]
-        public void Invertabe()
+        public void Invertable()
         {
             Matrix m = new Matrix(6, 4, 4, 4,
                 5, 5, 7, 6,
@@ -299,14 +299,14 @@ namespace RayTracer
         public void TransformationMatrixLookingPositiveZDirection()
         {
             var t = Matrix.ViewTransform(Tuple.Point(0, 0, 0), Tuple.Point(0, 0, 1), Tuple.Vector(0, 1, 0));
-            t.Should().Be(Matrix.Identity().Scaling(-1, 1, -1).Apply());
+            t.Should().Be(Matrix.Transformation().Scaling(-1, 1, -1).Apply());
         }
 
         [Fact]
         public void ViewTransformationMovesTheWorld()
         {
             var t = Matrix.ViewTransform(Tuple.Point(0, 0, 8), Tuple.Point(0, 0, 0), Tuple.Vector(0, 1, 0));
-            var transformation = Matrix.Identity().Translation(0, 0, -8).Apply();
+            var transformation = Matrix.Transformation().Translation(0, 0, -8).Apply();
             t.Should().Be(transformation);
         }
 

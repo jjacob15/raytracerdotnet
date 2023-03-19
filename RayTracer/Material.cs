@@ -9,6 +9,19 @@ namespace RayTracer
 {
     public class Material
     {
+        public Material(IPattern pattern, double ambient = 0.1, double diffuse = 0.9, double specular = 0.9, int shininess = 200,
+            double reflective = 0.0, double transparency = 0, double refractiveIndex = 1) : this(Color.White)
+        {
+            Pattern = pattern;
+            Ambient = ambient;
+            Diffuse = diffuse;
+            Specular = specular;
+            Shininess = shininess;
+            Reflective = reflective;
+            Transparency = transparency;
+            RefractiveIndex = refractiveIndex;
+        }
+
         public Material(Color color, double ambient = 0.1, double diffuse = 0.9, double specular = 0.9, int shininess = 200,
             double reflective = 0.0, double transparency = 0, double refractiveIndex = 1)
         {
@@ -27,18 +40,18 @@ namespace RayTracer
 
         }
 
-        public Color Color { get; set; }
-        public double Ambient { get; set; }
-        public double Diffuse { get; set; }
-        public double Specular { get; set; }
-        public double Shininess { get; set; }
-        public double Reflective { get; set; }
-        public double Transparency { get; set; }
-        public double RefractiveIndex { get; set; }
+        public Color Color { get; set; } = new Color(1, 1, 1);
+        public double Ambient { get; set; } = 0.1;
+        public double Diffuse { get; set; } = 0.9;
+        public double Specular { get; set; } = 0.9;
+        public double Shininess { get; set; } = 200;
+        public double Reflective { get; set; } = 0.0;
+        public double Transparency { get; set; } = 0;
+        public double RefractiveIndex { get; set; } = 1;
 
         public IPattern Pattern { get; set; }
 
-        public Color Lighting(IShape shape, ILight light,ref Tuple point,ref Tuple eyeV,ref Tuple normalV, bool inShadow)
+        public Color Lighting(IShape shape, ILight light,ref Tuple point,ref Tuple eyeV, ref Tuple normalV, bool inShadow)
         {
             if (Pattern != null)
             {

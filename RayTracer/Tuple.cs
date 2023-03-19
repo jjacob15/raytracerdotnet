@@ -18,7 +18,7 @@ namespace RayTracer
             Z = z;
             W = w;
 
-            _magnitude = double.MinValue;
+            //_magnitude = double.MinValue;
         }
 
         public double X { get; }
@@ -32,13 +32,13 @@ namespace RayTracer
         public void SetW(int val)
         {
             W = val;
-            ResetMagnitude();
+            //ResetMagnitude();
         }
 
-        private void ResetMagnitude()
-        {
-            _magnitude = double.MinValue;
-        }
+        //private void ResetMagnitude()
+        //{
+        //    _magnitude = double.MinValue;
+        //}
 
         public override bool Equals(object obj)
         {
@@ -104,14 +104,14 @@ namespace RayTracer
             return new Tuple(a.X * multiplier, a.Y * multiplier, a.Z * multiplier, a.W * multiplier);
         }
 
-        private double _magnitude { get; set; }
+        //private double _magnitude { get; set; }
 
         public double Magnitude()
         {
-            if (_magnitude != double.MinValue) return _magnitude;
-
-            _magnitude = Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2) + Math.Pow(W, 2));
-            return _magnitude;
+            //if (_magnitude != double.MinValue) return _magnitude;
+            return Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2) + Math.Pow(W, 2)); 
+            //_magnitude = Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2) + Math.Pow(W, 2));
+            //return _magnitude;
         }
 
 

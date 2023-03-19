@@ -22,18 +22,20 @@ namespace Demo
             var threadCount = threading ? Environment.ProcessorCount : 1;
             var display = true;
 
-            var renderParams = RendererParameters.DefaultQuality;
+            var renderParams = RendererParameters.HighQuality;
 
             List<Type> scenes = new List<Type> {
-                //typeof(SimpleScene),
-            typeof(StrippedPatternScene)};
+            //    typeof(SimpleScene),
+            //typeof(StrippedPatternScene),
+            typeof(ReflectionScene)
+            };
 
             string dir = Path.Combine(Path.GetTempPath(), "raytracing");
             if (Directory.Exists(dir))
             {
                 Directory.Delete(dir, true);
             }
-            Console.WriteLine($"CreateDirectory: {dir}");
+
             Directory.CreateDirectory(dir);
 
             Stopwatch sw = Stopwatch.StartNew();

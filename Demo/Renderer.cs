@@ -32,7 +32,7 @@ namespace Demo
 
         public void Render(Type type, RendererParameters renderParams, int threads)
         {
-            Scene scene = (Scene)Activator.CreateInstance(type);
+            AbstractScene scene = (AbstractScene)Activator.CreateInstance(type);
             if (scene == null)
                 throw new Exception($"Invalid scene type: {type.FullName}");
 
@@ -40,7 +40,7 @@ namespace Demo
             Render(scene, renderParams, threads);
         }
 
-        private void Render(Scene scene, RendererParameters renderParameters, int threads)
+        private void Render(AbstractScene scene, RendererParameters renderParameters, int threads)
         {
             Canvas = new Canvas(renderParameters.Width, renderParameters.Height);
             var camera = BuildCamera(renderParameters);
@@ -51,31 +51,58 @@ namespace Demo
 
         private void Render(IWorld world, Canvas canvas, Camera camera, int threadCount)
         {
-            var point = new List<Tuple<int, int>>();
+            var pixels = new List<Tuple<int, int>>();
             for (int y = 0; y < camera.VSize; y++)
             {
                 for (int x = 0; x < camera.HSize; x++)
                 {
-                    point.Add(new Tuple<int, int>(x, y));
+                    pixels.Add(new Tuple<int, int>(x, y));
                 }
             }
 
-            const int Batch = 128;
-            for (int i = 0; i < point.Count; i += Batch)
+            //if (shuffle)
+            //{
+            //    Random r = new Random(0);
+            //    pixels = pixels.OrderBy(job => r.Next()).ToList();
+            //}
+
+            const int BatchSize = 128;
+            for (int i = 0; i < pixels.Count; i += BatchSize)
             {
-                RenderJob job = new RenderJob(world, camera, canvas, Stats);
-                for (int j = 0; j < Batch; j++)
+                RenderJob job = new RenderJob(world, camera,canvas, Stats);
+                for (int j = 0; j < BatchSize; j++)
                 {
-                    if (i + j >= point.Count)
+                    if (i + j >= pixels.Count)
                     {
                         continue;
                     }
-                    var pixel = point[i + j];
+                    var pixel = pixels[i + j];
                     job.XList.Add(pixel.Item1);
                     job.YList.Add(pixel.Item2);
                 }
                 RenderJobs.Enqueue(job);
             }
+            //int batchSize = 500;
+            //int count = 0;
+            //RenderJob job = new RenderJob(world, camera, canvas, Stats);
+            //for (int y = 0; y < camera.VSize; y++)
+            //{
+            //    for (int x = 0; x < camera.HSize; x++)
+            //    {
+            //        if (count >= batchSize)
+            //        {
+            //            RenderJobs.Enqueue(job);
+            //            job = new RenderJob(world, camera, canvas, Stats);
+            //            count = 0;
+            //        }
+            //        job.XList.Add(x);
+            //        job.YList.Add(y);
+            //        count++;
+            //    }
+            //}
+
+            //RenderJobs.Enqueue(job);
+
 
             if (threadCount < 2)
             {
@@ -86,7 +113,7 @@ namespace Demo
             threads = new Thread[threadCount];
             for (int i = 0; i < threadCount; i++)
             {
-                Thread t = new Thread(RunTask) { Name = $"worker_{i}", IsBackground = true };
+                Thread t = new Thread(RunTask) { Name = $"worker_{i}" };
                 t.Start();
                 threads[i] = t;
             }

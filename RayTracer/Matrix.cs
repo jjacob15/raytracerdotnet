@@ -20,6 +20,11 @@ namespace RayTracer
             return m;
         }
 
+        public static TransformationBuilder Transformation()
+        {
+            return new TransformationBuilder();
+        }
+
         public static Matrix ViewTransform(Tuple from, Tuple to, Tuple up)
         {
             var forward = (to - from).Normalize();
@@ -32,7 +37,7 @@ namespace RayTracer
                 -forward.X, -forward.Y, -forward.Z, 0,
                 0, 0, 0, 1);
 
-            return orientation * Identity().Translation(-from.X, -from.Y, -from.Z).Apply();
+            return orientation * Transformation().Translation(-from.X, -from.Y, -from.Z).Apply();
         }
 
         public Matrix(double m00, double m01,
@@ -289,7 +294,7 @@ namespace RayTracer
         {
             if (!IsInvertable()) throw new NotSupportedException("This matrix is not invertable");
 
-            if (IsIdentity) 
+            if (IsIdentity)
                 return this;
 
             Matrix result = new Matrix(Size);
@@ -302,93 +307,6 @@ namespace RayTracer
                 }
             }
             return result;
-        }
-
-        private Stack<Matrix> _transformationChain = new Stack<Matrix>();
-
-        public Matrix Apply()
-        {
-            Matrix result = new Matrix(this);
-            result.IsIdentity = false;
-            while (_transformationChain.Count > 0)
-            {
-                var transform = _transformationChain.Pop();
-                result = result * transform;
-            }
-            return result;
-        }
-
-        public Matrix Scaling(double x, double y, double z)
-        {
-            var transform = Identity();
-            transform[0, 0] = x;
-            transform[1, 1] = y;
-            transform[2, 2] = z;
-
-            _transformationChain.Push(transform);
-            return this;
-        }
-
-        public Matrix Translation(double x, double y, double z)
-        {
-            var transform = Identity();
-
-            transform[0, 3] = x;
-            transform[1, 3] = y;
-            transform[2, 3] = z;
-
-            _transformationChain.Push(transform);
-            return this;
-        }
-
-        public Matrix RotateX(double r)
-        {
-            var transform = Identity();
-            transform[1, 1] = Math.Cos(r);
-            transform[1, 2] = -Math.Sin(r);
-            transform[2, 1] = Math.Sin(r);
-            transform[2, 2] = Math.Cos(r);
-
-            _transformationChain.Push(transform);
-            return this;
-        }
-
-        public Matrix RotateY(double r)
-        {
-            var transform = Identity();
-            transform[0, 0] = Math.Cos(r);
-            transform[0, 2] = Math.Sin(r);
-            transform[2, 0] = -Math.Sin(r);
-            transform[2, 2] = Math.Cos(r);
-
-            _transformationChain.Push(transform);
-            return this;
-        }
-
-        public Matrix RotateZ(double r)
-        {
-            var transform = Identity();
-            transform[0, 0] = Math.Cos(r);
-            transform[0, 1] = -Math.Sin(r);
-            transform[1, 0] = Math.Sin(r);
-            transform[1, 1] = Math.Cos(r);
-
-            _transformationChain.Push(transform);
-            return this;
-        }
-
-        public Matrix Shearing(double xy, double xz, double yx, double yz, double zx, double zy)
-        {
-            var transform = Identity();
-            transform[0, 1] = xy;
-            transform[0, 2] = xz;
-            transform[1, 0] = yx;
-            transform[1, 2] = yz;
-            transform[2, 0] = zx;
-            transform[2, 1] = zy;
-
-            _transformationChain.Push(transform);
-            return this;
         }
     }
 }

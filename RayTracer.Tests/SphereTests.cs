@@ -106,7 +106,7 @@ namespace RayTracer
         public void NormalOfTranslatedSphere()
         {
             var sphere = new Sphere();
-            sphere.Transform = Matrix.Identity().Translation(0, 1, 0).Apply();
+            sphere.Transform = Matrix.Transformation().Translation(0, 1, 0).Apply();
             var normal = sphere.NormalAt(Tuple.Point(0, 1.70711, -0.70711));
 
             Assert.True(normal == Tuple.Vector(0, 0.70711, -0.70711));
@@ -117,7 +117,7 @@ namespace RayTracer
         public void NormalOfTransformedSphere()
         {
             var sphere = new Sphere();
-            sphere.Transform = Matrix.Identity().RotateZ(Math.PI / 5).Scaling(1, 0.5, 1).Apply();
+            sphere.Transform = Matrix.Transformation().RotateZ(Math.PI / 5).Scaling(1, 0.5, 1).Apply();
             var normal = sphere.NormalAt(Tuple.Point(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2));
 
             Assert.True(normal == Tuple.Vector(0, 0.97014, -0.24254));

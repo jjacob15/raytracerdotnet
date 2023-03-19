@@ -23,7 +23,7 @@ namespace RayTracer
         {
             Ray r = new Ray(Tuple.Point(1, 2, 3), Tuple.Vector(0, 1, 0));
 
-            var r2 = r.Transform(Matrix.Identity().Translation(3, 4, 5).Apply());
+            var r2 = r.Transform(Matrix.Transformation().Translation(3, 4, 5).Apply());
 
             Assert.Equal(r2.Origin, Tuple.Point(4, 6, 8));
             Assert.Equal(r2.Direction, Tuple.Vector(0, 1, 0));
@@ -34,7 +34,7 @@ namespace RayTracer
         {
             Ray r = new Ray(Tuple.Point(1, 2, 3), Tuple.Vector(0, 1, 0));
 
-            var r2 = r.Transform(Matrix.Identity().Scaling(2, 3, 4).Apply());
+            var r2 = r.Transform(Matrix.Transformation().Scaling(2, 3, 4).Apply());
 
             Assert.Equal(r2.Origin, Tuple.Point(2, 6, 12));
             Assert.Equal(r2.Direction, Tuple.Vector(0, 3, 0));

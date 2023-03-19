@@ -11,9 +11,14 @@ namespace RayTracer
         public void TransformationSequenceTest()
         {
             var p = Tuple.Point(1, 0, 1);
-            var a = Matrix.Identity().RotateX(Math.PI / 2).Apply();
-            var b = Matrix.Identity().Scaling(5, 5, 5).Apply();
-            var c = Matrix.Identity().Translation(10, 5, 7).Apply();
+            //var a = Matrix.Identity().RotateX(Math.PI / 2).Apply();
+            //var b = Matrix.Identity().Scaling(5, 5, 5).Apply();
+            //var c = Matrix.Identity().Translation(10, 5, 7).Apply();
+
+            var a = Matrix.Transformation().RotateX(Math.PI / 2).Apply();
+            var b = Matrix.Transformation().Scaling(5, 5, 5).Apply();
+            var c = Matrix.Transformation().Translation(10, 5, 7).Apply();
+
 
             var p2 = a * p;
 
@@ -32,7 +37,7 @@ namespace RayTracer
         public void TransformationChainTest()
         {
             var p = Tuple.Point(1, 0, 1);
-            var transform = Matrix.Identity()
+            var transform = Matrix.Transformation()
                 .RotateX(Math.PI / 2)
                 .Scaling(5, 5, 5)
                 .Translation(10, 5, 7).Apply();

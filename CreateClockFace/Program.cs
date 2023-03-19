@@ -21,9 +21,9 @@ namespace CreateClockFace
             Canvas c = new Canvas(size, size);
             var point = Tuple.Point(size / 2, 0, 0);
             Console.WriteLine(point);
-            point = Matrix.Identity().Scaling(.5, 0, .5).Apply() * point;
+            point = Matrix.Transformation().Scaling(.5, 0, .5).Apply() * point;
             Console.WriteLine(point);
-            var translation = Matrix.Identity().RotateY(Math.PI / 6).Apply();
+            var translation = Matrix.Transformation().RotateY(Math.PI / 6).Apply();
             for (int i = 0; i < n; i++)
             {
                 var pX = (int)(point.X + (size/2));
@@ -45,10 +45,10 @@ namespace CreateClockFace
             var size = 200;
             Canvas c = new Canvas(size, size);
             var point = Tuple.Point(0, 0, 0);
-            var transform = Matrix.Identity().Translation(0, 1, 0).Scaling(size / 4, size / 4, 0).Apply();//.Scaling(size / 4, size / 4, 0).Apply();
+            var transform = Matrix.Transformation().Translation(0, 1, 0).Scaling(size / 4, size / 4, 0).Apply();//.Scaling(size / 4, size / 4, 0).Apply();
             point = transform * point;
 
-            var rotation = Matrix.Identity().RotateZ(Math.PI / 6).Apply();
+            var rotation = Matrix.Transformation().RotateZ(Math.PI / 6).Apply();
 
             for (int i = 0; i < n; i++)
             {

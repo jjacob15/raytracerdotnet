@@ -23,7 +23,7 @@ namespace RayTracer
 
             w.Shapes.Add(new Sphere
             {
-                Transform = Matrix.Identity().Scaling(0.5, 0.5, 0.5).Apply()
+                Transform = Matrix.Transformation().Scaling(0.5, 0.5, 0.5).Apply()
             });
 
             w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));

@@ -61,7 +61,7 @@ namespace RayTracer.Patterns
         public void StripesWithAnObjectTransformation()
         {
             Sphere s = new Sphere();
-            s.Transform = Matrix.Identity().Scaling(2, 2, 2).Apply();
+            s.Transform = Matrix.Transformation().Scaling(2, 2, 2).Apply();
             var pattern = new StrippedPattern();
             pattern.PatternAtShape(s, Tuple.Point(1.5, 0, 0)).Should().Be(Color.White);
         }
@@ -71,7 +71,7 @@ namespace RayTracer.Patterns
         {
             Sphere s = new Sphere();
             var pattern = new StrippedPattern();
-            pattern.Transform = Matrix.Identity().Scaling(2, 2, 2).Apply();
+            pattern.Transform = Matrix.Transformation().Scaling(2, 2, 2).Apply();
             pattern.PatternAtShape(s, Tuple.Point(1.5, 0, 0)).Should().Be(Color.White);
         }
 
@@ -79,9 +79,9 @@ namespace RayTracer.Patterns
         public void StripesWithBothObjectAndPatternTransformation()
         {
             Sphere s = new Sphere();
-            s.Transform = Matrix.Identity().Scaling(2, 2, 2).Apply();
+            s.Transform = Matrix.Transformation().Scaling(2, 2, 2).Apply();
             var pattern = new StrippedPattern();
-            pattern.Transform = Matrix.Identity().Translation(0.5, 0, 0).Apply();
+            pattern.Transform = Matrix.Transformation().Translation(0.5, 0, 0).Apply();
             pattern.PatternAtShape(s, Tuple.Point(2.5, 0, 0)).Should().Be(Color.White);
         }
     }

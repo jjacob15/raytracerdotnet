@@ -44,7 +44,7 @@ namespace RayTracer
         public void RayWhenCameraIsTransformed()
         {
             Camera c = new Camera(201, 101, Math.PI / 2);
-            c.SetTransform(Matrix.Identity().Translation(0, -2, 5).RotateY(Math.PI / 4).Apply());
+            c.SetTransform(Matrix.Transformation().Translation(0, -2, 5).RotateY(Math.PI / 4).Apply());
             Ray r = c.RayForPixel(100, 50);
             r.Origin.Should().Be(Tuple.Point(0, 2, -5));
             r.Direction.Should().Be(Tuple.Vector(Math.Sqrt(2) / 2, 0, -Math.Sqrt(2) / 2));

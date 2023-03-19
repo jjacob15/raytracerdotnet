@@ -18,7 +18,7 @@ namespace RayTracer.Patterns
 
         public override Color PatternAt(Tuple point)
         {
-            if (Math.Floor(point.X) % 2 == 0) return A;
+            if (Math.Floor(point.X) % 2 < Constants.Epsilon) return A;
 
             return B;
         }

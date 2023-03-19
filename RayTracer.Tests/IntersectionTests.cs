@@ -69,7 +69,7 @@ namespace RayTracer
         {
             var ray = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             var s = new Sphere();
-            s.Transform = Matrix.Identity().Scaling(2, 2, 2).Apply();
+            s.Transform = Matrix.Transformation().Scaling(2, 2, 2).Apply();
 
             var xs = s.Intersect(ray);
 
@@ -84,7 +84,7 @@ namespace RayTracer
         {
             var ray = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             var s = new Sphere();
-            s.Transform = Matrix.Identity().Translation(5, 0, 0).Apply();
+            s.Transform = Matrix.Transformation().Translation(5, 0, 0).Apply();
 
             var xs = s.Intersect(ray);
 
@@ -197,7 +197,7 @@ namespace RayTracer
         {
             var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             var s = new Sphere();
-            s.Transform = Matrix.Identity().Translation(0, 0, 1).Apply();
+            s.Transform = Matrix.Transformation().Translation(0, 0, 1).Apply();
             var i = s.Intersection(5);
             var comps = i.PrepareComputations(r);
             comps.OverPoint.Z.Should().BeLessThan(-double.Epsilon / 2);
@@ -232,7 +232,7 @@ namespace RayTracer
             var w = ObjectFactory.DefaultWorld();
             var p = new Plane();
             p.Material.Reflective = 0.5;
-            p.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
+            p.Transform = Matrix.Transformation().Translation(0, -1, 0).Apply();
             w.AddShape(p);
 
             var r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
@@ -246,7 +246,7 @@ namespace RayTracer
             var w = ObjectFactory.DefaultWorld();
             var p = new Plane();
             p.Material.Reflective = 0.5;
-            p.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
+            p.Transform = Matrix.Transformation().Translation(0, -1, 0).Apply();
             w.AddShape(p);
 
             var r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
@@ -263,12 +263,12 @@ namespace RayTracer
             w.SetLight(new PointLight(Tuple.Point(0, 0, 0), Color.White));
             var lower = new Plane();
             lower.Material.Reflective = 1;
-            lower.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
+            lower.Transform = Matrix.Transformation().Translation(0, -1, 0).Apply();
             w.AddShape(lower);
 
             var upper = new Plane();
             upper.Material.Reflective = 1;
-            upper.Transform = Matrix.Identity().Translation(0, 1, 0).Apply();
+            upper.Transform = Matrix.Transformation().Translation(0, 1, 0).Apply();
             w.AddShape(upper);
 
             var r = new Ray(Tuple.Point(0, 0, 0), Tuple.Vector(0, 1, 0));
@@ -282,7 +282,7 @@ namespace RayTracer
             var w = ObjectFactory.DefaultWorld();
             var shape = new Plane();
             shape.Material.Reflective = 0.5;
-            shape.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
+            shape.Transform = Matrix.Transformation().Translation(0, -1, 0).Apply();
             w.AddShape(shape);
 
             var r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
@@ -309,15 +309,15 @@ namespace RayTracer
         public void FindingN1AndN2AtVariousIntersections(int i, double n1, double n2)
         {
             var a = Sphere.GlassSphere();
-            a.Transform = Matrix.Identity().Scaling(2, 2, 2).Apply();
+            a.Transform = Matrix.Transformation().Scaling(2, 2, 2).Apply();
             a.Material.RefractiveIndex = 1.5;
 
             var b = Sphere.GlassSphere();
-            b.Transform = Matrix.Identity().Translation(0, 0, -0.25).Apply();
+            b.Transform = Matrix.Transformation().Translation(0, 0, -0.25).Apply();
             b.Material.RefractiveIndex = 2;
 
             var c = Sphere.GlassSphere();
-            b.Transform = Matrix.Identity().Translation(0, 0, 0.25).Apply();
+            b.Transform = Matrix.Transformation().Translation(0, 0, 0.25).Apply();
             c.Material.RefractiveIndex = 2.5;
 
             var r = new Ray(Tuple.Point(0, 0, -4), Tuple.Vector(0, 0, 1));
@@ -333,7 +333,7 @@ namespace RayTracer
         {
             var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             var s = Sphere.GlassSphere();
-            s.Transform = Matrix.Identity().Translation(0, 0, 1).Apply();
+            s.Transform = Matrix.Transformation().Translation(0, 0, 1).Apply();
             var i = new Intersection(s, 5);
             var xs = new Intersections(i);
             var comps = i.PrepareComputations(r, xs);

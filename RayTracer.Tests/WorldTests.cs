@@ -17,7 +17,7 @@ namespace RayTracer
             Sphere s1 = new Sphere();
             s1.Material = new Material(new Color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2, 200);
             Sphere s2 = new Sphere();
-            s2.Transform = Matrix.Identity().Scaling(0.5, 0.5, 0.5).Apply();
+            s2.Transform = Matrix.Transformation().Scaling(0.5, 0.5, 0.5).Apply();
 
             var world = ObjectFactory.DefaultWorld();
             world.Shapes[0].Should().Be(s1);
@@ -81,7 +81,7 @@ namespace RayTracer
             w.SetLight(new PointLight(Tuple.Point(0, 0, -10), new Color(1, 1, 1)));
             w.AddShape(new Sphere());
             var s2 = new Sphere();
-            s2.Transform = Matrix.Identity().Translation(0, 0, 10).Apply();
+            s2.Transform = Matrix.Transformation().Translation(0, 0, 10).Apply();
             w.AddShape(s2);
             var r = new Ray(Tuple.Point(0, 0, 5), Tuple.Vector(0, 0, 1));
             var i = s2.Intersection(4);
@@ -154,7 +154,7 @@ namespace RayTracer
             var w = ObjectFactory.DefaultWorld();
 
             var floor = new Plane();
-            floor.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
+            floor.Transform = Matrix.Transformation().Translation(0, -1, 0).Apply();
             floor.Material.Transparency = 0.5;
             floor.Material.RefractiveIndex = 1.5;
             w.AddShape(floor);
@@ -162,7 +162,7 @@ namespace RayTracer
             var ball = new Sphere();
             ball.Material.Color = new Color(1, 0, 0);
             ball.Material.Ambient = 0.5;
-            ball.Transform = Matrix.Identity().Translation(0, -3.5, -0.5).Apply();
+            ball.Transform = Matrix.Transformation().Translation(0, -3.5, -0.5).Apply();
             w.AddShape(ball);
 
             var r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
@@ -180,7 +180,7 @@ namespace RayTracer
             var w = ObjectFactory.DefaultWorld();
             var r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -sqrt2 / 2, sqrt2 / 2));
             var floor = new Plane();
-            floor.Transform = Matrix.Identity().Translation(0, -1, 0).Apply();
+            floor.Transform = Matrix.Transformation().Translation(0, -1, 0).Apply();
             floor.Material.Reflective = 0.5;
             floor.Material.Transparency = 0.5;
             floor.Material.RefractiveIndex = 1.5;
@@ -190,7 +190,7 @@ namespace RayTracer
             var ball = new Sphere();
             ball.Material.Color = new Color(1, 0, 0);
             ball.Material.Ambient = 0.5;
-            ball.Transform = Matrix.Identity().Translation(0, -3.5, -0.5).Apply();
+            ball.Transform = Matrix.Transformation().Translation(0, -3.5, -0.5).Apply();
 
             w.AddShape(ball);
             var xs = new Intersections(new Intersection(floor, sqrt2));

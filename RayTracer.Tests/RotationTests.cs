@@ -11,8 +11,8 @@ namespace RayTracer
         public void RotationX()
         {
             Tuple point = Tuple.Point(0, 1, 0);
-            Matrix halfQuater = Matrix.Identity().RotateX(Math.PI / 4).Apply();
-            Matrix fullQuater = Matrix.Identity().RotateX(Math.PI / 2).Apply();
+            Matrix halfQuater = Matrix.Transformation().RotateX(Math.PI / 4).Apply();
+            Matrix fullQuater = Matrix.Transformation().RotateX(Math.PI / 2).Apply();
 
             Assert.True(halfQuater * point == Tuple.Point(0, Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
             Assert.True(fullQuater * point == Tuple.Point(0, 0, 1));
@@ -22,7 +22,7 @@ namespace RayTracer
         public void RotationXInverse()
         {
             Tuple point = Tuple.Point(0, 1, 0);
-            Matrix halfQuater = Matrix.Identity().RotateX(Math.PI / 4).Apply();
+            Matrix halfQuater = Matrix.Transformation().RotateX(Math.PI / 4).Apply();
             var inv = halfQuater.Inverse();
 
             Assert.True(inv * point == Tuple.Point(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2));
@@ -32,8 +32,8 @@ namespace RayTracer
         public void RotationY()
         {
             Tuple point = Tuple.Point(0, 0, 1);
-            Matrix halfQuater = Matrix.Identity().RotateY(Math.PI / 4).Apply();
-            Matrix fullQuater = Matrix.Identity().RotateY(Math.PI / 2).Apply();
+            Matrix halfQuater = Matrix.Transformation().RotateY(Math.PI / 4).Apply();
+            Matrix fullQuater = Matrix.Transformation().RotateY(Math.PI / 2).Apply();
 
             Assert.True(halfQuater * point == Tuple.Point(Math.Sqrt(2) / 2, 0, Math.Sqrt(2) / 2));
             Assert.True(fullQuater * point == Tuple.Point(1, 0, 0));
@@ -43,8 +43,8 @@ namespace RayTracer
         public void RotationZ()
         {
             Tuple point = Tuple.Point(0, 1, 0);
-            Matrix halfQuater = Matrix.Identity().RotateZ(Math.PI / 4).Apply();
-            Matrix fullQuater = Matrix.Identity().RotateZ(Math.PI / 2).Apply();
+            Matrix halfQuater = Matrix.Transformation().RotateZ(Math.PI / 4).Apply();
+            Matrix fullQuater = Matrix.Transformation().RotateZ(Math.PI / 2).Apply();
 
             Assert.True(halfQuater * point == Tuple.Point(-Math.Sqrt(2) / 2, Math.Sqrt(2) / 2, 0));
             Assert.True(fullQuater * point == Tuple.Point(-1, 0, 0));
