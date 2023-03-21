@@ -106,8 +106,8 @@ namespace RayTracer
         [Fact]
         public void TransposeIdentity()
         {
-            Matrix i1 = Matrix.Identity();
-            Matrix i2 = Matrix.Identity();
+            Matrix i1 = Matrix.Identity;
+            Matrix i2 = Matrix.Identity;
 
             Assert.True(i1.Transpose() == i2);
         }
@@ -292,7 +292,7 @@ namespace RayTracer
         public void TransformationMatrixForDefaultOrientation()
         {
             var t = Matrix.ViewTransform(Tuple.Point(0, 0, 0), Tuple.Point(0, 0, -1), Tuple.Vector(0, 1, 0));
-            t.Should().Be(Matrix.Identity());
+            t.Should().Be(Matrix.Identity);
         }
 
         [Fact]

@@ -19,7 +19,7 @@ namespace Demo
             GCSettings.LatencyMode = GCLatencyMode.Batch;
 
             var threading = true;
-            var threadCount = threading ? Environment.ProcessorCount : 1;
+            int threadCount = threading ? (int) Environment.ProcessorCount :5;
             var display = true;
 
             var renderParams = RendererParameters.HighQuality;

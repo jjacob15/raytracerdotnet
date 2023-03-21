@@ -31,7 +31,8 @@ namespace Demo
                 int y = YList[i];
                 Ray ray = Camera.RayForPixel(x, y);
                 var color = World.ColorAt(ray);
-                Canvas[x, y] = color;
+                //Canvas[x, y] = color;
+                Canvas.SetPixel(x, y, color);
                 Stats.IncrementPixelCount();
             }
         }

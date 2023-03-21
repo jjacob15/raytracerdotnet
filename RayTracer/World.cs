@@ -31,7 +31,8 @@ namespace RayTracer
         {
             for (var i = 0; i < Shapes.Count; i++)
             {
-                intersections.AddRange(Shapes[i].Intersect(ray));
+                var shape = Shapes[i];
+                shape.Intersect(ref ray.Origin, ref ray.Direction, intersections);
             }
 
             intersections.Sort();
@@ -44,7 +45,7 @@ namespace RayTracer
             var normalV = comps.NormalV;
 
             var shadowed = IsShadowed(comps.OverPoint);
-            var surface = comps.Object.Material.Lighting(comps.Object, Light,ref overpoint,ref  eyeV, ref normalV, shadowed);
+            var surface = comps.Object.Material.Lighting(comps.Object, Light, overpoint, eyeV, normalV, shadowed);
             var reflected = ReflectedColor(comps, remaining);
             var refracted = RefractedColor(comps, remaining);
 
@@ -61,7 +62,9 @@ namespace RayTracer
         public Color ColorAt(Ray ray, int remaining = 4)
         {
             var intersections = new Intersections();
+
             Intersect(ray, intersections);
+
             var hit = intersections.Hit();
             if (hit == null)
                 return Color.Black;
@@ -73,7 +76,7 @@ namespace RayTracer
         public bool IsShadowed(Tuple point)
         {
             var v = Light.Position - point;
-            var distance = v.Magnitude();
+            var distance = v.Magnitude;
             var direction = v.Normalize();
 
             var r = new Ray(point, direction);
@@ -93,10 +96,11 @@ namespace RayTracer
         {
             if (remaining < 1) return Color.Black;
 
-            if (comps.Object.Material.Transparency == 0) return Color.Black;
+            if (comps.Object.Material.Transparency <= Constants.Epsilon) return Color.Black;
 
             var nRatio = comps.N1 / comps.N2;
-            var cosI = comps.EyeV.Dot(comps.NormalV);
+            var normalV = comps.NormalV;
+            var cosI = comps.EyeV.Dot(ref normalV);
             var sin2T = nRatio * nRatio * (1 - cosI * cosI);
             if (sin2T > 1)
             {
@@ -111,7 +115,8 @@ namespace RayTracer
 
         public Color ReflectedColor(IntersectionState comps, int remaining = 4)
         {
-            if (remaining < 1) return Color.Black;
+            var materialReflective = comps.Object.Material.Reflective;
+            if (remaining < 1 || materialReflective < double.Epsilon) return Color.Black;
 
             if (comps.Object.Material.Ambient == 1)
                 return Color.Black;

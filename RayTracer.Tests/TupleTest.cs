@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentAssertions;
+using System;
 using Xunit;
 
 namespace RayTracer
@@ -107,28 +108,28 @@ namespace RayTracer
         public void MagnitudeOne()
         {
             Tuple v = Tuple.Vector(0, 1, 0);
-            Assert.Equal(v.Magnitude(), 1);
+            v.Magnitude.Should().Be(1);
         }
 
         [Fact]
         public void MagnitudeTwo()
         {
             Tuple v = Tuple.Vector(0, 0, 1);
-            Assert.Equal(v.Magnitude(), 1);
+            v.Magnitude.Should().Be(1);
         }
 
         [Fact]
         public void MagnitudeThree()
         {
             Tuple v = Tuple.Vector(1, 2, 3);
-            Assert.Equal(v.Magnitude(), Math.Sqrt(14));
+            v.Magnitude.Should().Be(Math.Sqrt(14));
         }
 
         [Fact]
         public void MagnitudeFour()
         {
             Tuple v = Tuple.Vector(-1, -2, -3);
-            Assert.Equal(v.Magnitude(), Math.Sqrt(14));
+            v.Magnitude.Should().Be(Math.Sqrt(14));
         }
 
         [Fact]
@@ -150,7 +151,7 @@ namespace RayTracer
         {
             Tuple v1 = Tuple.Vector(1, 2, 3);
             Tuple v2 = Tuple.Vector(2, 3, 4);
-            Assert.Equal(v1.Dot(v2), 20);
+            Assert.Equal(v1.Dot(ref v2), 20);
         }
 
         [Fact]

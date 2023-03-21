@@ -17,15 +17,14 @@ namespace Profiling
         [Benchmark]
         public void CameraRayForPixelTest()
         {
-            Random r = new Random();
-            c.RayForPixel(r.Next(0, (int)c.HSize), r.Next(0, (int)c.HSize));
+            c.RayForPixel(200, 400);
         }
         
-        [Benchmark]
-        public void CameraRayForPixelTestOld()
-        {
-            Random r = new Random();
-            c.RayForPixelOld(r.Next(0, (int)c.HSize), r.Next(0, (int)c.HSize));
-        }
+        //[Benchmark]
+        //public void CameraRayForPixelTestOld()
+        //{
+        //    Random r = new Random();
+        //    c.RayForPixelOld(r.Next(0, (int)c.HSize), r.Next(0, (int)c.HSize));
+        //}
     }
 }

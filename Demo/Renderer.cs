@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Demo
         private string Output { get; }
         private Canvas Canvas { get; set; }
         private ConcurrentQueue<RenderJob> RenderJobs { get; } = new ConcurrentQueue<RenderJob>();
-
+        private Thread[] threads;
         public RendererStats Stats { get; private set; }
 
         public Renderer() : this(Path.GetTempPath())
@@ -27,7 +28,6 @@ namespace Demo
             Output = outputDir;
         }
 
-        private Thread[] threads;
 
 
         public void Render(Type type, RendererParameters renderParams, int threads)
@@ -59,12 +59,6 @@ namespace Demo
                     pixels.Add(new Tuple<int, int>(x, y));
                 }
             }
-
-            //if (shuffle)
-            //{
-            //    Random r = new Random(0);
-            //    pixels = pixels.OrderBy(job => r.Next()).ToList();
-            //}
 
             const int BatchSize = 128;
             for (int i = 0; i < pixels.Count; i += BatchSize)

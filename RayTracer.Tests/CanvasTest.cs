@@ -23,7 +23,7 @@ namespace RayTracer
         {
             var c = new Canvas(10, 20);
             var red = new Color(1, 0, 0);
-            c[2, 3] = red;
+            c.SetPixel(2, 3, red);
             Assert.Equal(c[2, 3], red);
         }
 
@@ -58,9 +58,9 @@ namespace RayTracer
         public void ConstructBody()
         {
             var c = new Canvas(5, 3);
-            c[0, 0] = new Color(1.5, 0, 0);
-            c[2, 1] = new Color(0, 0.5, 0);
-            c[4, 2] = new Color(-0.5, 0, 1);
+            c.SetPixel(0, 0, new Color(1.5, 0, 0));
+            c.SetPixel(2, 1, new Color(0, 0.5, 0));
+            c.SetPixel(4, 2, new Color(-0.5, 0, 1));
 
             var ppm = c.GetContent();
             var ppmLines = GetLines(ppm);

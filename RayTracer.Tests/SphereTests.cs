@@ -13,7 +13,8 @@ namespace RayTracer
         {
             var ray = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             var sphere = new Sphere();
-            var xs = sphere.Intersect(ray);
+            var xs = new Intersections();
+            sphere.Intersect(ray,xs);
 
             Assert.True(xs.Count == 2);
             Assert.True(xs[0].T.DoubleEqual(4.0));
@@ -25,7 +26,8 @@ namespace RayTracer
         {
             var ray = new Ray(Tuple.Point(0, 1, -5), Tuple.Vector(0, 0, 1));
             var sphere = new Sphere();
-            var xs = sphere.Intersect(ray);
+            var xs = new Intersections();
+            sphere.Intersect(ray,xs);
 
             Assert.True(xs.Count == 2);
             Assert.True(xs[0].T.DoubleEqual(5.0));
@@ -37,7 +39,8 @@ namespace RayTracer
         {
             var ray = new Ray(Tuple.Point(0, 2, -5), Tuple.Vector(0, 0, 1));
             var sphere = new Sphere();
-            var xs = sphere.Intersect(ray);
+            var xs = new Intersections();
+            sphere.Intersect(ray,xs);
             Assert.True(xs.Count == 0);
         }
 
@@ -46,7 +49,8 @@ namespace RayTracer
         {
             var ray = new Ray(Tuple.Point(0, 0, 0), Tuple.Vector(0, 0, 1));
             var sphere = new Sphere();
-            var xs = sphere.Intersect(ray);
+            var xs = new Intersections();
+            sphere.Intersect(ray,xs);
 
             Assert.True(xs.Count == 2);
             Assert.True(xs[0].T.DoubleEqual(-1.0));
@@ -58,7 +62,8 @@ namespace RayTracer
         {
             var ray = new Ray(Tuple.Point(0, 0, 5), Tuple.Vector(0, 0, 1));
             var sphere = new Sphere();
-            var xs = sphere.Intersect(ray);
+            var xs = new Intersections();
+            sphere.Intersect(ray,xs);
 
             Assert.True(xs.Count == 2);
             Assert.True(xs[0].T.DoubleEqual(-6.0));

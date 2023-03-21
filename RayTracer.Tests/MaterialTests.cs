@@ -17,7 +17,7 @@ namespace RayTracer.Tests
             var eyev = Tuple.Vector(0, 0, -1);
             var normalv = Tuple.Vector(0, 0, -1);
             var light = new PointLight(Tuple.Point(0, 0, -10), new Color(1, 1, 1));
-            var result = new Material().Lighting(new Sphere(),light, ref position,ref  eyev, ref normalv, false);
+            var result = new Material().Lighting(new Sphere(),light,  position,  eyev,  normalv, false);
             Assert.Equal(new Color(1.9, 1.9, 1.9), result);
         }
 
@@ -28,7 +28,7 @@ namespace RayTracer.Tests
             var eyev = Tuple.Vector(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2);
             var normalv = Tuple.Vector(0, 0, -1);
             var light = new PointLight(Tuple.Point(0, 0, -10), new Color(1, 1, 1));
-            var result = new Material().Lighting(new Sphere(), light,ref position, ref eyev, ref normalv, false);
+            var result = new Material().Lighting(new Sphere(), light, position,  eyev,  normalv, false);
             Assert.Equal(new Color(1.0, 1.0, 1.0), result);
         }
 
@@ -39,7 +39,7 @@ namespace RayTracer.Tests
             var eyev = Tuple.Vector(0, 0, -1);
             var normalv = Tuple.Vector(0, 0, -1);
             var light = new PointLight(Tuple.Point(0, 10, -10), new Color(1, 1, 1));
-            var result = new Material().Lighting(new Sphere(), light,ref position, ref eyev, ref normalv, false);
+            var result = new Material().Lighting(new Sphere(), light, position,  eyev,  normalv, false);
             Assert.Equal(new Color(0.7364, 0.7364, 0.7364), result);
         }
 
@@ -50,7 +50,7 @@ namespace RayTracer.Tests
             var eyev = Tuple.Vector(0, -Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2);
             var normalv = Tuple.Vector(0, 0, -1);
             var light = new PointLight(Tuple.Point(0, 10, -10), new Color(1, 1, 1));
-            var result = new Material().Lighting(new Sphere(), light,ref position, ref eyev, ref normalv, false);
+            var result = new Material().Lighting(new Sphere(), light, position,  eyev,  normalv, false);
             Assert.Equal(new Color(1.6364, 1.6364, 1.6364), result);
         }
 
@@ -61,7 +61,7 @@ namespace RayTracer.Tests
             var eyev = Tuple.Vector(0, 0, -1);
             var normalv = Tuple.Vector(0, 0, -1);
             var light = new PointLight(Tuple.Point(0, 0, 10), new Color(1, 1, 1));
-            var result = new Material().Lighting(new Sphere(), light,ref position, ref eyev, ref normalv, false);
+            var result = new Material().Lighting(new Sphere(), light, position,  eyev,  normalv, false);
             Assert.Equal(new Color(0.1, 0.1, 0.1), result);
         }
 
@@ -72,7 +72,7 @@ namespace RayTracer.Tests
             var eyev = Tuple.Vector(0, 0, -1);
             var normalv = Tuple.Vector(0, 0, -1);
             var light = new PointLight(Tuple.Point(0, 0, -10), new Color(1, 1, 1));
-            var result = new Material().Lighting(new Sphere(), light, ref position, ref eyev, ref normalv, true);
+            var result = new Material().Lighting(new Sphere(), light,  position,  eyev,  normalv, true);
             result.Should().Be(new Color(0.1, 0.1, 0.1));
         }
     }

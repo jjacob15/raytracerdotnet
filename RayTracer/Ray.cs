@@ -13,8 +13,8 @@ namespace RayTracer
             Direction = direction;
         }
 
-        public Tuple Origin { get; }
-        public Tuple Direction { get; }
+        public Tuple Origin;
+        public Tuple Direction;
 
         public Tuple Position(double t)
         {

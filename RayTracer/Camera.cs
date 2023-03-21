@@ -20,7 +20,7 @@ namespace RayTracer
             FieldOfView = fieldOfView;
             ComputePixelSize();
 
-            SetTransform(Matrix.Identity());
+            SetTransform(Matrix.Identity);
         }
 
         public void SetTransform(Matrix transform)
@@ -77,26 +77,26 @@ namespace RayTracer
             return new Ray(origin, direction);
         }
 
-        public Ray RayForPixelOld(int px, int py)
-        {
-            //the offset from the edge of the canvas to the pixel's center
-            double xOffset = (px + 0.5) * PixelSize;
-            double yOffset = (py + 0.5) * PixelSize;
+        //public Ray RayForPixelOld(int px, int py)
+        //{
+        //    //the offset from the edge of the canvas to the pixel's center
+        //    double xOffset = (px + 0.5) * PixelSize;
+        //    double yOffset = (py + 0.5) * PixelSize;
 
-            //the untransformed coordinates of the pixel in world space.
-            //(remember that the camera looks toward -z, so +x is to the *left*.)
-            double worldX = HalfWidth - xOffset;
-            double worldY = HalfHeight - yOffset;
+        //    //the untransformed coordinates of the pixel in world space.
+        //    //(remember that the camera looks toward -z, so +x is to the *left*.)
+        //    double worldX = HalfWidth - xOffset;
+        //    double worldY = HalfHeight - yOffset;
 
-            //using the camera matrix, transform the canvas point and the origin,
-            //and then compute the ray's direction vector.
-            //(remember that the canvas is at z=-1)
-            var pixel = Transform.Inverse() * Tuple.Point(worldX, worldY, -1);
-            var origin = Transform.Inverse() * Tuple.ZeroPoint();
-            var direction = (pixel - origin).Normalize();
+        //    //using the camera matrix, transform the canvas point and the origin,
+        //    //and then compute the ray's direction vector.
+        //    //(remember that the canvas is at z=-1)
+        //    var pixel = Transform.Inverse() * Tuple.Point(worldX, worldY, -1);
+        //    var origin = Transform.Inverse() * Tuple.ZeroPoint();
+        //    var direction = (pixel - origin).Normalize();
 
-            return new Ray(origin, direction);
-        }
+        //    return new Ray(origin, direction);
+        //}
 
         public Canvas Render(World w)
         {
@@ -107,7 +107,7 @@ namespace RayTracer
                 {
                     var ray = RayForPixel(x, y);
                     var color = w.ColorAt(ray);
-                    c[x, y] = color;
+                    c.SetPixel(x, y, color);
                 }
             }
             return c;

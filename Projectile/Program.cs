@@ -20,7 +20,7 @@ namespace Projectile
                 var x = (int)Math.Round(p.Position.X);
                 var y = cy - (int)Math.Round(p.Position.Y);
                 if (x < 0 || x > cx || y < 0 || y > cy) continue;
-                c[x, y] = new Color(1, 0, 0);
+                c.SetPixel(x, y,new Color(1, 0, 0));
                 i++;
             }
             c.Save("projectile.ppm");

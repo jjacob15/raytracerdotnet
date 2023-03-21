@@ -8,17 +8,11 @@ namespace RayTracer
     {
         public int Size;
         private double[,] _m;
-        public bool IsIdentity { get; set; }
 
-        public static Matrix Identity()
-        {
-            var m = new Matrix(1, 0, 0, 0,
+        public static readonly Matrix Identity = new Matrix(1, 0, 0, 0,
                    0, 1, 0, 0,
                    0, 0, 1, 0,
                    0, 0, 0, 1);
-            m.IsIdentity = true;
-            return m;
-        }
 
         public static TransformationBuilder Transformation()
         {
@@ -192,7 +186,7 @@ namespace RayTracer
 
         public Matrix Transpose()
         {
-            if (IsIdentity) return this;
+            if (ReferenceEquals(this, Identity)) return this;
             Matrix m = new Matrix(Size);
             for (int r = 0; r < Size; r++)
             {
@@ -294,8 +288,7 @@ namespace RayTracer
         {
             if (!IsInvertable()) throw new NotSupportedException("This matrix is not invertable");
 
-            if (IsIdentity)
-                return this;
+            if (ReferenceEquals(this, Identity)) return this;
 
             Matrix result = new Matrix(Size);
             for (var row = 0; row < Size; row++)

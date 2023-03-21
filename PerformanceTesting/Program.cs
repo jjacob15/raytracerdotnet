@@ -9,6 +9,8 @@ namespace Profiling
         {
             //BenchmarkRunner.Run<CameraBenchmarks>();
             BenchmarkRunner.Run<WorldBenchmark>();
+            //BenchmarkRunner.Run<TupleBenchmark>();
+            //BenchmarkRunner.Run<CameraBenchmarks>();
         }
     }
 }

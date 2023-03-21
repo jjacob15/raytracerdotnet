@@ -17,45 +17,40 @@ namespace RayTracer.Shapes
             return new Intersection(this, t);
         }
 
-        public override Intersections IntersectLocal(Ray ray)
+        public override void IntersectLocal(Ray ray, Intersections intersections)
         {
-            var intersections = new Intersections();
             var SphereToRay = ray.Origin - Tuple.Point(0, 0, 0);
-            var a = ray.Direction.Dot(ray.Direction);
-            var b = 2 * ray.Direction.Dot(SphereToRay);
-            var c = SphereToRay.Dot(SphereToRay) - 1;
+            var a = ray.Direction.Dot(ref ray.Direction);
+            var b = 2 * ray.Direction.Dot(ref SphereToRay);
+            var c = SphereToRay.Dot(ref SphereToRay) - 1;
             var discriminant = b * b - 4 * a * c;
 
             if (discriminant < 0)
             {
-                return intersections;
+                return;
             }
 
             intersections.Add(new Intersection(this, (-b - Math.Sqrt(discriminant)) / (2 * a)));
             intersections.Add(new Intersection(this, (-b + Math.Sqrt(discriminant)) / (2 * a)));
-
-            return intersections;
         }
 
-        public override Intersections IntersectLocal(ref Tuple origin, ref Tuple direction)
+        public override void IntersectLocal(ref Tuple origin, ref Tuple direction, Intersections intersections)
         {
-            var intersections = new Intersections();
 
             var SphereToRay = origin - Tuple.Point(0, 0, 0);
-            var a = direction.Dot(direction);
-            var b = 2 * direction.Dot(SphereToRay);
-            var c = SphereToRay.Dot(SphereToRay) - 1;
+            var a = direction.Dot(ref direction);
+            var b = 2 * direction.Dot(ref SphereToRay);
+            var c = SphereToRay.Dot(ref SphereToRay) - 1;
             var discriminant = b * b - 4 * a * c;
 
             if (discriminant < 0)
             {
-                return intersections;
+                return;
             }
+            var sqrtDiscriminant = Math.Sqrt(discriminant);
 
-            intersections.Add(new Intersection(this, (-b - Math.Sqrt(discriminant)) / (2 * a)));
-            intersections.Add(new Intersection(this, (-b + Math.Sqrt(discriminant)) / (2 * a)));
-
-            return intersections;
+            intersections.Add(new Intersection(this, (-b - sqrtDiscriminant) / (2 * a)));
+            intersections.Add(new Intersection(this, (-b + sqrtDiscriminant) / (2 * a)));
         }
 
         public override Tuple NormalAtLocal(Tuple localPoint)

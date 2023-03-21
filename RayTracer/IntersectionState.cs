@@ -21,7 +21,7 @@ namespace RayTracer
             NormalV = Object.NormalAt(ray.Position(T));
             ReflectV = ray.Direction.Reflect(-NormalV);
 
-            if (NormalV.Dot(EyeV) < 0)
+            if (NormalV.Dot(ref EyeV) < 0)
             {
                 Inside = true;
                 NormalV = -NormalV;
@@ -66,7 +66,7 @@ namespace RayTracer
 
         public double Schlick()
         {
-            var cos = EyeV.Dot(NormalV);
+            var cos = EyeV.Dot(ref NormalV);
             if (N1 > N2)
             {
                 var n = N1 / N2;
@@ -85,8 +85,8 @@ namespace RayTracer
         public Tuple Point { get; }
         public Tuple OverPoint { get; }
         public Tuple UnderPoint { get; }
-        public Tuple EyeV { get; }
-        public Tuple NormalV { get; }
+        public Tuple EyeV;
+        public Tuple NormalV;
         public bool Inside { get; }
         public Tuple ReflectV { get; }
         public double N1 { get; private set; }

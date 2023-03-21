@@ -8,7 +8,7 @@ namespace RayTracer
     {
         private Color[][] canvas;
         private CanvasWriter writer;
-
+        private object _lock = new object();
         public Canvas(int w, int h)
         {
             Width = w;
@@ -37,14 +37,25 @@ namespace RayTracer
         public Color this[int w, int h]
         {
             get => canvas[w][h];
-            set => canvas[w][h] = value;
+            set
+            {
+                canvas[w][h] = value;
+            }
+        }
+
+        public void SetPixel(int x, int y, Color c)
+        {
+            lock (_lock)
+            {
+                canvas[x][y] = c;
+            }
         }
 
         public string GetContent()
         {
             return writer.CreateContent();
         }
-        public void Save(string filename="file.ppm")
+        public void Save(string filename = "file.ppm")
         {
             writer.Save(filename);
         }

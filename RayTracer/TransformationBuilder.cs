@@ -12,11 +12,10 @@ namespace RayTracer
         public TransformationBuilder()
         {
             chain = new Stack<Matrix>();
-            result = Matrix.Identity();
+            result = Matrix.Identity;
         }
         public Matrix Apply()
         {
-            result.IsIdentity = false;
             while (chain.Count > 0)
             {
                 var transform = chain.Pop();
@@ -27,7 +26,7 @@ namespace RayTracer
 
         public TransformationBuilder Scaling(double x, double y, double z)
         {
-            var transform = Matrix.Identity();
+            var transform = Matrix.Identity;
             transform[0, 0] = x;
             transform[1, 1] = y;
             transform[2, 2] = z;
@@ -38,7 +37,7 @@ namespace RayTracer
 
         public TransformationBuilder Translation(double x, double y, double z)
         {
-            var transform = Matrix.Identity();
+            var transform = Matrix.Identity;
 
             transform[0, 3] = x;
             transform[1, 3] = y;
@@ -50,7 +49,7 @@ namespace RayTracer
 
         public TransformationBuilder RotateX(double r)
         {
-            var transform = Matrix.Identity();
+            var transform = Matrix.Identity;
             transform[1, 1] = Math.Cos(r);
             transform[1, 2] = -Math.Sin(r);
             transform[2, 1] = Math.Sin(r);
@@ -62,7 +61,7 @@ namespace RayTracer
 
         public TransformationBuilder RotateY(double r)
         {
-            var transform = Matrix.Identity();
+            var transform = Matrix.Identity;
             transform[0, 0] = Math.Cos(r);
             transform[0, 2] = Math.Sin(r);
             transform[2, 0] = -Math.Sin(r);
@@ -74,7 +73,7 @@ namespace RayTracer
 
         public TransformationBuilder RotateZ(double r)
         {
-            var transform = Matrix.Identity();
+            var transform = Matrix.Identity;
             transform[0, 0] = Math.Cos(r);
             transform[0, 1] = -Math.Sin(r);
             transform[1, 0] = Math.Sin(r);
@@ -86,7 +85,7 @@ namespace RayTracer
 
         public TransformationBuilder Shearing(double xy, double xz, double yx, double yz, double zx, double zy)
         {
-            var transform = Matrix.Identity();
+            var transform = Matrix.Identity;
             transform[0, 1] = xy;
             transform[0, 2] = xz;
             transform[1, 0] = yx;

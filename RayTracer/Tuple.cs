@@ -24,7 +24,7 @@ namespace RayTracer
         public double X { get; }
         public double Y { get; }
         public double Z { get; }
-        public double W { get; private set; }
+        public double W { get; set; }
 
         public bool IsPoint => W == 1;
         public bool IsVector => W == 0;
@@ -106,22 +106,17 @@ namespace RayTracer
 
         //private double _magnitude { get; set; }
 
-        public double Magnitude()
-        {
-            //if (_magnitude != double.MinValue) return _magnitude;
-            return Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2) + Math.Pow(W, 2)); 
-            //_magnitude = Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2) + Math.Pow(W, 2));
-            //return _magnitude;
-        }
+        public double Magnitude =>
+            Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
 
 
         public Tuple Normalize()
         {
-            var m = Magnitude();
+            var m = Magnitude;
             return new Tuple(X / m, Y / m, Z / m, W / m);
         }
 
-        public double Dot(Tuple t)
+        public double Dot(ref Tuple t)
         {
             return X * t.X + Y * t.Y + Z * t.Z + W * t.W;
         }
@@ -143,7 +138,7 @@ namespace RayTracer
 
         public Tuple Reflect(Tuple normal)
         {
-            return this - normal * 2 * Dot(normal);
+            return this - normal * 2 * Dot(ref normal);
         }
     }
 }

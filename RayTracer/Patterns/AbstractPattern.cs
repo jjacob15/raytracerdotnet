@@ -10,9 +10,10 @@ namespace RayTracer.Patterns
         public Color A { get; }
         public Color B { get; }
 
-        public Matrix Transform { get; set; } = Matrix.Identity();
+        public Matrix Transform { get; set; } = Matrix.Identity;
 
         public abstract Color PatternAt(Tuple point);
+
         public Color PatternAtShape(IShape shape, Tuple worldPoint)
         {
             var objectPoint = shape.Transform.Inverse() * worldPoint;

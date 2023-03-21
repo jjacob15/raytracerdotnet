@@ -4,36 +4,38 @@ namespace RayTracer.Shapes
 {
     public abstract class AbstractShape : IShape
     {
-        public Matrix Transform { get; set; } = Matrix.Identity();
+        public Matrix Transform { get; set; } = Matrix.Identity;
         public Material Material { get; set; } = new Material();
 
-        public abstract Intersections IntersectLocal(Ray ray);
-        public abstract Intersections IntersectLocal(ref Tuple origin, ref Tuple direction);
+        public abstract void IntersectLocal(Ray ray, Intersections intersections);
+        public abstract void IntersectLocal(ref Tuple origin, ref Tuple direction, Intersections intersections);
         public abstract Tuple NormalAtLocal(Tuple localPoint);
 
-        public Intersections Intersect(Ray ray)
+        public void Intersect(Ray ray, Intersections intersections)
         {
-            if (Transform.IsIdentity)
+            if (ReferenceEquals(Transform, Matrix.Identity))
             {
-                return IntersectLocal(ray);
+                IntersectLocal(ray, intersections);
+                return;
             }
 
             var transformedRay = ray.Transform(Transform.Inverse());
-            return IntersectLocal(transformedRay);
+            IntersectLocal(transformedRay, intersections);
         }
 
-        public Intersections Intersect(ref Tuple origin, ref Tuple direction)
+        public void Intersect(ref Tuple origin, ref Tuple direction, Intersections intersections)
         {
-            if (Transform.IsIdentity)
+            if (ReferenceEquals(Transform, Matrix.Identity))
             {
-                return IntersectLocal(ref origin, ref direction);
+                IntersectLocal(ref origin, ref direction, intersections);
+                return;
             }
 
             var transformInverse = Transform.Inverse();
             //var transformedRay = ray.Transform(Transform.Inverse());
             var transformedOrigin = origin * transformInverse;
             var transformedDirection = direction * transformInverse;
-            return IntersectLocal(ref transformedOrigin, ref transformedDirection);
+            IntersectLocal(ref transformedOrigin, ref transformedDirection, intersections);
         }
 
         public Tuple NormalAt(Tuple worldPoint)

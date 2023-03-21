@@ -28,7 +28,8 @@ namespace RayTracer.Shapes
         {
             var p = new Plane();
             var r = new Ray(Tuple.Point(0, 10, 0), Tuple.Vector(0, 0, 1));
-            var xs = p.IntersectLocal(r);
+            var xs = new Intersections();
+            p.IntersectLocal(r, xs);
             xs.Hit().Should().Be(null);
         }
 
@@ -37,7 +38,8 @@ namespace RayTracer.Shapes
         {
             var p = new Plane();
             var r = new Ray(Tuple.Point(0, 0, 0), Tuple.Vector(0, 0, 1));
-            var xs = p.IntersectLocal(r);
+            var xs = new Intersections();
+            p.IntersectLocal(r, xs);
             xs.Hit().Should().Be(null);
         }
 
@@ -46,7 +48,8 @@ namespace RayTracer.Shapes
         {
             var p = new Plane();
             var r = new Ray(Tuple.Point(0, 1, 0), Tuple.Vector(0, -1, 0));
-            var xs = p.IntersectLocal(r);
+            var xs = new Intersections();
+            p.IntersectLocal(r, xs);
             xs.Count.Should().Be(1);
             xs[0].T.Should().Be(1);
             xs[0].Object.Should().BeOfType<Plane>();
@@ -58,7 +61,8 @@ namespace RayTracer.Shapes
         {
             var p = new Plane();
             var r = new Ray(Tuple.Point(0, -1, 0), Tuple.Vector(0, 1, 0));
-            var xs = p.IntersectLocal(r);
+            var xs = new Intersections();
+            p.IntersectLocal(r, xs);
             xs.Count.Should().Be(1);
             xs[0].T.Should().Be(1);
             xs[0].Object.Should().BeOfType<Plane>();

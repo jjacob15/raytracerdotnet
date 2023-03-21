@@ -51,7 +51,7 @@ namespace RayTracer
 
         public IPattern Pattern { get; set; }
 
-        public Color Lighting(IShape shape, ILight light,ref Tuple point,ref Tuple eyeV, ref Tuple normalV, bool inShadow)
+        public Color Lighting(IShape shape, ILight light,Tuple point,Tuple eyeV, Tuple normalV, bool inShadow)
         {
             if (Pattern != null)
             {
@@ -63,7 +63,7 @@ namespace RayTracer
             var lightV = (light.Position - point).Normalize();
             //compute the ambient contribution
             var ambient = effectiveColor * Ambient;
-            var lightDotNormal = lightV.Dot(normalV);
+            var lightDotNormal = lightV.Dot(ref normalV);
 
             //light_dot_normal represents the cosine of the angle between the
             //light vector and the normal vector. A negative number means the
@@ -79,7 +79,7 @@ namespace RayTracer
                 // reflection vector and the eye vector. A negative number means the
                 // light reflects away from the eye.
                 var reflectV = -lightV.Reflect(normalV);
-                var reflectEyeDot = reflectV.Dot(eyeV);
+                var reflectEyeDot = reflectV.Dot(ref eyeV);
 
                 if (reflectEyeDot <= 0)
                 {

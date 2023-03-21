@@ -26,11 +26,11 @@ namespace CreateClockFace
             var translation = Matrix.Transformation().RotateY(Math.PI / 6).Apply();
             for (int i = 0; i < n; i++)
             {
-                var pX = (int)(point.X + (size/2));
+                var pX = (int)(point.X + (size / 2));
                 var pY = (int)(point.Z + (size / 2));
                 Console.WriteLine(point);
                 if (pX > 0 && pY > 0)
-                    c[pX, pY] = color;
+                    c.SetPixel(pX, pY, color);
                 point = translation * point;
             }
 
@@ -56,7 +56,7 @@ namespace CreateClockFace
                 Console.WriteLine($"x {(int)point.X + size / 2} y {(int)point.Y + size / 2} point x {(int)point.X} point y {(int)point.Y}");
                 var pX = (int)(point.X + size / 2);
                 var pY = (int)(point.Y + size / 2);
-                c[pX, pY] = color;
+                c.SetPixel(pX, pY, color);
             }
 
 

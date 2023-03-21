@@ -16,7 +16,8 @@ namespace RayTracer
         {
             var ray = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             var s = new Sphere();
-            var xs = s.Intersect(ray);
+            var xs = new Intersections();
+            s.Intersect(ray, xs);
 
             Assert.Equal(2, xs.Count);
             Assert.Equal(s, xs[0].Object);
@@ -70,8 +71,8 @@ namespace RayTracer
             var ray = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             var s = new Sphere();
             s.Transform = Matrix.Transformation().Scaling(2, 2, 2).Apply();
-
-            var xs = s.Intersect(ray);
+            var xs = new Intersections();
+            s.Intersect(ray, xs);
 
             Assert.Equal(2, xs.Count);
             Assert.True(xs[0].T.DoubleEqual(3));
@@ -85,8 +86,8 @@ namespace RayTracer
             var ray = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             var s = new Sphere();
             s.Transform = Matrix.Transformation().Translation(5, 0, 0).Apply();
-
-            var xs = s.Intersect(ray);
+            var xs = new Intersections();
+            s.Intersect(ray, xs);
 
             Assert.Equal(0, xs.Count);
         }
