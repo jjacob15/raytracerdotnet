@@ -42,8 +42,10 @@ namespace RayTracer.Shapes
             var localPoint = Transform.Inverse() * worldPoint;
             var localNormal = NormalAtLocal(localPoint);
             var worldNormal = Transform.Inverse().Transpose() * localNormal;
-            worldNormal.SetW(0.0d);
-            return worldNormal.Normalize();
+            Tuple worldNormalVector = Tuple.Vector(worldNormal.X, worldNormal.Y, worldNormal.Z);
+            //worldNormal.SetW(0.0d);
+            //return worldNormal.Normalize();
+            return worldNormalVector.Normalize();
         }
 
         public override bool Equals(object obj)

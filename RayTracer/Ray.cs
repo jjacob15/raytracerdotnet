@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RayTracer
 {
-    public struct Ray
+    public readonly struct Ray
     {
         public Ray(Tuple origin, Tuple direction)
         {
@@ -13,8 +13,8 @@ namespace RayTracer
             Direction = direction;
         }
 
-        public Tuple Origin;
-        public Tuple Direction;
+        public readonly Tuple Origin;
+        public readonly Tuple Direction;
 
         public Tuple Position(double t)
         {

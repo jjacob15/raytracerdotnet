@@ -7,7 +7,6 @@ namespace RayTracer
 {
     public class CanvasWriter
     {
-        private string _desktop = @"c:\users\jaison.jacob\desktop";
         private Canvas canvas;
         public CanvasWriter(Canvas canvas)
         {

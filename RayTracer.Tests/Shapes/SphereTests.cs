@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace RayTracer
+namespace RayTracer.Shapes
 {
     public class SphereTests
     {

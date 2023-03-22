@@ -12,7 +12,6 @@ namespace Profiling
     public class WorldBenchmark
     {
         World w;
-        Ray r;
 
         [GlobalSetup]
         public void Setup()

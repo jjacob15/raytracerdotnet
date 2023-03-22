@@ -89,7 +89,7 @@ namespace RayTracer
             var xs = new Intersections();
             s.Intersect(ray, xs);
 
-            Assert.Equal(0, xs.Count);
+            Assert.Empty(xs);
         }
 
         [Fact]

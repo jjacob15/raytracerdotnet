@@ -6,29 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="CameraTests.cs" />
-    <Compile Remove="CanvasTest.cs" />
-    <Compile Remove="ColorTest.cs" />
-    <Compile Remove="IntersectionTests.cs" />
-    <Compile Remove="MaterialTests.cs" />
-    <Compile Remove="MatrixTests.cs" />
-    <Compile Remove="Patterns\CheckerPatternTests.cs" />
-    <Compile Remove="Patterns\GradientPatternTests.cs" />
-    <Compile Remove="Patterns\RingPatternTests.cs" />
-    <Compile Remove="Patterns\StrippedPatternTests.cs" />
-    <Compile Remove="PointLightTests.cs" />
-    <Compile Remove="RayTests.cs" />
-    <Compile Remove="RotationTests.cs" />
-    <Compile Remove="Shapes\PlaneTests.cs" />
-    <Compile Remove="ShearingTests.cs" />
-    <Compile Remove="SphereTests.cs" />
-    <Compile Remove="TransformationTests.cs" />
-    <Compile Remove="TranslationTests.cs" />
-    <Compile Remove="TupleTest.cs" />
-    <Compile Remove="WorldTests.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Threading\test.txt" />
   </ItemGroup>
 
@@ -48,11 +25,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RayTracer\RayTracer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Patterns\" />
-    <Folder Include="Shapes\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace RayTracer
 {
-    public class Tuple
+    public readonly struct Tuple
     {
         public static Tuple ZeroPoint() => new Tuple(0, 0, 0, 1);
         public static Tuple ZeroVector() => new Tuple(0, 0, 0, 0);
@@ -24,20 +24,14 @@ namespace RayTracer
         public double X { get; }
         public double Y { get; }
         public double Z { get; }
-        public double W { get; set; }
+        public double W { get;  }
 
         public bool IsPoint => W == 1.0d;
         public bool IsVector => W == 0.0d;
 
-        public void SetW(double val)
-        {
-            W = val;
-            //ResetMagnitude();
-        }
-
-        //private void ResetMagnitude()
+        //public void SetW(double val)
         //{
-        //    _magnitude = double.MinValue;
+        //    W = val;
         //}
 
         public override bool Equals(object obj)
@@ -51,11 +45,6 @@ namespace RayTracer
         public override int GetHashCode()
         {
             return base.GetHashCode();
-            //double hashcode = 23;
-            //hashcode = (hashcode * 37) + X;
-            //hashcode = (hashcode * 37) + Y;
-            //hashcode = (hashcode * 37) + Z;
-            //return (int) Math.Round((hashcode * 37) + W);
         }
 
         public static bool operator ==(Tuple a, Tuple b)

@@ -204,8 +204,5 @@ namespace RayTracer
             w.ShadeHits(comps, 5).Should().Be(new Color(0.93391, 0.69643, 0.69243));
 
         }
-
-       
-
     }
 }

@@ -10,10 +10,10 @@ namespace RayTracer
         public void TupleWithW1IsAPoint()
         {
             Tuple tuple = new Tuple(4.3, -4.2, 3.1, 1);
-            Assert.Equal(tuple.X, 4.3d);
-            Assert.Equal(tuple.Y, -4.2d);
-            Assert.Equal(tuple.Z, 3.1d);
-            Assert.Equal(tuple.W, 1);
+            Assert.Equal(4.3d, tuple.X);
+            Assert.Equal(-4.2d, tuple.Y);
+            Assert.Equal(3.1d, tuple.Z);
+            Assert.Equal(1, tuple.W);
             Assert.True(tuple.IsPoint);
             Assert.False(tuple.IsVector);
         }
@@ -22,10 +22,10 @@ namespace RayTracer
         public void TupleWithW1IsAVector()
         {
             Tuple tuple = new Tuple(4.3, -4.2, 3.1, 0);
-            Assert.Equal(tuple.X, 4.3d);
-            Assert.Equal(tuple.Y, -4.2d);
-            Assert.Equal(tuple.Z, 3.1d);
-            Assert.Equal(tuple.W, 0);
+            Assert.Equal(4.3d, tuple.X);
+            Assert.Equal(-4.2d, tuple.Y);
+            Assert.Equal(3.1d, tuple.Z);
+            Assert.Equal(0, tuple.W);
             Assert.True(tuple.IsVector);
             Assert.False(tuple.IsPoint);
         }
@@ -151,7 +151,7 @@ namespace RayTracer
         {
             Tuple v1 = Tuple.Vector(1, 2, 3);
             Tuple v2 = Tuple.Vector(2, 3, 4);
-            Assert.Equal(v1.Dot( v2), 20);
+            Assert.True(v1.Dot(v2).DoubleEqual(20));
         }
 
         [Fact]
@@ -175,7 +175,7 @@ namespace RayTracer
         public void ReflectingAVectorAtSlanted()
         {
             Tuple v = Tuple.Vector(0, -1, 0);
-            Tuple n = Tuple.Vector(Math.Sqrt(2)/2, Math.Sqrt(2) / 2, 0);
+            Tuple n = Tuple.Vector(Math.Sqrt(2) / 2, Math.Sqrt(2) / 2, 0);
             Assert.Equal(Tuple.Vector(1, 0, 0), v.Reflect(n));
         }
     }
