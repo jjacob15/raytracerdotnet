@@ -3,8 +3,11 @@ using RayTracer.Lights;
 using RayTracer.Patterns;
 using RayTracer.Shapes;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using System.Threading;
 using Xunit;
 
 namespace RayTracer
@@ -201,5 +204,8 @@ namespace RayTracer
             w.ShadeHits(comps, 5).Should().Be(new Color(0.93391, 0.69643, 0.69243));
 
         }
+
+       
+
     }
 }

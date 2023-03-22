@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace RayTracer
 {
-    public struct Tuple
+    public class Tuple
     {
         public static Tuple ZeroPoint() => new Tuple(0, 0, 0, 1);
         public static Tuple ZeroVector() => new Tuple(0, 0, 0, 0);
@@ -118,6 +118,11 @@ namespace RayTracer
         }
 
         public double Dot(Tuple t)
+        {
+            return X * t.X + Y * t.Y + Z * t.Z + W * t.W;
+        }
+
+        public double Dot(ref Tuple t)
         {
             return X * t.X + Y * t.Y + Z * t.Z + W * t.W;
         }

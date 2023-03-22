@@ -20,9 +20,9 @@ namespace RayTracer.Shapes
         public override void IntersectLocal(Ray ray, Intersections intersections)
         {
             var SphereToRay = ray.Origin - Tuple.Point(0, 0, 0);
-            var a = ray.Direction.Dot( ray.Direction);
-            var b = 2 * ray.Direction.Dot( SphereToRay);
-            var c = SphereToRay.Dot( SphereToRay) - 1;
+            var a = ray.Direction.Dot(ray.Direction);
+            var b = 2 * ray.Direction.Dot(SphereToRay);
+            var c = SphereToRay.Dot(SphereToRay) - 1;
             var discriminant = b * b - 4 * a * c;
 
             if (discriminant < 0)
@@ -38,9 +38,9 @@ namespace RayTracer.Shapes
         {
 
             var sphereToRay = origin - Tuple.Point(0, 0, 0);
-            var a = direction.Dot( direction);
-            var b = 2 * direction.Dot( sphereToRay);
-            var c = sphereToRay.Dot( sphereToRay) - 1;
+            var a = direction.Dot(ref direction);
+            var b = 2 * direction.Dot(ref sphereToRay);
+            var c = sphereToRay.Dot(ref sphereToRay) - 1;
             var discriminant = b * b - 4 * a * c;
 
             if (discriminant < 0)

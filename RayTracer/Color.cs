@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RayTracer
 {
-    public struct Color
+    public readonly struct Color
     {
         public static Color Black = new Color(0, 0, 0);
         public static Color White = new Color(1, 1, 1);
@@ -53,11 +53,18 @@ namespace RayTracer
             return new string[] { Normalized(Red).ToString(), Normalized(Green).ToString(), Normalized(Blue).ToString() };
         }
 
-        private int Normalized(double val)
+        public static int Normalized(double val)
         {
-            if (val < 0) return 0;
-            if (val > 1) return 255;
-            return (int)Math.Round(255 * val);
+            //if (val < 0) return 0;
+            //if (val > 1) return 255;
+            if (double.IsNaN(val))
+            {
+                return 0;
+            }
+            var d = Math.Min(val, 1);
+            d = Math.Max(d, 0);
+
+            return (int)Math.Round(d * 255, 0);
         }
 
         public override bool Equals(object obj)

@@ -27,15 +27,22 @@ namespace RayTracer
             Light = light;
         }
 
+        object _lock = new object();
         public void Intersect(Ray ray, Intersections intersections)
         {
-            for (var i = 0; i < Shapes.Count; i++)
+            //lock (_lock)
             {
-                var shape = Shapes[i];
-                shape.Intersect(ref ray.Origin, ref ray.Direction, intersections);
-            }
+                var origin = ray.Origin;
+                var direction = ray.Direction;
+                for (var i = 0; i < Shapes.Count; i++)
+                {
+                    var shape = Shapes[i];
+                    //shape.Intersect(ray, intersections);
+                    shape.Intersect(ref origin, ref direction, intersections);
+                }
 
-            intersections.Sort();
+                intersections.Sort();
+            }
         }
 
         public Color ShadeHits(IntersectionState comps, int remaining = 5)
@@ -100,7 +107,7 @@ namespace RayTracer
 
             var nRatio = comps.N1 / comps.N2;
             var normalV = comps.NormalV;
-            var cosI = comps.EyeV.Dot( normalV);
+            var cosI = comps.EyeV.Dot(normalV);
             var sin2T = nRatio * nRatio * (1 - cosI * cosI);
             if (sin2T > 1)
             {

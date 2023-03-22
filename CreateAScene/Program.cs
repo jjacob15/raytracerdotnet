@@ -1,7 +1,11 @@
-﻿using RayTracer;
+﻿using Demo;
+using Demo.Scenes;
+using RayTracer;
 using RayTracer.Lights;
+using RayTracer.Patterns;
 using RayTracer.Shapes;
 using System;
+using System.IO;
 using Tuple = RayTracer.Tuple;
 
 namespace CreateAScene
@@ -13,11 +17,33 @@ namespace CreateAScene
             //var c = CreateAScene();
             //var c = CustomScene();
             //var c = CanvasWithPlane();
-            var c = SimpleSceneWithReflection();
-            c.Save(@"c:\\users\\jaison.jacob\\desktop\\simplescene1.ppm");
+            //var c = SimpleSceneWithReflection();
+            //c.Save(@"c:\\users\\jaison.jacob\\desktop\\simplescene1.ppm");
+            WriteEachPoint();
             Console.WriteLine("Hello World!");
         }
 
+        static void WriteEachPoint()
+        {
+
+            AbstractScene scene = (AbstractScene)Activator.CreateInstance(typeof(ReflectionScene));
+
+            scene.Initialize();
+
+
+            using StreamWriter sw = new StreamWriter(@"d:\test\picture1.txt");
+            var c = Camera.DefaultCamera();
+            for (int x = 0; x < 640; x ++)
+            {
+                for (int y = 0; y < 400; y ++)
+                {
+                    var ray = c.RayForPixel(x, y);
+                    var color = scene.World.ColorAt(ray,10);
+                    sw.WriteLine($"{x},{y},{color.Red},{color.Green},{color.Blue}");
+                }
+            }
+
+        }
         static Canvas SimpleSceneWithReflection()
         {
             World w = new World();
@@ -64,8 +90,7 @@ namespace CreateAScene
 
             w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
-            Camera c = new Camera(400, 200, Math.PI / 3);
-            c.SetTransform(Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+            Camera c = new Camera(400, 200, Math.PI / 3,Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
                 Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c.Render(w);
         }
@@ -107,8 +132,7 @@ namespace CreateAScene
 
             w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
-            Camera c = new Camera(100, 50, Math.PI / 3);
-            c.SetTransform(Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+            Camera c = new Camera(100, 50, Math.PI / 3,Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
                 Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c.Render(w);
         }
@@ -139,8 +163,7 @@ namespace CreateAScene
 
             w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
-            Camera c = new Camera(100, 50, Math.PI / 3);
-            c.SetTransform(Matrix.ViewTransform(Tuple.Point(0, 1.5, -7),
+            Camera c = new Camera(100, 50, Math.PI / 3,Matrix.ViewTransform(Tuple.Point(0, 1.5, -7),
                 Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c.Render(w);
         }
@@ -191,8 +214,7 @@ namespace CreateAScene
 
             w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
-            Camera c = new Camera(800, 400, Math.PI / 3);
-            c.SetTransform(Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+            Camera c = new Camera(800, 400, Math.PI / 3,Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
                 Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c.Render(w);
         }

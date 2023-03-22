@@ -8,25 +8,19 @@ namespace RayTracer
     {
         public static Camera DefaultCamera()
         {
-            var c = new Camera(640, 400, Math.PI / 3);
-            c.SetTransform(Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+            var c = new Camera(640, 400, Math.PI / 3,Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
                   Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c;
         }
-        public Camera(double hSize, double vSize, double fieldOfView)
+        public Camera(double hSize, double vSize, double fieldOfView,Matrix transform)
         {
             HSize = hSize;
             VSize = vSize;
             FieldOfView = fieldOfView;
             ComputePixelSize();
 
-            SetTransform(Matrix.Identity);
-        }
-
-        public void SetTransform(Matrix transform)
-        {
             Transform = transform;
-            _transformInverse = transform.Inverse();
+            _transformInverse = Transform.Inverse();
         }
 
         private void ComputePixelSize()
@@ -56,6 +50,7 @@ namespace RayTracer
         public double HalfWidth { get; private set; }
         public double HalfHeight { get; private set; }
 
+
         public Ray RayForPixel(int px, int py)
         {
             //the offset from the edge of the canvas to the pixel's center
@@ -74,7 +69,9 @@ namespace RayTracer
             var origin = _transformInverse * Tuple.ZeroPoint();
             var direction = (pixel - origin).Normalize();
 
-            return new Ray(origin, direction);
+            var ray = new Ray(origin, direction);
+            return ray;
+
         }
 
         //public Ray RayForPixelOld(int px, int py)

@@ -26,6 +26,6 @@ namespace RayTracer
 
         }
 
-        public Intersection Hit() => this.OrderBy(x => x.T).FirstOrDefault(x => x.T >= 0);
+        public Intersection Hit() => this.FirstOrDefault(x => x.T >= 0);
     }
 }

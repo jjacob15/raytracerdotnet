@@ -60,10 +60,13 @@ namespace Demo
                 }
             }
 
+            Random r = new Random(0);
+            pixels = pixels.OrderBy(job => r.Next()).ToList();
+
             const int BatchSize = 128;
             for (int i = 0; i < pixels.Count; i += BatchSize)
             {
-                RenderJob job = new RenderJob(world, camera,canvas, Stats);
+                RenderJob job = new RenderJob(world, camera, canvas, Stats);
                 for (int j = 0; j < BatchSize; j++)
                 {
                     if (i + j >= pixels.Count)
@@ -142,8 +145,7 @@ namespace Demo
 
         private Camera BuildCamera(RendererParameters rendererParameters)
         {
-            var c = new Camera(rendererParameters.Width, rendererParameters.Height, Math.PI / 3);
-            c.SetTransform(Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+            var c = new Camera(rendererParameters.Width, rendererParameters.Height, Math.PI / 3, Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
               Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c;
         }

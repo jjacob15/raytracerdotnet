@@ -37,10 +37,10 @@ namespace RayTracer
         public Color this[int w, int h]
         {
             get => canvas[w][h];
-            set
-            {
-                canvas[w][h] = value;
-            }
+            //set
+            //{
+            //    canvas[w][h] = value;
+            //}
         }
 
         public void SetPixel(int x, int y, Color c)

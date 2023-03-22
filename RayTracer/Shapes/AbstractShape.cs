@@ -5,7 +5,7 @@ namespace RayTracer.Shapes
     public abstract class AbstractShape : IShape
     {
         public Matrix Transform { get; set; } = Matrix.Identity;
-        public Material Material { get; set; } = new Material();
+        public virtual Material Material { get; set; } = new Material();
 
         public abstract void IntersectLocal(Ray ray, Intersections intersections);
         public abstract void IntersectLocal(ref Tuple origin, ref Tuple direction, Intersections intersections);
@@ -25,7 +25,7 @@ namespace RayTracer.Shapes
 
         public void Intersect(ref Tuple origin, ref Tuple direction, Intersections intersections)
         {
-            if (Transform == Matrix.Identity)
+            if (ReferenceEquals(Transform, Matrix.Identity))
             {
                 IntersectLocal(ref origin, ref direction, intersections);
                 return;

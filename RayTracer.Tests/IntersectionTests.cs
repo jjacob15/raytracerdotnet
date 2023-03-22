@@ -179,8 +179,11 @@ namespace RayTracer
         public void ColorWhenIntersectionBehindRay()
         {
             var w = ObjectFactory.DefaultWorld();
-            var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
-            w.ColorAt(r).Should().Be(new Color(0.38066, 0.47583, 0.2855));
+            w.Shapes[0].Material.Ambient = 1;
+            w.Shapes[1].Material.Ambient = 1;
+
+            var r = new Ray(Tuple.Point(0, 0, .75), Tuple.Vector(0, 0, -1));
+            w.ColorAt(r).Should().Be(Color.White);
         }
 
         [Fact]

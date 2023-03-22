@@ -51,9 +51,9 @@ namespace RayTracer
 
         public IPattern Pattern { get; set; }
 
-        public Color Lighting(IShape shape, ILight light,Tuple point,Tuple eyeV, Tuple normalV, bool inShadow)
+        public Color Lighting(IShape shape, ILight light, Tuple point, Tuple eyeV, Tuple normalV, bool inShadow)
         {
-            if (Pattern != null)
+            if (!ReferenceEquals(Pattern, null))
             {
                 Color = Pattern.PatternAtShape(shape, point);
             }
@@ -71,7 +71,7 @@ namespace RayTracer
             //light vector and the normal vector. A negative number means the
             //light is on the other side of the surface.
 
-           
+
             Color diffuse = Color.Black;
             Color specular = Color.Black;
             if (lightDotNormal > 0 && !inShadow)
@@ -82,7 +82,7 @@ namespace RayTracer
                 // reflection vector and the eye vector. A negative number means the
                 // light reflects away from the eye.
                 var reflectV = -lightV.Reflect(normalV);
-                var reflectEyeDot = reflectV.Dot( eyeV);
+                var reflectEyeDot = reflectV.Dot(eyeV);
 
                 if (reflectEyeDot > 0)
                 {
