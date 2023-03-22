@@ -12,7 +12,12 @@ namespace RayTracer
         public TransformationBuilder()
         {
             chain = new Stack<Matrix>();
-            result = Matrix.Identity;
+            result = new Matrix(
+                1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1
+            );
         }
         public Matrix Apply()
         {
@@ -26,74 +31,67 @@ namespace RayTracer
 
         public TransformationBuilder Scaling(double x, double y, double z)
         {
-            var transform = Matrix.Identity;
-            transform[0, 0] = x;
-            transform[1, 1] = y;
-            transform[2, 2] = z;
-
-            chain.Push(transform);
+            chain.Push(new Matrix(
+                x, 0, 0, 0,
+                0, y, 0, 0,
+                0, 0, z, 0,
+                0, 0, 0, 1
+            ));
             return this;
         }
 
         public TransformationBuilder Translation(double x, double y, double z)
         {
-            var transform = Matrix.Identity;
-
-            transform[0, 3] = x;
-            transform[1, 3] = y;
-            transform[2, 3] = z;
-
-            chain.Push(transform);
+            chain.Push(new Matrix(
+                 1, 0, 0, x,
+                0, 1, 0, y,
+                0, 0, 1, z,
+                0, 0, 0, 1
+             ));
             return this;
         }
 
-        public TransformationBuilder RotateX(double r)
+        public TransformationBuilder RotateX(double a)
         {
-            var transform = Matrix.Identity;
-            transform[1, 1] = Math.Cos(r);
-            transform[1, 2] = -Math.Sin(r);
-            transform[2, 1] = Math.Sin(r);
-            transform[2, 2] = Math.Cos(r);
-
-            chain.Push(transform);
+            chain.Push(new Matrix(
+               1, 0, 0, 0,
+                0, Math.Cos(a), -Math.Sin(a), 0,
+                0, Math.Sin(a), Math.Cos(a), 0,
+                0, 0, 0, 1
+            ));
             return this;
         }
 
-        public TransformationBuilder RotateY(double r)
+        public TransformationBuilder RotateY(double a)
         {
-            var transform = Matrix.Identity;
-            transform[0, 0] = Math.Cos(r);
-            transform[0, 2] = Math.Sin(r);
-            transform[2, 0] = -Math.Sin(r);
-            transform[2, 2] = Math.Cos(r);
-
-            chain.Push(transform);
+            chain.Push(new Matrix(
+               Math.Cos(a), 0, Math.Sin(a), 0,
+                0, 1, 0, 0,
+                -Math.Sin(a), 0, Math.Cos(a), 0,
+                0, 0, 0, 1
+           ));
             return this;
         }
 
-        public TransformationBuilder RotateZ(double r)
+        public TransformationBuilder RotateZ(double a)
         {
-            var transform = Matrix.Identity;
-            transform[0, 0] = Math.Cos(r);
-            transform[0, 1] = -Math.Sin(r);
-            transform[1, 0] = Math.Sin(r);
-            transform[1, 1] = Math.Cos(r);
-
-            chain.Push(transform);
+            chain.Push(new Matrix(
+                Math.Cos(a), -Math.Sin(a), 0, 0,
+                Math.Sin(a), Math.Cos(a), 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1
+           ));
             return this;
         }
 
         public TransformationBuilder Shearing(double xy, double xz, double yx, double yz, double zx, double zy)
         {
-            var transform = Matrix.Identity;
-            transform[0, 1] = xy;
-            transform[0, 2] = xz;
-            transform[1, 0] = yx;
-            transform[1, 2] = yz;
-            transform[2, 0] = zx;
-            transform[2, 1] = zy;
-
-            chain.Push(transform);
+            chain.Push(new Matrix(
+                1, xy, xz, 0,
+                yx, 1, yz, 0,
+                zx, zy, 1, 0,
+                0, 0, 0, 1
+           ));
             return this;
         }
     }

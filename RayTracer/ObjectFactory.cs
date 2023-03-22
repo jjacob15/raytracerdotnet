@@ -18,7 +18,7 @@ namespace RayTracer
 
             w.Shapes.Add(new Sphere
             {
-                Material = new Material(new Color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2, 200)
+                Material = new Material(new Color(0.8, 1.0, 0.6), diffuse: 0.7, specular: 0.2)
             });
 
             w.Shapes.Add(new Sphere
@@ -26,7 +26,7 @@ namespace RayTracer
                 Transform = Matrix.Transformation().Scaling(0.5, 0.5, 0.5).Apply()
             });
 
-            w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
+            w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), Color.White));
             return w;
         }
     }

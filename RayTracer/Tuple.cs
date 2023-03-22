@@ -26,10 +26,10 @@ namespace RayTracer
         public double Z { get; }
         public double W { get; set; }
 
-        public bool IsPoint => W == 1;
-        public bool IsVector => W == 0;
+        public bool IsPoint => W == 1.0d;
+        public bool IsVector => W == 0.0d;
 
-        public void SetW(int val)
+        public void SetW(double val)
         {
             W = val;
             //ResetMagnitude();
@@ -84,7 +84,8 @@ namespace RayTracer
             return new Tuple(a.X - b.X,
                 a.Y - b.Y,
                 a.Z - b.Z,
-                Math.Abs(a.W - b.W));
+            //a.W - b.W);
+            Math.Abs(a.W - b.W));
         }
 
         public static Tuple operator -(Tuple a) => new Tuple(-a.X, -a.Y, -a.Z, -a.W);
@@ -116,7 +117,7 @@ namespace RayTracer
             return new Tuple(X / m, Y / m, Z / m, W / m);
         }
 
-        public double Dot(ref Tuple t)
+        public double Dot(Tuple t)
         {
             return X * t.X + Y * t.Y + Z * t.Z + W * t.W;
         }
@@ -131,14 +132,11 @@ namespace RayTracer
 
         }
 
-        public override string ToString()
-        {
-            return $"x {Math.Round(X, 2)} y {Math.Round(Y, 2)} z {Math.Round(Z, 2)} w {Math.Round(W, 2)}";
-        }
+        public override string ToString() => $"X: {X} Y: {Y} Z: {Z} W: {W}";
 
         public Tuple Reflect(Tuple normal)
         {
-            return this - normal * 2 * Dot(ref normal);
+            return this - normal * 2 * Dot(normal);
         }
     }
 }

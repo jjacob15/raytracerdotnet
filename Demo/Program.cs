@@ -16,10 +16,10 @@ namespace Demo
     {
         static void Main(string[] args)
         {
-            GCSettings.LatencyMode = GCLatencyMode.Batch;
+            //GCSettings.LatencyMode = GCLatencyMode.Batch;
 
             var threading = true;
-            int threadCount = threading ? (int) Environment.ProcessorCount :5;
+            int threadCount = threading ? (int) Environment.ProcessorCount :1;
             var display = true;
 
             var renderParams = RendererParameters.HighQuality;

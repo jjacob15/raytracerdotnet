@@ -16,8 +16,13 @@ namespace RayTracer.Patterns
 
         public override Color PatternAt(Tuple point)
         {
+            //var d = Math.Floor(point.X) + Math.Floor(point.Y) + Math.Floor(point.Z);
+            //if (Math.Floor(d) % 2 < Constants.Epsilon)
+            //{
+            //    return A;
+            //}
             var d = Math.Floor(point.X) + Math.Floor(point.Y) + Math.Floor(point.Z);
-            if (Math.Floor(d) % 2 == 0)
+            if (Math.Abs(d % 2) < Constants.Epsilon)
             {
                 return A;
             }

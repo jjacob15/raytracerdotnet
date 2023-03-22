@@ -6,17 +6,10 @@ namespace RayTracer
 {
     public static class Constants
     {
-        public const double Epsilon = 0.0001;
+        public const double Epsilon = 0.00001;
     }
     public static class DoubleExtensions
     {
-        public static bool DoubleEqual(this double x, double y)
-        {
-            if (Math.Abs(x - y) < Constants.Epsilon)
-            {
-                return true;
-            }
-            return false;
-        }
+        public static bool DoubleEqual(this double x, double y) => Math.Abs(x - y) < Constants.Epsilon;
     }
 }

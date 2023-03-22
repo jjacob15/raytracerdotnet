@@ -38,7 +38,7 @@ namespace RayTracer
             intersections.Sort();
         }
 
-        public Color ShadeHits(IntersectionState comps, int remaining = 4)
+        public Color ShadeHits(IntersectionState comps, int remaining = 5)
         {
             var overpoint = comps.OverPoint;
             var eyeV = comps.EyeV;
@@ -59,7 +59,7 @@ namespace RayTracer
             return surface + reflected + refracted;
         }
 
-        public Color ColorAt(Ray ray, int remaining = 4)
+        public Color ColorAt(Ray ray, int remaining = 5)
         {
             var intersections = new Intersections();
 
@@ -92,15 +92,15 @@ namespace RayTracer
             return false;
         }
 
-        public Color RefractedColor(IntersectionState comps, int remaining = 4)
+        public Color RefractedColor(IntersectionState comps, int remaining = 5)
         {
             if (remaining < 1) return Color.Black;
 
-            if (comps.Object.Material.Transparency <= Constants.Epsilon) return Color.Black;
+            if (comps.Object.Material.Transparency < Constants.Epsilon) return Color.Black;
 
             var nRatio = comps.N1 / comps.N2;
             var normalV = comps.NormalV;
-            var cosI = comps.EyeV.Dot(ref normalV);
+            var cosI = comps.EyeV.Dot( normalV);
             var sin2T = nRatio * nRatio * (1 - cosI * cosI);
             if (sin2T > 1)
             {
@@ -113,10 +113,10 @@ namespace RayTracer
             return ColorAt(refractedRay, remaining - 1) * comps.Object.Material.Transparency;
         }
 
-        public Color ReflectedColor(IntersectionState comps, int remaining = 4)
+        public Color ReflectedColor(IntersectionState comps, int remaining = 5)
         {
             var materialReflective = comps.Object.Material.Reflective;
-            if (remaining < 1 || materialReflective < double.Epsilon) return Color.Black;
+            if (remaining < 1 || materialReflective < Constants.Epsilon) return Color.Black;
 
             if (comps.Object.Material.Ambient == 1)
                 return Color.Black;

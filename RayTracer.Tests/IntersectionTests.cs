@@ -153,7 +153,10 @@ namespace RayTracer
             var shape = w.Shapes[1];
             var i = new Intersection(shape, 0.5);
             var comps = i.PrepareComputations(r);
-            w.ShadeHits(comps).Should().Be(new Color(0.90498, 0.90498, 0.90498));
+            var c = w.ShadeHits(comps);
+            c.Red.Should().BeApproximately(0.90498, 1e-4);
+            c.Green.Should().BeApproximately(0.90498, 1e-4);
+            c.Blue.Should().BeApproximately(0.90498, 1e-4);
         }
 
         [Fact]
@@ -201,7 +204,7 @@ namespace RayTracer
             s.Transform = Matrix.Transformation().Translation(0, 0, 1).Apply();
             var i = s.Intersection(5);
             var comps = i.PrepareComputations(r);
-            comps.OverPoint.Z.Should().BeLessThan(-double.Epsilon / 2);
+            comps.OverPoint.Z.Should().BeLessThan(-Constants.Epsilon / 2);
             comps.Point.Z.Should().BeGreaterThan(comps.OverPoint.Z);
         }
 
@@ -239,7 +242,10 @@ namespace RayTracer
             var r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
             var i = new Intersection(p, Math.Sqrt(2));
             var comps = i.PrepareComputations(r);
-            w.ReflectedColor(comps).Should().Be(new Color(0.19032, 0.2379, 0.14274));
+            var c = w.ReflectedColor(comps);
+            c.Red.Should().BeApproximately(0.19032, 1e-4);
+            c.Green.Should().BeApproximately(0.2379, 1e-4);
+            c.Blue.Should().BeApproximately(0.14274, 1e-4);
         }
         [Fact]
         public void ShadeHitWithReflectiveMaterial()
@@ -254,7 +260,10 @@ namespace RayTracer
             var i = new Intersection(p, Math.Sqrt(2));
             var comps = i.PrepareComputations(r);
             var c = w.ShadeHits(comps);
-            c.Should().Be(new Color(0.87677, 0.92436, 0.82918));
+            c.Red.Should().BeApproximately(0.87677, 1e-4);
+            c.Green.Should().BeApproximately(0.92436, 1e-4);
+            c.Blue.Should().BeApproximately(0.82918, 1e-4);
+            //c.Should().Be(new Color(0.87677, 0.92436, 0.82918));
         }
 
         [Fact]

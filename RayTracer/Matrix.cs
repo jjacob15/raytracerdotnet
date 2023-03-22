@@ -8,6 +8,7 @@ namespace RayTracer
     {
         public int Size;
         private double[,] _m;
+        private Matrix Inverted;
 
         public static readonly Matrix Identity = new Matrix(1, 0, 0, 0,
                    0, 1, 0, 0,
@@ -156,7 +157,6 @@ namespace RayTracer
         public static bool operator ==(Matrix a, Matrix b)
         {
             if (ReferenceEquals(a, b)) return true;
-            if (a.Size != b.Size) return false;
 
             for (int r = 0; r < a.Size; r++)
                 for (int c = 0; c < a.Size; c++)
@@ -186,7 +186,7 @@ namespace RayTracer
 
         public Matrix Transpose()
         {
-            if (ReferenceEquals(this, Identity)) return this;
+            if (this == Identity) return this;
             Matrix m = new Matrix(Size);
             for (int r = 0; r < Size; r++)
             {
@@ -286,19 +286,28 @@ namespace RayTracer
 
         public Matrix Inverse()
         {
-            if (!IsInvertable()) throw new NotSupportedException("This matrix is not invertable");
+            if (!ReferenceEquals(Inverted, null))
+            {
+                return Inverted;
+            }
 
-            if (ReferenceEquals(this, Identity)) return this;
+            if (this == Identity) return this;
 
             Matrix result = new Matrix(Size);
+            var d = Determinant();
+            if (d == 0)
+            {
+                throw new InvalidOperationException("Can not inverse matrix: determinant == 0 !");
+            }
             for (var row = 0; row < Size; row++)
             {
                 for (var col = 0; col < Size; col++)
                 {
                     var c = Cofactor(row, col);
-                    result[col, row] = c / Determinant();
+                    result[col, row] = c / d;
                 }
             }
+            Inverted = result;
             return result;
         }
     }

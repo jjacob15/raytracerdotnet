@@ -111,6 +111,8 @@ namespace Demo
                 t.Start();
                 threads[i] = t;
             }
+
+            Console.WriteLine($"Created {threads.Length} workers");
         }
 
         public void Wait()
@@ -132,7 +134,6 @@ namespace Demo
 
         private void RunTask()
         {
-            Console.WriteLine($"In worker {Thread.CurrentThread.Name}");
             while (RenderJobs.TryDequeue(out var renderJob))
             {
                 renderJob.Work();

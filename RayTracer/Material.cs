@@ -63,12 +63,15 @@ namespace RayTracer
             var lightV = (light.Position - point).Normalize();
             //compute the ambient contribution
             var ambient = effectiveColor * Ambient;
-            var lightDotNormal = lightV.Dot(ref normalV);
+            ///TODO
+            ///remove dot and manuallty multiple to save copy
+            var lightDotNormal = lightV.Dot(normalV);
 
             //light_dot_normal represents the cosine of the angle between the
             //light vector and the normal vector. A negative number means the
             //light is on the other side of the surface.
 
+           
             Color diffuse = Color.Black;
             Color specular = Color.Black;
             if (lightDotNormal > 0 && !inShadow)
@@ -79,13 +82,9 @@ namespace RayTracer
                 // reflection vector and the eye vector. A negative number means the
                 // light reflects away from the eye.
                 var reflectV = -lightV.Reflect(normalV);
-                var reflectEyeDot = reflectV.Dot(ref eyeV);
+                var reflectEyeDot = reflectV.Dot( eyeV);
 
-                if (reflectEyeDot <= 0)
-                {
-                    specular = Color.Black;
-                }
-                else
+                if (reflectEyeDot > 0)
                 {
                     //compute the specular contribution
                     var factor = Math.Pow(reflectEyeDot, Shininess);

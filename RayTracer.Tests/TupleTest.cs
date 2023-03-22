@@ -151,7 +151,7 @@ namespace RayTracer
         {
             Tuple v1 = Tuple.Vector(1, 2, 3);
             Tuple v2 = Tuple.Vector(2, 3, 4);
-            Assert.Equal(v1.Dot(ref v2), 20);
+            Assert.Equal(v1.Dot( v2), 20);
         }
 
         [Fact]

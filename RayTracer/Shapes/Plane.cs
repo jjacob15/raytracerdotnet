@@ -8,7 +8,7 @@ namespace RayTracer.Shapes
     {
         public override void IntersectLocal(Ray ray, Intersections intersections)
         {
-            if (Math.Abs(ray.Direction.Y)< double.Epsilon)
+            if (Math.Abs(ray.Direction.Y) < Constants.Epsilon)
             {
                 return;
             }
@@ -19,7 +19,7 @@ namespace RayTracer.Shapes
 
         public override void IntersectLocal(ref Tuple origin, ref Tuple direction, Intersections intersections)
         {
-            if (Math.Abs(direction.Y) < double.Epsilon)
+            if (Math.Abs(direction.Y) < Constants.Epsilon)
             {
                 return;
             }

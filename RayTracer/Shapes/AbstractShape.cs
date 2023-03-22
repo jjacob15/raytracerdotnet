@@ -13,7 +13,7 @@ namespace RayTracer.Shapes
 
         public void Intersect(Ray ray, Intersections intersections)
         {
-            if (ReferenceEquals(Transform, Matrix.Identity))
+            if (Transform == Matrix.Identity)
             {
                 IntersectLocal(ray, intersections);
                 return;
@@ -25,14 +25,13 @@ namespace RayTracer.Shapes
 
         public void Intersect(ref Tuple origin, ref Tuple direction, Intersections intersections)
         {
-            if (ReferenceEquals(Transform, Matrix.Identity))
+            if (Transform == Matrix.Identity)
             {
                 IntersectLocal(ref origin, ref direction, intersections);
                 return;
             }
 
             var transformInverse = Transform.Inverse();
-            //var transformedRay = ray.Transform(Transform.Inverse());
             var transformedOrigin = origin * transformInverse;
             var transformedDirection = direction * transformInverse;
             IntersectLocal(ref transformedOrigin, ref transformedDirection, intersections);
@@ -41,10 +40,9 @@ namespace RayTracer.Shapes
         public Tuple NormalAt(Tuple worldPoint)
         {
             var localPoint = Transform.Inverse() * worldPoint;
-            //var localNormal = localPoint - Tuple.Point(0, 0, 0);
             var localNormal = NormalAtLocal(localPoint);
             var worldNormal = Transform.Inverse().Transpose() * localNormal;
-            worldNormal.SetW(0);
+            worldNormal.SetW(0.0d);
             return worldNormal.Normalize();
         }
 

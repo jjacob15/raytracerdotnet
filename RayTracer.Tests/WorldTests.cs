@@ -145,7 +145,10 @@ namespace RayTracer
             var r = new Ray(Tuple.Point(0, 0, 0.1), Tuple.Vector(0, 1, 0));
             var xs = new Intersections(new Intersection(a, -0.9899), new Intersection(b, -0.4899), new Intersection(b, 0.4899), new Intersection(a, 0.9899));
             var comps = xs[2].PrepareComputations(r, xs);
-            w.RefractedColor(comps, 5).Should().Be(new Color(0, 0.99888, 0.04725));
+            var c = w.RefractedColor(comps, 5);
+            c.Red.Should().Be(0);
+            c.Green.Should().BeApproximately(0.99888, 1e-4);
+            c.Blue.Should().BeApproximately(0.04725, 1e-4);
         }
 
         [Fact]
