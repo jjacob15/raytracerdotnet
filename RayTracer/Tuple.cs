@@ -52,7 +52,6 @@ namespace RayTracer
 
         public double Magnitude => Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
 
-
         public Tuple Normalize()
         {
             var m = Magnitude;

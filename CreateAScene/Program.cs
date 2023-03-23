@@ -33,12 +33,12 @@ namespace CreateAScene
 
             using StreamWriter sw = new StreamWriter(@"d:\test\picture1.txt");
             var c = Camera.DefaultCamera();
-            for (int x = 0; x < 640; x ++)
+            for (int x = 0; x < 640; x++)
             {
-                for (int y = 0; y < 400; y ++)
+                for (int y = 0; y < 400; y++)
                 {
                     var ray = c.RayForPixel(x, y);
-                    var color = scene.World.ColorAt(ray,10);
+                    var color = scene.World.ColorAt(ray, 10);
                     sw.WriteLine($"{x},{y},{color.Red},{color.Green},{color.Blue}");
                 }
             }
@@ -50,17 +50,16 @@ namespace CreateAScene
 
 
             var floor = new Plane();
-            floor.Material.Pattern = new RayTracer.Patterns.CheckerPattern(new Color(1, 0.9, 0.9), new Color(0.6, 0, 0));
+            floor.Material.Pattern = new CheckerPattern(new Color(1, 0.9, 0.9), new Color(0.6, 0, 0));
             floor.Material.Reflective = 0.5;
-            //floor.Transform = Matrix.Transformation().Apply();
-            floor.Material.Color = new Color(1, 0.9, 0.9);
+            //floor.Material.Color = new Color(1, 0.9, 0.9);
             floor.Material.Specular = 0;
             w.AddShape(floor);
 
             var leftWall = new Plane();
             leftWall.Transform = Matrix.Transformation().RotateX(Math.PI / 2)
                 .RotateY(-Math.PI / 4).Translation(0, 0, 5).Apply();
-            leftWall.Material.Color = new Color(1, 0.9, 0.9);
+            leftWall.Material = new Material(new Color(1, 0.9, 0.9));
             leftWall.Material.Reflective = 1;
             leftWall.Material.Transparency = 0.5;
             w.AddShape(leftWall);
@@ -68,14 +67,14 @@ namespace CreateAScene
             var rightWall = new Plane();
             rightWall.Transform = Matrix.Transformation().RotateX(Math.PI / 2)
                  .RotateY(Math.PI / 4).Translation(0, 0, 5).Apply();
-            rightWall.Material.Color = new Color(1, 1, 1);
+            rightWall.Material = new Material(new Color(1, 1, 1));
             rightWall.Material.Reflective = 1;
             rightWall.Material.Transparency = 0.5;
             w.AddShape(rightWall);
 
             var right = new Sphere();
             right.Transform = Matrix.Transformation().Translation(0.5, 1, 1).Apply();
-            right.Material.Color = new Color(0.5, 1, 0.1);
+            right.Material = new Material(new Color(0.5, 1, 0.1));
             right.Material.Diffuse = 0.7;
             right.Material.Specular = 0.3;
             w.AddShape(right);
@@ -83,14 +82,12 @@ namespace CreateAScene
 
             var left = Sphere.GlassSphere();
             left.Transform = Matrix.Transformation().Scaling(.33, .33, .33).Translation(-1.5, 0.33, -0.75).Apply();
-            //left.Material.Color = new Color(1, 0.8, 0.1);
-            //left.Material.Diffuse = 0.7;
             //left.Material.Specular = 0.3;
             w.AddShape(left);
 
             w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
-            Camera c = new Camera(400, 200, Math.PI / 3,Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+            Camera c = new Camera(400, 200, Math.PI / 3, Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
                 Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c.Render(w);
         }
@@ -132,7 +129,7 @@ namespace CreateAScene
 
             w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
-            Camera c = new Camera(100, 50, Math.PI / 3,Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+            Camera c = new Camera(100, 50, Math.PI / 3, Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
                 Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c.Render(w);
         }
@@ -163,7 +160,7 @@ namespace CreateAScene
 
             w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
-            Camera c = new Camera(100, 50, Math.PI / 3,Matrix.ViewTransform(Tuple.Point(0, 1.5, -7),
+            Camera c = new Camera(100, 50, Math.PI / 3, Matrix.ViewTransform(Tuple.Point(0, 1.5, -7),
                 Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c.Render(w);
         }
@@ -214,7 +211,7 @@ namespace CreateAScene
 
             w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
 
-            Camera c = new Camera(800, 400, Math.PI / 3,Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+            Camera c = new Camera(800, 400, Math.PI / 3, Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
                 Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
             return c.Render(w);
         }

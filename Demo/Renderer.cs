@@ -51,54 +51,26 @@ namespace Demo
 
         private void Render(IWorld world, Canvas canvas, Camera camera, int threadCount)
         {
-            var pixels = new List<Tuple<int, int>>();
+            int batchSize = 200;
+            int count = 0;
+            RenderJob job = new RenderJob(world, camera, canvas, Stats);
             for (int y = 0; y < camera.VSize; y++)
             {
                 for (int x = 0; x < camera.HSize; x++)
                 {
-                    pixels.Add(new Tuple<int, int>(x, y));
-                }
-            }
-
-            Random r = new Random(0);
-            pixels = pixels.OrderBy(job => r.Next()).ToList();
-
-            const int BatchSize = 128;
-            for (int i = 0; i < pixels.Count; i += BatchSize)
-            {
-                RenderJob job = new RenderJob(world, camera, canvas, Stats);
-                for (int j = 0; j < BatchSize; j++)
-                {
-                    if (i + j >= pixels.Count)
+                    if (count >= batchSize)
                     {
-                        continue;
+                        RenderJobs.Enqueue(job);
+                        job = new RenderJob(world, camera, canvas, Stats);
+                        count = 0;
                     }
-                    var pixel = pixels[i + j];
-                    job.XList.Add(pixel.Item1);
-                    job.YList.Add(pixel.Item2);
+                    job.XList.Add(x);
+                    job.YList.Add(y);
+                    count++;
                 }
-                RenderJobs.Enqueue(job);
             }
-            //int batchSize = 500;
-            //int count = 0;
-            //RenderJob job = new RenderJob(world, camera, canvas, Stats);
-            //for (int y = 0; y < camera.VSize; y++)
-            //{
-            //    for (int x = 0; x < camera.HSize; x++)
-            //    {
-            //        if (count >= batchSize)
-            //        {
-            //            RenderJobs.Enqueue(job);
-            //            job = new RenderJob(world, camera, canvas, Stats);
-            //            count = 0;
-            //        }
-            //        job.XList.Add(x);
-            //        job.YList.Add(y);
-            //        count++;
-            //    }
-            //}
 
-            //RenderJobs.Enqueue(job);
+            RenderJobs.Enqueue(job);
 
 
             if (threadCount < 2)

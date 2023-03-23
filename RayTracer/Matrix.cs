@@ -133,37 +133,56 @@ namespace RayTracer
             set => _m[row, column] = value;
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(Matrix m)
         {
-            if ((obj == null) || !GetType().Equals(obj.GetType()))
+            if (m.Size != Size)
             {
                 return false;
             }
-            else
+
+            for (int i = 0; i < Size; i++)
             {
-                Matrix m = (Matrix)obj;
-                return m == this;
-            }
-        }
-        public override int GetHashCode()
-        {
-            double hashcode = 23;
-            for (var r = 0; r < Size; r++)
-                for (var c = 0; c < Size; c++)
-                    hashcode = (hashcode * 37) + _m[r, c];
-
-            return (int)Math.Round(hashcode);
-        }
-        public static bool operator ==(Matrix a, Matrix b)
-        {
-            if (ReferenceEquals(a, b)) return true;
-
-            for (int r = 0; r < a.Size; r++)
-                for (int c = 0; c < a.Size; c++)
-                    if (!a[r, c].DoubleEqual(b[r, c]))
+                for (int j = 0; j < Size; j++)
+                {
+                    if (!m[i, j].DoubleEqual(_m[i,j]))
+                    {
                         return false;
+                    }
+                }
+            }
 
             return true;
+        }
+
+        public override bool Equals(object m)
+        {
+            if (m == null) return false;
+
+            if (m is Matrix matrix)
+            {
+                return Equals(matrix);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public static bool operator ==(Matrix m1, Matrix m2)
+        {
+            if (ReferenceEquals(m1, null) && ReferenceEquals(m2, null))
+            {
+                return true;
+            }
+            if (!ReferenceEquals(m1, null) && ReferenceEquals(m2, null))
+            {
+                return false;
+            }
+
+            return !ReferenceEquals(m1, null) && m1.Equals(m2);
         }
 
         public static bool operator !=(Matrix a, Matrix b)

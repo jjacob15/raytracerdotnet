@@ -166,7 +166,7 @@ namespace RayTracer
             w.AddShape(floor);
 
             var ball = new Sphere();
-            ball.Material.Color = new Color(1, 0, 0);
+            ball.Material = new Material(new Color(1, 0, 0));
             ball.Material.Ambient = 0.5;
             ball.Transform = Matrix.Transformation().Translation(0, -3.5, -0.5).Apply();
             w.AddShape(ball);
@@ -194,7 +194,7 @@ namespace RayTracer
             w.AddShape(floor);
 
             var ball = new Sphere();
-            ball.Material.Color = new Color(1, 0, 0);
+            ball.Material = new Material(new Color(1, 0, 0));
             ball.Material.Ambient = 0.5;
             ball.Transform = Matrix.Transformation().Translation(0, -3.5, -0.5).Apply();
 

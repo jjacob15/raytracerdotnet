@@ -52,13 +52,13 @@ namespace CastRaysToSphere
                     var ray = new Ray(rayOrigin, (position - rayOrigin).Normalize());
 
                     var xs = new Intersections();
-                    sphere.Intersect(ray,xs);
+                    sphere.Intersect(ray, xs);
                     if (xs.Hit() != null)
                     {
                         var point = ray.Position(xs.Hit().T);
                         var normal = sphere.NormalAt(point);
                         var eye = -ray.Direction;
-                        canvas.SetPixel(x, y,sphere.Material.Lighting(sphere, light, point,eye, normal, false));
+                        canvas.SetPixel(x, y, sphere.Material.Lighting(sphere, light, ref point, ref eye, ref normal, false));
                     }
                 }
             }
@@ -99,9 +99,9 @@ namespace CastRaysToSphere
                     //Console.WriteLine($"x {x} y {y} {position}");
                     var ray = new Ray(rayOrigin, (position - rayOrigin));
                     var xs = new Intersections();
-                    shape.Intersect(ray,xs);
+                    shape.Intersect(ray, xs);
                     if (xs.Hit() != null)
-                        canvas.SetPixel(x, y,color);
+                        canvas.SetPixel(x, y, color);
                 }
             }
             canvas.Save(@"c:\users\jaison.jacob\desktop\sphere.ppm");

@@ -40,23 +40,21 @@ namespace Profiling
         //    w.ColorAt(localRay, 10);
         //}
 
+        //[Benchmark]
+        //public void IntersectionTest()
+        //{
+        //    var localRay = new Ray(Tuple.Point(0, 0, 0.1), Tuple.Vector(0, 1, 0));
+        //    var xs = new Intersections();
+        //    w.Intersect(localRay, xs);
+
+        //    var h = xs.Hit();
+        //}
+
         [Benchmark]
-        public void IntersectionTest()
+        public void ColorRayTestNew()
         {
             var localRay = new Ray(Tuple.Point(0, 0, 0.1), Tuple.Vector(0, 1, 0));
-            var xs = new Intersections();
-            w.Intersect(localRay, xs);
-
-            var h = xs.Hit();
+            w.ColorAt(localRay, 10);
         }
-
-        //[Benchmark]
-        //public void ColorRayTestNew()
-        //{
-        //    Ray r = ObjectFactory.IntersectingRay();
-        //    var origin = r.Origin;
-        //    var dir = r.Direction;
-        //    w.ColorAtNew(ref origin, ref dir, 10);
-        //}
     }
 }

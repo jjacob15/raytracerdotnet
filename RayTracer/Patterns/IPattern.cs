@@ -8,6 +8,6 @@ namespace RayTracer.Patterns
     public interface IPattern : ITransformable
     {
         public Color PatternAt(Tuple point);
-        public Color PatternAtShape(IShape shape, Tuple worldPoint);
+        public Color PatternAtShape(IShape shape, ref Tuple worldPoint);
     }
 }

@@ -40,7 +40,7 @@ namespace RayTracer
 
         }
 
-        public Color Color { get; set; } = new Color(1, 1, 1);
+        public Color Color { get; }
         public double Ambient { get; set; } = 0.1;
         public double Diffuse { get; set; } = 0.9;
         public double Specular { get; set; } = 0.9;
@@ -51,14 +51,20 @@ namespace RayTracer
 
         public IPattern Pattern { get; set; }
 
-        public Color Lighting(IShape shape, ILight light, Tuple point, Tuple eyeV, Tuple normalV, bool inShadow)
+        public Color Lighting(IShape shape, ILight light, ref Tuple point, ref Tuple eyeV, ref Tuple normalV, bool inShadow)
         {
+            Color newColor = Color;
             if (!ReferenceEquals(Pattern, null))
             {
-                Color = Pattern.PatternAtShape(shape, point);
+                newColor = Pattern.PatternAtShape(shape, ref point);
+                //combine the surface color with the light's color/intensity
             }
-            //combine the surface color with the light's color/intensity
-            var effectiveColor = Color * light.Intensity;
+            return Lighting(light, ref point, ref eyeV, ref normalV, inShadow, ref newColor);
+        }
+
+        private Color Lighting(ILight light, ref Tuple point, ref Tuple eyeV, ref Tuple normalV, bool inShadow, ref Color color)
+        {
+            var effectiveColor = color * light.Intensity;
             //find the direction to the light source
             var lightV = (light.Position - point).Normalize();
             //compute the ambient contribution
