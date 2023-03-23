@@ -17,22 +17,15 @@ namespace RayTracer
             Y = y;
             Z = z;
             W = w;
-
-            //_magnitude = double.MinValue;
         }
 
         public double X { get; }
         public double Y { get; }
         public double Z { get; }
-        public double W { get;  }
+        public double W { get; }
 
         public bool IsPoint => W == 1.0d;
         public bool IsVector => W == 0.0d;
-
-        //public void SetW(double val)
-        //{
-        //    W = val;
-        //}
 
         public override bool Equals(object obj)
         {
@@ -47,57 +40,17 @@ namespace RayTracer
             return base.GetHashCode();
         }
 
-        public static bool operator ==(Tuple a, Tuple b)
-        {
-            return a.X.DoubleEqual(b.X) &&
-                a.Y.DoubleEqual(b.Y) &&
-                a.Z.DoubleEqual(b.Z) &&
-                a.W.DoubleEqual(b.W);
-        }
+        public static bool operator ==(Tuple a, Tuple b) => a.X.DoubleEqual(b.X) && a.Y.DoubleEqual(b.Y) && a.Z.DoubleEqual(b.Z) && a.W.DoubleEqual(b.W);
+        public static bool operator !=(Tuple a, Tuple b) => !(a == b);
 
-        public static bool operator !=(Tuple a, Tuple b)
-        {
-            return !(a == b);
-        }
-
-        public static Tuple operator +(Tuple a, Tuple b)
-        {
-            return new Tuple(a.X + b.X,
-                a.Y + b.Y,
-                a.Z + b.Z,
-                Math.Max(a.W, b.W));
-        }
-
-        public static Tuple operator -(Tuple a, Tuple b)
-        {
-            return new Tuple(a.X - b.X,
-                a.Y - b.Y,
-                a.Z - b.Z,
-            //a.W - b.W);
-            Math.Abs(a.W - b.W));
-        }
-
+        public static Tuple operator +(Tuple a, Tuple b) => new Tuple(a.X + b.X, a.Y + b.Y, a.Z + b.Z, Math.Max(a.W, b.W));
+        public static Tuple operator -(Tuple a, Tuple b) => new Tuple(a.X - b.X, a.Y - b.Y, a.Z - b.Z, Math.Abs(a.W - b.W));
         public static Tuple operator -(Tuple a) => new Tuple(-a.X, -a.Y, -a.Z, -a.W);
+        public static Tuple operator --(Tuple a) => new Tuple(-a.X, -a.Y, -a.Z, -a.W);
+        public static Tuple operator /(Tuple a, double divisor) => new Tuple(a.X / divisor, a.Y / divisor, a.Z / divisor, a.W / divisor);
+        public static Tuple operator *(Tuple a, double multiplier) => new Tuple(a.X * multiplier, a.Y * multiplier, a.Z * multiplier, a.W * multiplier);
 
-        public static Tuple operator --(Tuple a)
-        {
-            return new Tuple(-a.X, -a.Y, -a.Z, -a.W);
-        }
-
-        public static Tuple operator /(Tuple a, double divisor)
-        {
-            return new Tuple(a.X / divisor, a.Y / divisor, a.Z / divisor, a.W / divisor);
-        }
-
-        public static Tuple operator *(Tuple a, double multiplier)
-        {
-            return new Tuple(a.X * multiplier, a.Y * multiplier, a.Z * multiplier, a.W * multiplier);
-        }
-
-        //private double _magnitude { get; set; }
-
-        public double Magnitude =>
-            Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
+        public double Magnitude => Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
 
 
         public Tuple Normalize()
@@ -106,15 +59,8 @@ namespace RayTracer
             return new Tuple(X / m, Y / m, Z / m, W / m);
         }
 
-        public double Dot(Tuple t)
-        {
-            return X * t.X + Y * t.Y + Z * t.Z + W * t.W;
-        }
-
-        public double Dot(ref Tuple t)
-        {
-            return X * t.X + Y * t.Y + Z * t.Z + W * t.W;
-        }
+        public double Dot(Tuple t) => X * t.X + Y * t.Y + Z * t.Z + W * t.W;
+        public double Dot(ref Tuple t) => X * t.X + Y * t.Y + Z * t.Z + W * t.W;
 
         public Tuple Cross(Tuple t)
         {
@@ -128,9 +74,6 @@ namespace RayTracer
 
         public override string ToString() => $"X: {X} Y: {Y} Z: {Z} W: {W}";
 
-        public Tuple Reflect(Tuple normal)
-        {
-            return this - normal * 2 * Dot(normal);
-        }
+        public Tuple Reflect(Tuple normal) => this - normal * 2 * Dot(normal);
     }
 }
