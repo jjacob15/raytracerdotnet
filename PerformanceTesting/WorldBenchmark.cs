@@ -26,12 +26,12 @@ namespace Profiling
             b.Material.RefractiveIndex = 1.5;
         }
 
-        //[Benchmark]
-        //public void ColorRayTest()
-        //{
-        //    Ray r = ObjectFactory.IntersectingRay();
-        //    w.ColorAt(r, 10);
-        //}
+        [Benchmark]
+        public void ColorRayTest()
+        {
+            Ray r = ObjectFactory.IntersectingRay();
+            w.ColorAt(r, 10);
+        }
 
         //[Benchmark]
         //public void ColorRayTest()
@@ -40,21 +40,21 @@ namespace Profiling
         //    w.ColorAt(localRay, 10);
         //}
 
-        //[Benchmark]
-        //public void IntersectionTest()
-        //{
-        //    var localRay = new Ray(Tuple.Point(0, 0, 0.1), Tuple.Vector(0, 1, 0));
-        //    var xs = new Intersections();
-        //    w.Intersect(localRay, xs);
-
-        //    var h = xs.Hit();
-        //}
-
         [Benchmark]
-        public void ColorRayTestNew()
+        public void IntersectionTest()
         {
             var localRay = new Ray(Tuple.Point(0, 0, 0.1), Tuple.Vector(0, 1, 0));
-            w.ColorAt(localRay, 10);
+            var xs = new Intersections();
+            w.Intersect(localRay, xs);
+
+            var h = xs.Hit();
         }
+
+        //[Benchmark]
+        //public void ColorRayTestNew()
+        //{
+        //    var localRay = new Ray(Tuple.Point(0, 0, 0.1), Tuple.Vector(0, 1, 0));
+        //    w.ColorAt(localRay, 10);
+        //}
     }
 }
