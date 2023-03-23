@@ -34,5 +34,12 @@ namespace RayTracer
         {
             World.SetLight(light);
         }
+
+        public void Light(double x, double y, double z)
+        {
+            var p = new PointLight(Tuple.Point(x, y, z), Color.White);
+            World.SetLight(p);
+        }
+
     }
 }

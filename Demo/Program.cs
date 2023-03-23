@@ -25,9 +25,10 @@ namespace Demo
             var renderParams = RendererParameters.HighQuality;
 
             List<Type> scenes = new List<Type> {
-            //    typeof(SimpleScene),
-            //typeof(StrippedPatternScene),
-            typeof(ReflectionScene)
+                //    typeof(SimpleScene),
+                //typeof(StrippedPatternScene),
+                //typeof(ReflectionScene),
+                typeof(ReflectionRefractionScene),
             };
 
             string dir = Path.Combine(Path.GetTempPath(), "raytracing");
