@@ -23,12 +23,12 @@ namespace Demo.Scenes
             var blueSphere = new Sphere
             {
                 Material = new Material(new Color(0, 0, 0.2), ambient: 0, diffuse: 0.4, specular: 0.9, shininess: 300, reflective: 0.9, transparency: 0.9, refractiveIndex: 1.5),
-                Transform = Matrix.Transformation().Scaling(0.7, 0.7, 0.7).Translation(0.6, 0.7, -0.6).Apply()
+                Transform = Matrix.Transformation().Scaling(0.7, 0.7, 0.7).Translation(0.6, 1, -0.6).Apply()
             };
             var greenSphere = new Sphere
             {
                 Material = new Material(new Color(0, 0.2, 0), ambient: 0, diffuse: 0.4, specular: 0.9, shininess: 300, reflective: 0.9, transparency: 0.9, refractiveIndex: 1.5),
-                Transform = Matrix.Transformation().Scaling(0.5, 0.5, 0.5).Translation(-0.7, 0.5, -0.8).Apply()
+                Transform = Matrix.Transformation().Scaling(0.5, 0.5, 0.5).Translation(-0.7, 1, -0.8).Apply()
             };
 
             Add(new[] { floor, s1, s2, blueSphere, greenSphere });

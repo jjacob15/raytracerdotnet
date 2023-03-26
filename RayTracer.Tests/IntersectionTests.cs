@@ -15,9 +15,11 @@ namespace RayTracer
         public void IntersectionEncapsulateT()
         {
             var ray = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
+            var origin = ray.Origin;
+            var direction = ray.Direction;
             var s = new Sphere();
             var xs = new Intersections();
-            s.Intersect(ray, xs);
+            s.Intersect(ref origin, ref direction, xs);
 
             Assert.Equal(2, xs.Count);
             Assert.Equal(s, xs[0].Object);
@@ -69,10 +71,12 @@ namespace RayTracer
         public void IntersectingScaledSphereWithARay()
         {
             var ray = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
+            var origin = ray.Origin;
+            var direction = ray.Direction;
             var s = new Sphere();
             s.Transform = Matrix.Transformation().Scaling(2, 2, 2).Apply();
             var xs = new Intersections();
-            s.Intersect(ray, xs);
+            s.Intersect(ref origin, ref direction, xs);
 
             Assert.Equal(2, xs.Count);
             Assert.True(xs[0].T.DoubleEqual(3));
@@ -84,10 +88,12 @@ namespace RayTracer
         public void IntersectingTranslatedSphereWithARay()
         {
             var ray = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
+            var origin = ray.Origin;
+            var direction = ray.Direction;
             var s = new Sphere();
             s.Transform = Matrix.Transformation().Translation(5, 0, 0).Apply();
             var xs = new Intersections();
-            s.Intersect(ray, xs);
+            s.Intersect(ref origin, ref direction, xs);
 
             Assert.Empty(xs);
         }

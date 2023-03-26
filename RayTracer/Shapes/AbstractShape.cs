@@ -7,21 +7,21 @@ namespace RayTracer.Shapes
         public Matrix Transform { get; set; } = Matrix.Identity;
         public virtual Material Material { get; set; } = new Material();
 
-        public abstract void IntersectLocal(Ray ray, Intersections intersections);
+        //public abstract void IntersectLocal(Ray ray, Intersections intersections);
         public abstract void IntersectLocal(ref Tuple origin, ref Tuple direction, Intersections intersections);
         public abstract Tuple NormalAtLocal(Tuple localPoint);
 
-        public void Intersect(Ray ray, Intersections intersections)
-        {
-            if (Transform == Matrix.Identity)
-            {
-                IntersectLocal(ray, intersections);
-                return;
-            }
+        //public void Intersect(Ray ray, Intersections intersections)
+        //{
+        //    if (Transform == Matrix.Identity)
+        //    {
+        //        IntersectLocal(ray, intersections);
+        //        return;
+        //    }
 
-            var transformedRay = ray.Transform(Transform.Inverse());
-            IntersectLocal(transformedRay, intersections);
-        }
+        //    var transformedRay = ray.Transform(Transform.Inverse());
+        //    IntersectLocal(transformedRay, intersections);
+        //}
 
         public void Intersect(ref Tuple origin, ref Tuple direction, Intersections intersections)
         {
