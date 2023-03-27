@@ -1,4 +1,5 @@
 ﻿using Demo.Scenes;
+using RayTracer;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,7 +29,8 @@ namespace Demo
                 //    typeof(SimpleScene),
                 //typeof(StrippedPatternScene),
                 //typeof(ReflectionScene),
-                typeof(ReflectionRefractionScene),
+                //typeof(ReflectionRefractionScene),
+                typeof(BasicCube)
             };
 
             string dir = Path.Combine(Path.GetTempPath(), "raytracing");

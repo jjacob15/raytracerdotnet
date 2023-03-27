@@ -11,7 +11,7 @@ namespace Profiling
         [GlobalSetup]
         public void Setup()
         {
-            c = Camera.DefaultCamera();
+            c = new CameraSettings().Build();
         }
 
         [Benchmark]

@@ -4,23 +4,76 @@ using System.Text;
 
 namespace RayTracer
 {
-    public class Camera
+    public class CameraSettings
     {
-        public static Camera DefaultCamera()
+        private Tuple ViewFrom { get; set; } = Tuple.Point(0, 1.5, -5);
+        private Tuple ViewTo { get; set; } = Tuple.Point(0, 1, 0);
+
+        public RendererParameters RendererParameters { get; } = RendererParameters.HighQuality;
+
+        public Camera Build()
         {
-            var c = new Camera(640, 400, Math.PI / 3,Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
-                  Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
+            var c = new Camera(RendererParameters.Width, RendererParameters.Height, Math.PI / 3,
+             Matrix.ViewTransform(ViewFrom,
+               ViewTo, Tuple.Vector(0, 1, 0)));
             return c;
         }
-        public Camera(double hSize, double vSize, double fieldOfView,Matrix transform)
+
+        public static CameraSettings ViewFromFarTopLeft()
+        {
+            return new CameraSettings { ViewFrom = Tuple.Point(-13, 17, -13), ViewTo = Tuple.Vector(0, 5, 0) };
+        }
+        public static CameraSettings ViewFromFarLeft()
+        {
+            return new CameraSettings { ViewFrom = Tuple.Point(-13, 3, -13), ViewTo = Tuple.Vector(0, 5, 0) };
+        }
+
+        public static CameraSettings ViewFromTopLeft()
+        {
+            return new CameraSettings { ViewFrom = Tuple.Point(-5 , 7, -5), ViewTo = Tuple.Vector(0, 5, 0) };
+        }
+        public static CameraSettings ViewFromLeft()
+        {
+            return new CameraSettings { ViewFrom = Tuple.Point(-5, 3, -5), ViewTo = Tuple.Vector(0, 5, 0) };
+        }
+
+        public static CameraSettings ViewFromTopRight()
+        {
+            return new CameraSettings { ViewFrom = Tuple.Point(13, 17, 13), ViewTo = Tuple.Vector(0, 5, 0) };
+
+        }
+        public static CameraSettings ViewFromRight()
+        {
+            return new CameraSettings { ViewFrom = Tuple.Point(13, 5, 13), ViewTo = Tuple.Vector(0, 5, 0) };
+        }
+        public static CameraSettings ViewFromTopCenter()
+        {
+            return new CameraSettings { ViewFrom = Tuple.Point(-13, 17, -13), ViewTo = Tuple.Vector(0, 5, 0) };
+
+        }
+    }
+
+    public class Camera : ICamera
+    {
+        //public static Camera DefaultCamera()
+        //{
+        //    var c = new Camera(640, 400, Math.PI / 3,
+        //        Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+        //          Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
+        //    return c;
+        //}
+        public Camera(double hSize, double vSize, double fieldOfView, Matrix transform) : this(hSize, vSize, fieldOfView)
+        {
+            Transform = transform;
+            _transformInverse = Transform.Inverse();
+        }
+
+        public Camera(double hSize, double vSize, double fieldOfView)
         {
             HSize = hSize;
             VSize = vSize;
             FieldOfView = fieldOfView;
             ComputePixelSize();
-
-            Transform = transform;
-            _transformInverse = Transform.Inverse();
         }
 
         private void ComputePixelSize()

@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tuple = RayTracer.Tuple;
 
-namespace Demo
+namespace RayTracer
 {
     public class Renderer
     {
@@ -37,13 +37,13 @@ namespace Demo
                 throw new Exception($"Invalid scene type: {type.FullName}");
 
             scene.Initialize();
-            Render(scene, renderParams, threads);
+            Camera c = scene.CameraSettings.Build();
+            Render(scene, renderParams, c, threads);
         }
 
-        private void Render(AbstractScene scene, RendererParameters renderParameters, int threads)
+        private void Render(AbstractScene scene, RendererParameters renderParameters, Camera camera, int threads)
         {
             Canvas = new Canvas(renderParameters.Width, renderParameters.Height);
-            var camera = BuildCamera(renderParameters);
 
             Stats = new RendererStats(renderParameters.Width * renderParameters.Height);
             Render(scene.World, Canvas, camera, threads);
@@ -115,11 +115,11 @@ namespace Demo
             }
         }
 
-        private Camera BuildCamera(RendererParameters rendererParameters)
-        {
-            var c = new Camera(rendererParameters.Width, rendererParameters.Height, Math.PI / 3, Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
-              Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
-            return c;
-        }
+        //private Camera BuildCamera(RendererParameters rendererParameters)
+        //{
+        //    var c = new Camera(rendererParameters.Width, rendererParameters.Height, Math.PI / 3, Matrix.ViewTransform(Tuple.Point(0, 1.5, -5),
+        //      Tuple.Point(0, 1, 0), Tuple.Vector(0, 1, 0)));
+        //    return c;
+        //}
     }
 }

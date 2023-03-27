@@ -11,11 +11,13 @@ namespace RayTracer
     public abstract class AbstractScene
     {
         public IWorld World { get; }
+        public CameraSettings CameraSettings { get; private set; }
 
         public AbstractScene()
         {
             World = new World();
             World.SetLight(new PointLight(Tuple.Point(-10, 10, -10), Color.White));
+
         }
 
         public abstract void Initialize();
@@ -39,6 +41,11 @@ namespace RayTracer
         {
             var p = new PointLight(Tuple.Point(x, y, z), Color.White);
             World.SetLight(p);
+        }
+
+        public void SetCameraSettings(CameraSettings settings)
+        {
+            CameraSettings = settings;
         }
 
     }

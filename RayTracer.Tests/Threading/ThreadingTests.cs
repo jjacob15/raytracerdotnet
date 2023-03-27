@@ -71,7 +71,7 @@ namespace RayTracer.Threading
                 }
             }
 
-            var c = Camera.DefaultCamera();
+            var c = new CameraSettings().Build();
 
             while (jobs.TryDequeue(out var job))
             {
@@ -116,7 +116,7 @@ namespace RayTracer.Threading
                 }
             }
 
-            var c = Camera.DefaultCamera();
+            var c = new CameraSettings().Build();
 
             void localTask()
             {
