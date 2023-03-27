@@ -10,10 +10,17 @@ namespace RayTracer.Shapes
         {
             (double xmin, double xmax) = CheckAxis(origin.X, direction.X);
             (double ymin, double ymax) = CheckAxis(origin.Y, direction.Y);
+
+            var tmin = Math.Max(xmin, ymin);
+            var tmax = Math.Min(xmax, ymax);
+
+            if (tmin > tmax) return;
+
+
             (double zmin, double zmax) = CheckAxis(origin.Z, direction.Z);
 
-            var tmin = Math.Max(Math.Max(xmin, ymin), zmin);
-            var tmax = Math.Min(Math.Min(xmax, ymax), zmax);
+            tmin = Math.Max(tmin, zmin);
+            tmax = Math.Min(tmax, zmax);
 
             if (tmin > tmax) return;
 
