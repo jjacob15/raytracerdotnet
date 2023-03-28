@@ -11,7 +11,7 @@ namespace RayTracer.Patterns
         {
         }
 
-        public StrippedPattern() : this(Color.White, Color.Black)
+        public StrippedPattern() : this(Color._White, Color._Black)
         {
 
         }

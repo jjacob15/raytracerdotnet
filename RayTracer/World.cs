@@ -71,7 +71,7 @@ namespace RayTracer
 
             var hit = intersections.Hit();
             if (hit == null)
-                return Color.Black;
+                return Color._Black;
 
             var comp = hit.PrepareComputations(ray, intersections);
             return ShadeHits(comp, remaining);
@@ -98,9 +98,9 @@ namespace RayTracer
 
         public Color RefractedColor(IntersectionState comps, int remaining = 5)
         {
-            if (remaining < 1) return Color.Black;
+            if (remaining < 1) return Color._Black;
 
-            if (comps.Object.Material.Transparency < Constants.Epsilon) return Color.Black;
+            if (comps.Object.Material.Transparency < Constants.Epsilon) return Color._Black;
 
             var nRatio = comps.N1 / comps.N2;
             var normalV = comps.NormalV;
@@ -108,7 +108,7 @@ namespace RayTracer
             var sin2T = nRatio * nRatio * (1 - cosI * cosI);
             if (sin2T > 1)
             {
-                return Color.Black;
+                return Color._Black;
             }
 
             var cosT = Math.Sqrt(1.0 - sin2T);
@@ -120,10 +120,10 @@ namespace RayTracer
         public Color ReflectedColor(IntersectionState comps, int remaining = 5)
         {
             var materialReflective = comps.Object.Material.Reflective;
-            if (remaining < 1 || materialReflective < Constants.Epsilon) return Color.Black;
+            if (remaining < 1 || materialReflective < Constants.Epsilon) return Color._Black;
 
             if (comps.Object.Material.Ambient == 1)
-                return Color.Black;
+                return Color._Black;
 
             var reflectedRay = new Ray(comps.OverPoint, comps.ReflectV);
             var color = ColorAt(reflectedRay, remaining - 1);

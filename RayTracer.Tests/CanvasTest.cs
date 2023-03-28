@@ -15,7 +15,7 @@ namespace RayTracer
 
             for (int w = 0; w < c.Width; w++)
                 for (int h = 0; h < c.Height; h++)
-                    Assert.Equal(c[w, h], Color.Black);
+                    Assert.Equal(c[w, h], Color._Black);
         }
 
         [Fact]

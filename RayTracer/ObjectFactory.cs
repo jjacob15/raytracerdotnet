@@ -26,7 +26,7 @@ namespace RayTracer
                 Transform = Matrix.Transformation().Scaling(0.5, 0.5, 0.5).Apply()
             });
 
-            w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), Color.White));
+            w.SetLight(new PointLight(Tuple.Point(-10, 10, -10), Color._White));
             return w;
         }
     }

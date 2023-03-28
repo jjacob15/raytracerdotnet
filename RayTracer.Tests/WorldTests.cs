@@ -101,7 +101,7 @@ namespace RayTracer
             var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             var xs = new Intersections(new Intersection(s, 4), new Intersection(s, 6));
             var comps = xs[0].PrepareComputations(r, xs);
-            w.RefractedColor(comps, 5).Should().Be(Color.Black);
+            w.RefractedColor(comps, 5).Should().Be(Color._Black);
         }
 
 
@@ -116,7 +116,7 @@ namespace RayTracer
             var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             var xs = new Intersections(new Intersection(s, 4), new Intersection(s, 6));
             var comps = xs[0].PrepareComputations(r, xs);
-            w.RefractedColor(comps, 0).Should().Be(Color.Black);
+            w.RefractedColor(comps, 0).Should().Be(Color._Black);
         }
 
         [Fact]
@@ -130,7 +130,7 @@ namespace RayTracer
             var r = new Ray(Tuple.Point(0, 0, Math.Sqrt(2) / 2), Tuple.Vector(0, 1, 0));
             var xs = new Intersections(new Intersection(s, -Math.Sqrt(2) / 2), new Intersection(s, Math.Sqrt(2) / 2));
             var comps = xs[1].PrepareComputations(r, xs);
-            w.RefractedColor(comps, 5).Should().Be(Color.Black);
+            w.RefractedColor(comps, 5).Should().Be(Color._Black);
         }
 
         [Fact]

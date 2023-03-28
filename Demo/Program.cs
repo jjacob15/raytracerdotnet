@@ -30,7 +30,8 @@ namespace Demo
                 //typeof(StrippedPatternScene),
                 //typeof(ReflectionScene),
                 //typeof(ReflectionRefractionScene),
-                typeof(BasicCube)
+                //typeof(BasicCube),
+                typeof(TableScene)
             };
 
             string dir = Path.Combine(Path.GetTempPath(), "raytracing");

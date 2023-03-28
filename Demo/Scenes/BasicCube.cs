@@ -12,7 +12,7 @@ namespace Demo.Scenes
         public override void Initialize()
         {
             IShape floor = new Plane();
-            floor.Material = new Material(new CheckerPattern(Color.White * 0.35, Color.White * 0.65), reflective: 0.4, specular: 0);
+            floor.Material = new Material(new CheckerPattern(Color._White * 0.35, Color._White * 0.65), reflective: 0.4, specular: 0);
 
             var c1 = new Cube { Material = new Material(new Color(1, 0.3, 0.2), specular: 0.4, shininess: 5), Transform = Matrix.Transformation().Translation(2, 1, 3).Apply() };
             var c2 = new Cube { Material = new Material(new Color(0.2, 1, 0.3), specular: 0.4, shininess: 5), Transform = Matrix.Transformation().Translation(-1, 1, 2).Apply() };

@@ -12,7 +12,7 @@ namespace Demo.Scenes
         public override void Initialize()
         {
             IShape floor = new Plane();
-            floor.Material = new Material(new CheckerPattern(Color.White * 0.35, Color.White * 0.65)
+            floor.Material = new Material(new CheckerPattern(Color._White * 0.35, Color._White * 0.65)
             {
                 Transform = Matrix.Transformation().RotateX(45).Apply()
             }, reflective: 0.4, specular: 0);

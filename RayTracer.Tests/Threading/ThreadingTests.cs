@@ -17,7 +17,7 @@ namespace RayTracer.Threading
         public override void Initialize()
         {
             IShape floor = new Plane();
-            floor.Material = new Material(new StrippedPattern(Color.White, Color.Black), specular: 0, reflective: 0);
+            floor.Material = new Material(new StrippedPattern(Color._White, Color._Black), specular: 0, reflective: 0);
             floor.Transform = Matrix.Transformation().Translation(0, 0, 0).Apply();
 
             var middle = new Sphere();

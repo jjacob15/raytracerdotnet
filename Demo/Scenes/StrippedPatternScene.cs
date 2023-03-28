@@ -12,7 +12,7 @@ namespace Demo.Scenes
         public override void Initialize()
         {
             IShape floor = new Plane();
-            floor.Material.Pattern = new StrippedPattern(Color.White, new Color(0, 0, 1));
+            floor.Material.Pattern = new StrippedPattern(Color._White, new Color(0, 0, 1));
             floor.Material.Specular = 0;
             Add(floor);
 

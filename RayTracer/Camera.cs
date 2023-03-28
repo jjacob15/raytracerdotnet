@@ -6,8 +6,8 @@ namespace RayTracer
 {
     public class CameraSettings
     {
-        private Tuple ViewFrom { get; set; } = Tuple.Point(0, 1.5, -5);
-        private Tuple ViewTo { get; set; } = Tuple.Point(0, 1, 0);
+        public Tuple ViewFrom { get; set; } = Tuple.Point(0, 1.5, -5);
+        public Tuple ViewTo { get; set; } = Tuple.Point(0, 1, 0);
 
         public RendererParameters RendererParameters { get; } = RendererParameters.HighQuality;
 
@@ -34,7 +34,7 @@ namespace RayTracer
         }
         public static CameraSettings ViewFromLeft()
         {
-            return new CameraSettings { ViewFrom = Tuple.Point(-5, 3, -5), ViewTo = Tuple.Vector(0, 5, 0) };
+            return new CameraSettings { ViewFrom = Tuple.Point(-5, 3, -5), ViewTo = Tuple.Vector(0, 2, 0) };
         }
 
         public static CameraSettings ViewFromTopRight()
@@ -48,8 +48,7 @@ namespace RayTracer
         }
         public static CameraSettings ViewFromTopCenter()
         {
-            return new CameraSettings { ViewFrom = Tuple.Point(-13, 17, -13), ViewTo = Tuple.Vector(0, 5, 0) };
-
+            return new CameraSettings { ViewFrom = Tuple.Point(10, 10, 10), ViewTo = Tuple.Vector(0, 10, 0) };
         }
     }
 

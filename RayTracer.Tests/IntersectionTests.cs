@@ -170,7 +170,7 @@ namespace RayTracer
         {
             var w = ObjectFactory.DefaultWorld();
             var r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 1, 0));
-            w.ColorAt(r).Should().Be(Color.Black);
+            w.ColorAt(r).Should().Be(Color._Black);
         }
 
         [Fact]
@@ -189,7 +189,7 @@ namespace RayTracer
             w.Shapes[1].Material.Ambient = 1;
 
             var r = new Ray(Tuple.Point(0, 0, .75), Tuple.Vector(0, 0, -1));
-            w.ColorAt(r).Should().Be(Color.White);
+            w.ColorAt(r).Should().Be(Color._White);
         }
 
         [Fact]
@@ -236,7 +236,7 @@ namespace RayTracer
             s.Material.Ambient = 1;
             var i = new Intersection(s, 1);
             var comps = i.PrepareComputations(r);
-            w.ReflectedColor(comps).Should().Be(Color.Black);
+            w.ReflectedColor(comps).Should().Be(Color._Black);
         }
 
         [Fact]
@@ -279,7 +279,7 @@ namespace RayTracer
         public void ColorAtMutuallyReflectiveSurfaces()
         {
             var w = new World();
-            w.SetLight(new PointLight(Tuple.Point(0, 0, 0), Color.White));
+            w.SetLight(new PointLight(Tuple.Point(0, 0, 0), Color._White));
             var lower = new Plane();
             lower.Material.Reflective = 1;
             lower.Transform = Matrix.Transformation().Translation(0, -1, 0).Apply();
@@ -307,7 +307,7 @@ namespace RayTracer
             var r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
             var i = new Intersection(shape, Math.Sqrt(2));
             var comps = i.PrepareComputations(r);
-            w.ReflectedColor(comps, 0).Should().Be(Color.Black);
+            w.ReflectedColor(comps, 0).Should().Be(Color._Black);
         }
 
         [Fact]

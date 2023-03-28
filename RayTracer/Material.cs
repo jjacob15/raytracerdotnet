@@ -10,7 +10,7 @@ namespace RayTracer
     public class Material
     {
         public Material(IPattern pattern, double ambient = 0.1, double diffuse = 0.9, double specular = 0.9, int shininess = 200,
-            double reflective = 0.0, double transparency = 0, double refractiveIndex = 1) : this(Color.White)
+            double reflective = 0.0, double transparency = 0, double refractiveIndex = 1) : this(Color._White)
         {
             Pattern = pattern;
             Ambient = ambient;
@@ -78,8 +78,8 @@ namespace RayTracer
             //light is on the other side of the surface.
 
 
-            Color diffuse = Color.Black;
-            Color specular = Color.Black;
+            Color diffuse = Color._Black;
+            Color specular = Color._Black;
             if (lightDotNormal > 0 && !inShadow)
             {
                 // compute the diffuse contribution
