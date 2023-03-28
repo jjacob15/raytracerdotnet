@@ -52,5 +52,41 @@ namespace RayTracer.Shapes
             var origin = Tuple.Point(px, py, pz);
             c.NormalAtLocal(origin).Should().Be(Tuple.Vector(vx, vy, vz));
         }
+
+        [Fact]
+        public void CylinderMinMax()
+        {
+            var c = new Cylinder();
+            c.Minimum.Should().Be(double.NegativeInfinity);
+            c.Maximum.Should().Be(double.PositiveInfinity);
+        }
+
+
+        [Theory]
+        [InlineData(0, 1.5, 0, 0.1, 1, 0, 0)]
+        [InlineData(0, 3, -5, 0, 0, 1, 0)]
+        [InlineData(0, 0, -5, 0, 0, 1, 0)]
+        [InlineData(0, 2, -5, 0, 0, 1, 0)]
+        [InlineData(0, 1, -5, 0, 0, 1, 0)]
+        [InlineData(0, 1.5, -2, 0, 0, 1, 2)]
+        public void IntersectingConstraintCylinder(double px, double py, double pz,
+           double vx, double vy, double vz, int count)
+        {
+            var c = new Cylinder();
+            c.Minimum = 1;
+            c.Maximum = 2;
+            var direction = Tuple.Vector(vx, vy, vz).Normalize();
+            var origin = Tuple.Point(px, py, pz);
+            var xs = new Intersections();
+            c.IntersectLocal(ref origin, ref direction, xs);
+            xs.Count.Should().Be(count);
+        }
+
+        [Fact]
+        public void ClosedValueCylinder()
+        {
+            var c = new Cylinder();
+            c.Closed.Should().Be(false);
+        }
     }
 }
