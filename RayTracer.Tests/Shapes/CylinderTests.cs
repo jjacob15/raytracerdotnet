@@ -88,5 +88,42 @@ namespace RayTracer.Shapes
             var c = new Cylinder();
             c.Closed.Should().Be(false);
         }
+
+        [Theory]
+        [InlineData(0, 3, 0, 0, -1, 0, 2)]
+        [InlineData(0, 3, -2, 0, -1, 2, 2)]
+        [InlineData(0, 4, -2, 0, -1, 1, 2)]
+        [InlineData(0, 0, -2, 0, 1, 2, 2)]
+        [InlineData(0, -1, -2, 0, 1, 1, 2)]
+        public void IntersectingTheCapsOfClosedCylinder(double px, double py, double pz,
+          double vx, double vy, double vz, int count)
+        {
+            var c = new Cylinder();
+            c.Minimum = 1;
+            c.Maximum = 2;
+            c.Closed = true;
+            var direction = Tuple.Vector(vx, vy, vz).Normalize();
+            var origin = Tuple.Point(px, py, pz);
+            var xs = new Intersections();
+            c.IntersectLocal(ref origin, ref direction, xs);
+            xs.Count.Should().Be(count);
+        }
+
+        [Theory]
+        [InlineData(0, 1, 0, 0, -1, 0)]
+        [InlineData(0.5, 1, 0, 0, -1, 0)]
+        [InlineData(0, 1, 0.5, 0, -1, 0)]
+        [InlineData(0, 2, 0, 0, 1, 0)]
+        [InlineData(0.5, 2, 0, 0, 1, 0)]
+        [InlineData(0, 2, 0.5, 0, 1, 0)]
+        public void NormalVectorOnEndCap(double px, double py, double pz,
+          double vx, double vy, double vz)
+        {
+            var c = new Cylinder();
+            c.Minimum = 1;
+            c.Maximum = 2;
+            c.Closed = true;
+            c.NormalAtLocal(Tuple.Point(px, py, pz)).Should().Be(Tuple.Vector(vx, vy, vz));
+        }
     }
 }
