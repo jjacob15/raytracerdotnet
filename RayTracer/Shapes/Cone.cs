@@ -10,6 +10,8 @@ namespace RayTracer.Shapes
         public double Maximum { get; set; } = double.PositiveInfinity;
         public bool Closed { get; set; }
 
+        public override Bounds Box => new Bounds { Min = Tuple.Point(-1, -1, -1), Max = Tuple.Point(1, 1, 1) };
+
         public Cone(double min, double max, bool closed)
         {
             Minimum = min;

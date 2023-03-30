@@ -6,6 +6,8 @@ namespace RayTracer.Shapes
 {
     public class Cube : AbstractShape
     {
+        public override Bounds Box => new Bounds { Min = Tuple.Point(-1, -1, -1), Max = Tuple.Point(1, 1, 1) };
+
         public override void IntersectLocal(ref Tuple origin, ref Tuple direction, Intersections intersections)
         {
             (double xmin, double xmax) = CheckAxis(origin.X, direction.X);

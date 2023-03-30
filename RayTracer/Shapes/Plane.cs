@@ -6,16 +6,7 @@ namespace RayTracer.Shapes
 {
     public class Plane : AbstractShape
     {
-        //public override void IntersectLocal(Ray ray, Intersections intersections)
-        //{
-        //    if (Math.Abs(ray.Direction.Y) < Constants.Epsilon)
-        //    {
-        //        return;
-        //    }
-
-        //    var t = -ray.Origin.Y / ray.Direction.Y;
-        //    intersections.Add(new Intersection(this, t));
-        //}
+        public override Bounds Box { get; } = new Bounds { Min = Tuple.Point(double.NegativeInfinity, 0, double.NegativeInfinity), Max = Tuple.Point(double.PositiveInfinity, 0, double.PositiveInfinity) };
 
         public override void IntersectLocal(ref Tuple origin, ref Tuple direction, Intersections intersections)
         {

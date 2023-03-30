@@ -1,4 +1,4 @@
-﻿namespace RayTracer.Lights
+﻿namespace RayTracer
 {
     public interface ILight
     {

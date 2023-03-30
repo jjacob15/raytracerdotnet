@@ -70,26 +70,12 @@ namespace RayTracer
             Assert.Equal("0 0 0 0 0 0 0 0 0 0 0 0 0 0 255", ppmLines[5]);
         }
 
-        //[Fact]
-        //public void TestBodyLenghtLimit()
-        //{
-        //    var c = new Canvas(10, 2, new Color(1, 0.8, 0.6));
-
-        //    var ppm = c.GetContent();
-        //    var ppmLines = GetLines(ppm);
-
-        //    Assert.Equal("255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204", ppmLines[3]);
-        //    Assert.Equal("153 255 204 153 255 204 153 255 204 153 255 204 153", ppmLines[4]);
-        //    Assert.Equal("255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204", ppmLines[5]);
-        //    Assert.Equal("153 255 204 153 255 204 153 255 204 153 255 204 153", ppmLines[6]);
-        //}
-
         [Fact]
         public void NewLineEndingTest()
         {
             var c = new Canvas(5, 2);
             var ppm = c.GetContent();
-            Assert.True(ppm.EndsWith(Environment.NewLine));
+            Assert.EndsWith(Environment.NewLine,ppm);
         }
     }
 }

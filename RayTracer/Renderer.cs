@@ -30,7 +30,7 @@ namespace RayTracer
 
 
 
-        public void Render(Type type, RendererParameters renderParams, int threads)
+        public void Render(Type type,  int threads)
         {
             AbstractScene scene = (AbstractScene)Activator.CreateInstance(type);
             if (scene == null)
@@ -38,7 +38,7 @@ namespace RayTracer
 
             scene.Initialize();
             Camera c = scene.CameraSettings.Build();
-            Render(scene, renderParams, c, threads);
+            Render(scene, scene.CameraSettings.RendererParameters, c, threads);
         }
 
         private void Render(AbstractScene scene, RendererParameters renderParameters, Camera camera, int threads)

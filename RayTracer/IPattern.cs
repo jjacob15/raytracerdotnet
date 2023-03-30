@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RayTracer.Patterns
+namespace RayTracer
 {
     public interface IPattern : ITransformable
     {

@@ -33,6 +33,8 @@ namespace Demo.Scenes
 
             Add(new[] { floor, s1, s2, transparentOne, transparentTwo });
             Light(-4.9, 4.9, -1);
+
+            SetCameraSettings(new CameraSettings { RendererParameters = new RendererParameters { Height = 800, Width = 1200 } });
         }
     }
 }

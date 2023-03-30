@@ -9,7 +9,7 @@ namespace RayTracer
         public Tuple ViewFrom { get; set; } = Tuple.Point(0, 1.5, -5);
         public Tuple ViewTo { get; set; } = Tuple.Point(0, 1, 0);
 
-        public RendererParameters RendererParameters { get; } = RendererParameters.HighQuality;
+        public RendererParameters RendererParameters { get; set; } = RendererParameters.HighQuality;
 
         public Camera Build()
         {

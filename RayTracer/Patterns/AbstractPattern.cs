@@ -16,7 +16,7 @@ namespace RayTracer.Patterns
 
         public Color PatternAtShape(IShape shape, ref Tuple worldPoint)
         {
-            var objectPoint = shape.Transform.Inverse() * worldPoint;
+            var objectPoint = shape.WorldToObject(worldPoint);
             var patternPoint = Transform.Inverse() * objectPoint;
             return PatternAt(patternPoint);
         }

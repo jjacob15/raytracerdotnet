@@ -4,6 +4,8 @@ namespace RayTracer.Shapes
 {
     public class Sphere : AbstractShape
     {
+        public override Bounds Box => new Bounds { Min = Tuple.Point(-1, -1, -1), Max = Tuple.Point(1, 1, 1) };
+
         public static Sphere GlassSphere()
         {
             var s = new Sphere();
@@ -16,23 +18,6 @@ namespace RayTracer.Shapes
         {
             return new Intersection(this, t);
         }
-
-        //public override void IntersectLocal(Ray ray, Intersections intersections)
-        //{
-        //    var SphereToRay = ray.Origin - Tuple.Point(0, 0, 0);
-        //    var a = ray.Direction.Dot(ray.Direction);
-        //    var b = 2 * ray.Direction.Dot(SphereToRay);
-        //    var c = SphereToRay.Dot(SphereToRay) - 1;
-        //    var discriminant = b * b - 4 * a * c;
-
-        //    if (discriminant < 0)
-        //    {
-        //        return;
-        //    }
-
-        //    intersections.Add(new Intersection(this, (-b - Math.Sqrt(discriminant)) / (2 * a)));
-        //    intersections.Add(new Intersection(this, (-b + Math.Sqrt(discriminant)) / (2 * a)));
-        //}
 
         public override void IntersectLocal(ref Tuple origin, ref Tuple direction, Intersections intersections)
         {

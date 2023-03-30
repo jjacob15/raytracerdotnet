@@ -23,15 +23,14 @@ namespace Demo
             int threadCount = threading ? (int) Environment.ProcessorCount :1;
             var display = true;
 
-            var renderParams = RendererParameters.HighQuality;
-
             List<Type> scenes = new List<Type> {
                 //    typeof(SimpleScene),
                 //typeof(StrippedPatternScene),
                 //typeof(ReflectionScene),
-                //typeof(ReflectionRefractionScene),
+                typeof(ReflectionRefractionScene),
                 //typeof(BasicCube),
-                typeof(TableScene)
+                //typeof(TableScene)
+                //typeof(HeagonScene)
             };
 
             string dir = Path.Combine(Path.GetTempPath(), "raytracing");
@@ -44,7 +43,7 @@ namespace Demo
 
             Stopwatch sw = Stopwatch.StartNew();
             Console.WriteLine($"Start time: {DateTime.Now:HH:mm:ss}");
-            var files = Run(dir, threadCount, scenes.ToArray(), renderParams);
+            var files = Run(dir, threadCount, scenes.ToArray());
             sw.Stop();
 
             Console.WriteLine();
@@ -54,7 +53,7 @@ namespace Demo
                 Display.OpenPicture(files.Count == 1 ? files[0] : dir);
         }
 
-        private static List<string> Run(string dir, int threadCount, Type[] scenes, RendererParameters renderParams)
+        private static List<string> Run(string dir, int threadCount, Type[] scenes)
         {
             var files = new List<string>();
             Renderer renderer = new Renderer(dir);
@@ -67,7 +66,7 @@ namespace Demo
                 timer.Elapsed += (sender, args) => { ConsoleStats(scene.Name, renderer); };
                 timer.Start();
 
-                renderer.Render(scene, renderParams, threadCount);
+                renderer.Render(scene,  threadCount);
                 renderer.Wait();
 
                 timer.Stop();
