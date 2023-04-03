@@ -7,7 +7,7 @@ namespace RayTracer.Shapes
 {
     public class Group : AbstractShape
     {
-        protected List<IShape> Shapes { get; } = new List<IShape>();
+        public List<IShape> Shapes { get; } = new List<IShape>();
 
         private Bounds box;
         public override Bounds Box

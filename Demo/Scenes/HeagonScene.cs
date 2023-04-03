@@ -11,10 +11,7 @@ namespace Demo.Scenes
     {
         private IShape Corner()
         {
-            var corner = new Sphere
-            {
-                Transform = Matrix.Transformation().Scaling(0.25, 0.25, 0.25).Translation(0, 0, -1).Apply()
-            };
+            var corner = new Sphere().Scale(0.25).Translate(tz: -1);
             return corner;
         }
         private IShape Edge()
@@ -23,13 +20,8 @@ namespace Demo.Scenes
             {
                 Minimum = 0,
                 Maximum = 1,
-                Transform = Matrix.Transformation()
-                .Scaling(0.25, 1, 0.25)
-                .RotateZ(-Math.PI / 2)
-                .RotateY(-Math.PI / 6)
-                .Translation(0, 0, -1)
-                .Apply()
-            };
+            }
+            .Scale(0.25, 1, 0.25).Rotate(rz: -Math.PI / 2).Rotate(ry: -Math.PI / 6).Translate(tz: -1);
 
             return edge;
         }
@@ -54,7 +46,7 @@ namespace Demo.Scenes
 
             Add(hex);
 
-            SetCameraSettings(new CameraSettings { ViewFrom = Tuple.Point(-4, 4, 0) });
+            SetCameraSettings(new CameraSettings { ViewFrom = Tuple.Point(-4, 4, 0), RendererParameters = new RendererParameters { Height = 800, Width = 1200 } });
         }
     }
 }

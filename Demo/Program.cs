@@ -27,10 +27,10 @@ namespace Demo
                 //    typeof(SimpleScene),
                 //typeof(StrippedPatternScene),
                 //typeof(ReflectionScene),
-                typeof(ReflectionRefractionScene),
+                //typeof(ReflectionRefractionScene),
                 //typeof(BasicCube),
                 //typeof(TableScene)
-                //typeof(HeagonScene)
+                typeof(HeagonScene)
             };
 
             string dir = Path.Combine(Path.GetTempPath(), "raytracing");

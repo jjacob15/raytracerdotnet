@@ -18,7 +18,7 @@ namespace RayTracer
         {
             transformable.Transform = new TransformationBuilder().RotateX(tx)
                 .RotateY(ty)
-                .RotateZ(tz).Apply();
+                .RotateZ(tz).Apply() * transformable.Transform;
         }
 
         public static T Translate<T>(this T shape, double tx = 0, double ty = 0, double tz = 0)
@@ -30,7 +30,7 @@ namespace RayTracer
 
         private static void TransformTranslate(ITransformable transformable, double tx = 0, double ty = 0, double tz = 0)
         {
-            transformable.Transform = new TransformationBuilder().Translation(tx, ty, tz).Apply();
+            transformable.Transform = new TransformationBuilder().Translation(tx, ty, tz).Apply() * transformable.Transform;
         }
 
         public static T Scale<T>(this T shape, double scale)
@@ -49,7 +49,7 @@ namespace RayTracer
 
         private static void TransformScale(ITransformable transformable, double sx = 0, double sy = 0, double sz = 0)
         {
-            transformable.Transform = new TransformationBuilder().Scaling(sx, sy, sz).Apply();
+            transformable.Transform = new TransformationBuilder().Scaling(sx, sy, sz).Apply() * transformable.Transform;
         }
 
         public static Ray Ray(double px, double py, double pz, double vx, double vy, double vz) => new Ray(Tuple.Point(px, py, pz), Tuple.Vector(vx, vy, vz));

@@ -10,11 +10,16 @@ namespace RayTracer
     {
         public double T { get; }
         public IShape Object { get; }
+        public double U { get; }
+        public double V { get; }
 
-        public Intersection(IShape shape, double t)
+
+        public Intersection(IShape shape, double t, double u = double.NaN, double v = double.NaN)
         {
             Object = shape;
             T = t;
+            U = u;
+            V = v;
         }
 
         public override bool Equals(object obj)
