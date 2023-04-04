@@ -38,7 +38,7 @@ namespace RayTracer.Shapes
             intersections.Add(new Intersection(this, (-b + sqrtDiscriminant) / (2 * a)));
         }
 
-        public override Tuple NormalAtLocal(Tuple localPoint)
+        public override Tuple NormalAtLocal(Tuple localPoint, Intersection hit)
         {
             return localPoint - Tuple.Point(0, 0, 0);
         }

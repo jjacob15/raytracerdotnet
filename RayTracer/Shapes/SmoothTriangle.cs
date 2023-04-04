@@ -19,5 +19,12 @@ namespace RayTracer.Shapes
         public Tuple N1 { get; }
         public Tuple N2 { get; }
         public Tuple N3 { get; }
+
+        public override Tuple NormalAtLocal(Tuple localPoint, Intersection hit = null)
+        {
+            return N2 * hit.U +
+                N3 * hit.V +
+                N1 * (1 - hit.U - hit.V);
+        }
     }
 }

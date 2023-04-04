@@ -10,6 +10,7 @@ namespace RayTracer
     public class ObjFileParser
     {
         public List<Tuple> Vertices { get; } = new List<Tuple>();
+        public List<Tuple> Normals { get; } = new List<Tuple>();
         public List<Triangle> Triangles { get; } = new List<Triangle>();
         public int Ignored;
         public Group DefaultGroup => Groups[0];
@@ -48,13 +49,24 @@ namespace RayTracer
             for (int i = 0; i < lines.Length; i++)
             {
                 var parts = lines[i].Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                if(parts.Length ==0 )
+                {
+                    Ignored++;
+                    continue;
+                }
                 switch (parts[0])
                 {
                     case "v":
                         ParseVertex(parts);
                         break;
+                    case "vn":
+                        ParseVertexNormals(parts);
+                        break;
                     case "f":
-                        ParseTriangle(parts[1..], group);
+                        if (lines[i].Contains("/"))
+                            ParseSmoothTriangles(parts[1..], group);
+                        else
+                            ParseTriangle(parts[1..], group);
                         break;
                     case "g":
                         group = ParseGroup(parts[1..]);
@@ -66,11 +78,40 @@ namespace RayTracer
             }
         }
 
+        private void ParseVertexNormals(string[] parts)
+        {
+            var x = double.Parse(parts[1]);
+            var y = double.Parse(parts[2]);
+            var z = double.Parse(parts[3]);
+            Normals.Add(Tuple.Vector(x, y, z));
+        }
+
         private Group ParseGroup(string[] vs)
         {
             var group = new Group();
             Groups.Add(group);
             return group;
+        }
+
+        private void ParseSmoothTriangles(string[] parts, Group group)
+        {
+            List<(Tuple v, Tuple n)> vns = new List<(Tuple v, Tuple n)>();
+            foreach (string part in parts)
+            {
+                var viNi = part.Split("/");
+                var vi = int.Parse(viNi[0]);
+                var ni = int.Parse(viNi[2]);
+
+                vns.Add((Vertices[vi - 1], Normals[ni - 1]));
+            }
+
+            var fanedTriangles = FanTriangulation(vns);
+            foreach (var triangle in fanedTriangles)
+            {
+                Triangles.Add(triangle);
+                group.Add(triangle);
+            }
+
         }
 
         private void ParseTriangle(string[] parts, Group group)
@@ -88,7 +129,6 @@ namespace RayTracer
                 Triangles.Add(triangle);
                 group.Add(triangle);
             }
-
         }
 
         private void ParseVertex(string[] parts)
@@ -105,6 +145,18 @@ namespace RayTracer
             for (int i = 1; i <= vertices.Count - 2; i++)
             {
                 fanedTriangles.Add(new Triangle(vertices[0], vertices[i], vertices[i + 1]));
+            }
+            return fanedTriangles;
+        }
+
+        private List<SmoothTriangle> FanTriangulation(List<(Tuple v, Tuple n)> vertexNormals)
+        {
+            List<SmoothTriangle> fanedTriangles = new List<SmoothTriangle>();
+            for (int i = 1; i <= vertexNormals.Count - 2; i++)
+            {
+                fanedTriangles.Add(new SmoothTriangle(
+                    vertexNormals[0].v, vertexNormals[i].v, vertexNormals[i + 1].v,
+                    vertexNormals[0].n, vertexNormals[i].n, vertexNormals[i + 1].n));
             }
             return fanedTriangles;
         }

@@ -53,7 +53,7 @@ namespace RayTracer.Shapes
             return (tMin, tMax);
         }
 
-        public override Tuple NormalAtLocal(Tuple localPoint)
+        public override Tuple NormalAtLocal(Tuple localPoint, Intersection hit = null)
         {
             var absX = Math.Abs(localPoint.X);
             var absY = Math.Abs(localPoint.Y);

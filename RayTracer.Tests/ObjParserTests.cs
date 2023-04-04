@@ -117,42 +117,48 @@ namespace RayTracer
             parsedGroup.Shapes.Count.Should().Be(3);
         }
 
-        //[Fact]
-        //public void VertexNormalRecordTest()
-        //{
-        //    var reader = new ObjFileReader(
-        //        "vn 0 0 1",
-        //    "vn 0.707 0 -0.707",
-        //    "vn 1 2 3");
+        [Fact]
+        public void VertexNormalRecordTest()
+        {
+            var reader = new ObjFileParser(
+                "vn 0 0 1",
+            "vn 0.707 0 -0.707",
+            "vn 1 2 3");
 
-        //    Check.That(reader.Normals[0]).IsEqualTo(Helper.CreatePoint(0, 0, 1));
-        //    Check.That(reader.Normals[1]).IsEqualTo(Helper.CreatePoint(0.707, 0, -0.707));
-        //    Check.That(reader.Normals[2]).IsEqualTo(Helper.CreatePoint(1, 2, 3));
-        //}
+           reader.Normals[0].Should().Be(Tuple.Vector(0, 0, 1));
+           reader.Normals[1].Should().Be(Tuple.Vector(0.707, 0, -0.707));
+           reader.Normals[2].Should().Be(Tuple.Vector(1, 2, 3));
+        }
 
-        //[Fact]
-        //public void TrianglesWithNormalsTest()
-        //{
-        //    var reader = new ObjFileReader(
-        //        "v 0 1 0",
-        //        "v -1 0 0",
-        //        "v 1 0 0",
-        //        "",
-        //        "vn -1 0 0",
-        //        "vn 1 0 0",
-        //        "vn 0 1 0",
-        //        "f 1//3 2//1 3//2",
-        //        "f 1/0/3 2/102/1 3/14/2");
-        //    var t1 = reader.DefaultGroup[0] as Triangle;
-        //    var t2 = reader.DefaultGroup[0] as Triangle;
+        [Fact]
+        public void TrianglesWithNormalsTest()
+        {
+            var reader = new ObjFileParser(
+                "v 0 1 0",
+                "v -1 0 0",
+                "v 1 0 0",
+                "",
+                "vn -1 0 0",
+                "vn 1 0 0",
+                "vn 0 1 0",
+                "f 1//3 2//1 3//2",
+                "f 1/0/3 2/102/1 3/14/2");
+            var t1 = reader.DefaultGroup[0] as SmoothTriangle;
+            var t2 = reader.DefaultGroup[0] as SmoothTriangle;
 
-        //    Check.That(t1.P1).IsEqualTo(reader.Vertices[0]);
-        //    Check.That(t1.P2).IsEqualTo(reader.Vertices[1]);
-        //    Check.That(t1.P3).IsEqualTo(reader.Vertices[2]);
+            t1.P1.Should().Be(reader.Vertices[0]);
+            t1.P2.Should().Be(reader.Vertices[1]);
+            t1.P3.Should().Be(reader.Vertices[2]);
+            t1.N1.Should().Be(reader.Normals[2]);
+            t1.N2.Should().Be(reader.Normals[0]);
+            t1.N3.Should().Be(reader.Normals[1]);
 
-        //    Check.That(t2.P1).IsEqualTo(reader.Vertices[0]);
-        //    Check.That(t2.P2).IsEqualTo(reader.Vertices[1]);
-        //    Check.That(t2.P3).IsEqualTo(reader.Vertices[2]);
-        //}
+            t2.P1.Should().Be(reader.Vertices[0]);
+            t2.P2.Should().Be(reader.Vertices[1]);
+            t2.P3.Should().Be(reader.Vertices[2]);
+            t2.N1.Should().Be(reader.Normals[2]);
+            t2.N2.Should().Be(reader.Normals[0]);
+            t2.N3.Should().Be(reader.Normals[1]);
+        }
     }
 }

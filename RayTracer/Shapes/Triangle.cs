@@ -43,10 +43,10 @@ namespace RayTracer.Shapes
 
             var t = f * E2.Dot(originCrossE1);
 
-            intersections.Add(new Intersection(this, t));
+            intersections.Add(new Intersection(this, t, u, v));
         }
 
-        public override Tuple NormalAtLocal(Tuple localPoint)
+        public override Tuple NormalAtLocal(Tuple localPoint, Intersection hit = null)
         {
             return N;
         }

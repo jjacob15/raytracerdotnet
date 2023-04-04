@@ -8,10 +8,10 @@ namespace RayTracer
         public virtual Material Material { get; set; } = new Material();
         public IShape Parent { get; set; }
 
-        public abstract Bounds Box { get;  }
+        public abstract Bounds Box { get; }
 
         public abstract void IntersectLocal(ref Tuple origin, ref Tuple direction, Intersections intersections);
-        public abstract Tuple NormalAtLocal(Tuple localPoint);
+        public abstract Tuple NormalAtLocal(Tuple localPoint, Intersection hit = null);
 
         public void Intersect(ref Tuple origin, ref Tuple direction, Intersections intersections)
         {
@@ -27,10 +27,10 @@ namespace RayTracer
             IntersectLocal(ref transformedOrigin, ref transformedDirection, intersections);
         }
 
-        public Tuple NormalAt(Tuple worldPoint)
+        public Tuple NormalAt(Tuple worldPoint, Intersection hit = null)
         {
             var localPoint = WorldToObject(worldPoint);
-            var localNormal = NormalAtLocal(localPoint);
+            var localNormal = NormalAtLocal(localPoint, hit);
             return NormalToWorld(localNormal);
 
         }

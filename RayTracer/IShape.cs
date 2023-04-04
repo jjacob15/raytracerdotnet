@@ -11,6 +11,6 @@
         Tuple NormalToWorld(Tuple normal);
 
         void Intersect(ref Tuple origin,ref Tuple direction, Intersections intersections);
-        Tuple NormalAt(Tuple worldPoint);
+        Tuple NormalAt(Tuple worldPoint, Intersection hit = null);
     }
 }

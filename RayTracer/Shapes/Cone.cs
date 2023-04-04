@@ -70,7 +70,7 @@ namespace RayTracer.Shapes
 
             IntersectCaps(ref origin, ref direction, intersections);
         }
-        public override Tuple NormalAtLocal(Tuple localPoint)
+        public override Tuple NormalAtLocal(Tuple localPoint, Intersection hit = null)
         {
             //compute the square of the distance from the y axis
             var dist = localPoint.X * localPoint.X + localPoint.Z * localPoint.Z;

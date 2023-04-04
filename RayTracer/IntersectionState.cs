@@ -18,7 +18,7 @@ namespace RayTracer
             //precompute some useful values
             Point = ray.Position(T);
             EyeV = -ray.Direction;
-            NormalV = Object.NormalAt(ray.Position(T));
+            NormalV = Object.NormalAt(ray.Position(T),intersection);
             ReflectV = ray.Direction.Reflect(-NormalV);
 
             if (NormalV.Dot(EyeV) < 0)

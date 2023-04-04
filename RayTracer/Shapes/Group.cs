@@ -82,7 +82,7 @@ namespace RayTracer.Shapes
             }
         }
 
-        public override Tuple NormalAtLocal(Tuple localPoint)
+        public override Tuple NormalAtLocal(Tuple localPoint, Intersection hit)
         {
             throw new NotImplementedException();
         }

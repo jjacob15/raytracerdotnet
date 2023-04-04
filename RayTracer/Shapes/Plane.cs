@@ -19,7 +19,7 @@ namespace RayTracer.Shapes
             intersections.Add(new Intersection(this, t));
         }
 
-        public override Tuple NormalAtLocal(Tuple localPoint)
+        public override Tuple NormalAtLocal(Tuple localPoint, Intersection hit = null)
         {
             return Tuple.Vector(0, 1, 0);
         }
