@@ -74,6 +74,17 @@ namespace RayTracer.Shapes
             }
         }
 
+        public override bool Contains(IShape other)
+        {
+            foreach(var shape in Shapes)
+            {
+                if (shape.Contains(other))
+                    return true;
+            }
+
+            return false;
+        }
+
         public override void IntersectLocal(ref Tuple origin, ref Tuple direction, Intersections intersections)
         {
             for (var i = 0; i < Shapes.Count; i++)

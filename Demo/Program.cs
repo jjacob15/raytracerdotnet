@@ -31,7 +31,10 @@ namespace Demo
                 //typeof(BasicCube),
                 //typeof(TableScene),
                 //typeof(HeagonScene)
-                typeof(TeapotScene)
+                //typeof(CsgScene),
+                typeof(CsgDiceScene),
+                //typeof(CsgDifferenceScene),
+                //typeof(TeapotScene)
             };
 
             string dir = Path.Combine(Path.GetTempPath(), "raytracing");

@@ -14,8 +14,10 @@ namespace RayTracer
         public static Color _Brown = FromRGB(204, 102, 0);
         public static Color _Purple = FromRGB(204, 0, 204);
         public static Color _Red = FromRGB(255, 0, 0);
+        public static Color _Yellow = FromRGB(255, 255,0);
         public static Color _Green = FromRGB(0, 255, 0);
         public static Color _Blue = FromRGB(0, 0, 255);
+        public static Color _LightBlue = FromRGB(0, 128, 255);
 
         public Color(double r, double g, double b)
         {

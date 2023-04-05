@@ -10,7 +10,16 @@ namespace RayTracer.Shapes
         public double Maximum { get; set; } = double.PositiveInfinity;
         public bool Closed { get; set; }
 
-        public override Bounds Box => new Bounds { Min = Tuple.Point(-1, -1, -1), Max = Tuple.Point(1, 1, 1) };
+
+        public Cylinder(double minimum = double.NegativeInfinity, double maximum = double.PositiveInfinity, bool closed = false)
+        {
+            Minimum = minimum;
+            Maximum = maximum;
+            Closed = closed;
+            Box = new Bounds { Min = Tuple.Point(-1, Minimum, -1), Max = Tuple.Point(1, Maximum, 1) };
+        }
+
+        public override Bounds Box { get; }
 
         public override void IntersectLocal(ref Tuple origin, ref Tuple direction, Intersections intersections)
         {

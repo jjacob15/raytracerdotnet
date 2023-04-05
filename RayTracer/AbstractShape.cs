@@ -76,5 +76,10 @@ namespace RayTracer
 
             return normal;
         }
+
+        public virtual bool Contains(IShape shape)
+        {
+            return ReferenceEquals(shape, this);
+        }
     }
 }
