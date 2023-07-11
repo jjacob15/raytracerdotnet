@@ -16,7 +16,7 @@ namespace Demo
                     FileName =$"/bin/bash",
                     WorkingDirectory= "/mnt",
                     Arguments = $"-c \"gimp {path}\"" ,
-                      RedirectStandardOutput = false,
+                    RedirectStandardOutput = false,
                     RedirectStandardError = false,
                     UseShellExecute=false
                 };
