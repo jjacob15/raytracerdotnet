@@ -47,8 +47,8 @@ namespace RayTracer
         public static Tuple operator -(Tuple a, Tuple b) => new Tuple(a.X - b.X, a.Y - b.Y, a.Z - b.Z, Math.Abs(a.W - b.W));
         public static Tuple operator -(Tuple a) => new Tuple(-a.X, -a.Y, -a.Z, -a.W);
         public static Tuple operator --(Tuple a) => new Tuple(-a.X, -a.Y, -a.Z, -a.W);
-        public static Tuple operator /(Tuple a, double divisor) => new Tuple(a.X / divisor, a.Y / divisor, a.Z / divisor, a.W / divisor);
-        public static Tuple operator *(Tuple a, double multiplier) => new Tuple(a.X * multiplier, a.Y * multiplier, a.Z * multiplier, a.W * multiplier);
+        public static Tuple operator /(Tuple a, double divisor) => new Tuple(a.X / divisor, a.Y / divisor, a.Z / divisor, a.W);
+        public static Tuple operator *(Tuple a, double multiplier) => new Tuple(a.X * multiplier, a.Y * multiplier, a.Z * multiplier, a.W);
 
         public double Magnitude => Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
 
